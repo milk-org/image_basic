@@ -294,7 +294,8 @@ void __attribute__ ((constructor)) libinit_image_basic()
 int_fast8_t init_image_basic()
 {
     strcpy(data.module[data.NBmodule].name, __FILE__);
-    strcpy(data.module[data.NBmodule].info, "milk    - Basic image routines");
+    strcpy(data.module[data.NBmodule].package, "milk");
+    strcpy(data.module[data.NBmodule].info, "Basic image routines");
     data.NBmodule++;
 
 
