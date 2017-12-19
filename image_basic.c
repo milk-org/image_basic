@@ -238,6 +238,18 @@ int_fast8_t image_basic_cubecollapse_cli()
 }
 
 
+int_fast8_t image_basic_indexmap_cli()
+{
+    if(CLI_checkarg(1,4)+CLI_checkarg(2,4)+CLI_checkarg(3,3) == 0)
+    {
+        image_basic_indexmap(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.string);
+        return 0;
+    }
+    else
+        return 1;
+}
+
+
 
 
 int_fast8_t image_basic_streamaverage_cli()
@@ -427,6 +439,15 @@ int_fast8_t init_image_basic()
     strcpy(data.cmd[data.NBcmd].syntax,"cubecollapse <inim> <outim>");
     strcpy(data.cmd[data.NBcmd].example,"cubecollapse im1 outim");
     strcpy(data.cmd[data.NBcmd].Ccall,"long cube_collapse(const char *ID_in_name, const char *ID_out_name)");
+    data.NBcmd++;
+    
+    strcpy(data.cmd[data.NBcmd].key,"imindexmap");
+    strcpy(data.cmd[data.NBcmd].module,__FILE__);
+    data.cmd[data.NBcmd].fp = image_basic_indexmap_cli;
+    strcpy(data.cmd[data.NBcmd].info,"map input values to output image unsing index map");
+    strcpy(data.cmd[data.NBcmd].syntax,"imindexmap <indexmap> <values> <output>");
+    strcpy(data.cmd[data.NBcmd].example,"imindexmap imap imval outmap");    
+    strcpy(data.cmd[data.NBcmd].Ccall,"long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout_name)");
     data.NBcmd++;
     
     strcpy(data.cmd[data.NBcmd].key,"imgstreamave");
@@ -2759,6 +2780,138 @@ long cube_collapse(const char *ID_in_name, const char *ID_out_name)
     return(IDout);
 }
 
+
+
+
+long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout_name)
+{
+	long IDindex, IDvalues;
+	long IDout;
+	long xsize, ysize, xysize;
+	long val_xsize, val_ysize, val_xysize;
+	int atype;
+	
+	IDindex = image_ID(ID_index_name);
+	IDvalues = image_ID(ID_values_name);
+	
+	xsize = data.image[IDindex].md[0].size[0];
+	ysize = data.image[IDindex].md[0].size[1];
+	xysize = xsize * ysize;
+	atype = data.image[IDindex].md[0].atype;
+
+	val_xsize = data.image[IDvalues].md[0].size[0];
+	val_ysize = data.image[IDvalues].md[0].size[1];
+	val_xysize = val_xsize * val_ysize;
+	
+	IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
+	
+	long ii, i;
+	
+	switch( atype ) {
+		
+		case _DATATYPE_FLOAT:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) (data.image[IDindex].array.F[ii]+0.1);
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+		case _DATATYPE_DOUBLE:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) (data.image[IDindex].array.D[ii]+0.1);
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+
+
+		
+		case _DATATYPE_UINT8:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) data.image[IDindex].array.UI8[ii];
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+		case _DATATYPE_INT8:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) data.image[IDindex].array.SI8[ii];
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+		case _DATATYPE_UINT16:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) data.image[IDindex].array.UI16[ii];
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+		case _DATATYPE_INT16:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) data.image[IDindex].array.SI16[ii];
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+		case _DATATYPE_UINT32:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) data.image[IDindex].array.UI32[ii];
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+		case _DATATYPE_INT32:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) data.image[IDindex].array.SI32[ii];
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+		case _DATATYPE_UINT64:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) data.image[IDindex].array.UI64[ii];
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+		case _DATATYPE_INT64:
+		for(ii=0;ii<xysize;ii++)
+			{
+				i = (long) data.image[IDindex].array.SI64[ii];
+				if((i>-1)&&(i<val_xysize))
+					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+			}
+		break;
+		
+
+
+		default:
+		printf("ERROR: datatype not supported\n");
+		break;
+	}
+	
+
+	
+	return(IDout);
+}
 
 
 

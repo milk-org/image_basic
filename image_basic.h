@@ -81,6 +81,8 @@ long cube_average(const char *ID_in_name, const char *ID_out_name, float alpha);
 
 long cube_collapse(const char *ID_in_name, const char *ID_out_name);
 
+long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout_name);
+
 long basic_addimagesfiles(const char *strfilter, const char *outname);
 
 long basic_pasteimages(const char *prefix, long NBcol, const char *IDout_name);
