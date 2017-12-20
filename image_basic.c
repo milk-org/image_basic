@@ -2790,6 +2790,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 	long xsize, ysize, xysize;
 	long val_xsize, val_ysize, val_xysize;
 	int atype;
+	int val_atype;
 	
 	IDindex = image_ID(ID_index_name);
 	IDvalues = image_ID(ID_values_name);
@@ -2802,6 +2803,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 	val_xsize = data.image[IDvalues].md[0].size[0];
 	val_ysize = data.image[IDvalues].md[0].size[1];
 	val_xysize = val_xsize * val_ysize;
+	val_atype = data.image[IDindex].md[0].atype;
 	
 	IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
 	
