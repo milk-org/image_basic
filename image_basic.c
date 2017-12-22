@@ -2791,6 +2791,8 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 	long val_xsize, val_ysize, val_xysize;
 	int atype;
 	int val_atype;
+	float *arrayf;
+	long ii, i;
 	
 	IDindex = image_ID(ID_index_name);
 	IDvalues = image_ID(ID_values_name);
@@ -2807,7 +2809,14 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 	
 	IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
 	
-	long ii, i;
+	if(val_atype == _DATATYPE_FLOAT)
+		arrayf = data.image[IDvalues].array.F;
+	else 
+	{
+		arrayf = (float*) malloc(sizeof(float)*val_xysize);
+		for(i=0;i<val_xysize;i++)
+			arrayf[i] = (float) data.image[IDvalues].array.D[i];
+	}
 	
 	switch( atype ) {
 		
@@ -2816,7 +2825,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) (data.image[IDindex].array.F[ii]+0.1);
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];					
 			}
 		break;
 		
@@ -2825,7 +2834,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) (data.image[IDindex].array.D[ii]+0.1);
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 
@@ -2836,7 +2845,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) data.image[IDindex].array.UI8[ii];
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 		
@@ -2845,7 +2854,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) data.image[IDindex].array.SI8[ii];
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 		
@@ -2854,7 +2863,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) data.image[IDindex].array.UI16[ii];
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 		
@@ -2863,7 +2872,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) data.image[IDindex].array.SI16[ii];
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 		
@@ -2872,7 +2881,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) data.image[IDindex].array.UI32[ii];
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 		
@@ -2881,7 +2890,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) data.image[IDindex].array.SI32[ii];
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 		
@@ -2890,7 +2899,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) data.image[IDindex].array.UI64[ii];
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 		
@@ -2899,18 +2908,19 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			{
 				i = (long) data.image[IDindex].array.SI64[ii];
 				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+					data.image[IDout].array.F[ii] = arrayf[i];
 			}
 		break;
 		
-
-
 		default:
 		printf("ERROR: datatype not supported\n");
 		break;
 	}
 	
 
+
+	if(val_atype != _DATATYPE_FLOAT)
+		free(arrayf);
 	
 	return(IDout);
 }
