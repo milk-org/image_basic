@@ -295,7 +295,12 @@ int_fast8_t IMAGE_BASIC_streamrecord_cli()
 void __attribute__ ((constructor)) libinit_image_basic()
 {
 	init_image_basic();
-//	printf(" ...... Loading module %s\n", __FILE__);
+
+	if(data.progStatus>0)
+	{
+		printf("  Found unloaded shared object in ./libs/ -> LOADING module %s\n", __FILE__);
+		fflush(stdout);
+	}	
 }
 
 
