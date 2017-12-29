@@ -56,6 +56,8 @@
 
 extern DATA data;
 
+static int INITSTATUS_image_basic = 0;
+
 char errmsg[SBUFFERSIZE];
 
 
@@ -294,8 +296,12 @@ int_fast8_t IMAGE_BASIC_streamrecord_cli()
 
 void __attribute__ ((constructor)) libinit_image_basic()
 {
-	init_image_basic();
-	RegisterModule(__FILE__, "milk", "Basic image routines");
+	if ( INITSTATUS_image_basic == 0 )
+	{
+		init_image_basic();
+		RegisterModule(__FILE__, "milk", "Basic image routines");
+		INITSTATUS_image_basic = 1;
+	}
 }
 
 

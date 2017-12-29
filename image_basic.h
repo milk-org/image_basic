@@ -3,7 +3,7 @@
 
 
 
-
+void __attribute__ ((constructor)) libinit_image_basic();
 int_fast8_t init_image_basic();
 
 
