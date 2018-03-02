@@ -4140,6 +4140,10 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
 
 	int CounterWatch; // 1 if using cnt0, 0 if using semaphore
 
+	double *sumsqarray; // sum squared
+	double *sumarray;
+	
+	
     ID = image_ID(IDname);
     xsize = data.image[ID].md[0].size[0];
     ysize = data.image[ID].md[0].size[1];
@@ -4153,8 +4157,10 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
     atype = data.image[ID].md[0].atype;
 
     if(mode > 0)
-        IDrms = create_2Dimage_ID("imgstreamrms", xsize, ysize);
-
+    {    
+		IDrms = create_2Dimage_ID("imgstreamrms", xsize, ysize);
+		sumsqarray = (double*) malloc(sizeof(double)*xsize*ysize);
+	}
 
     createim = 0;
     IDcube = image_ID("tmpstrcoadd");
@@ -4176,6 +4182,8 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
 
 
     IDout = create_2Dimage_ID(IDoutname, xsize, ysize);
+	sumarray = (double*) malloc(sizeof(double)*xsize*ysize);
+
 
 	// if semindex out of range, use counter
 	CounterWatch = 0;
@@ -4234,10 +4242,10 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
             if(mode>0)
             {
                 for(ii=0; ii<xysize; ii++)
-                    data.image[IDrms].array.F[ii] += data.image[IDcube].array.UI8[offset+ii]*data.image[IDcube].array.UI8[offset+ii];
+                    sumsqarray[ii] += (double) (data.image[IDcube].array.UI8[offset+ii]*data.image[IDcube].array.UI8[offset+ii]);
             }
             for(ii=0; ii<xysize; ii++)
-                data.image[IDout].array.F[ii] += data.image[IDcube].array.UI8[offset+ii];
+                sumarray[ii] += (double) data.image[IDcube].array.UI8[offset+ii];
             break;
             
         case _DATATYPE_INT32:
@@ -4249,10 +4257,10 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
             if(mode>0)
             {
                 for(ii=0; ii<xysize; ii++)
-                    data.image[IDrms].array.F[ii] += data.image[IDcube].array.SI32[offset+ii]*data.image[IDcube].array.SI32[offset+ii];
+                    sumsqarray[ii] += (double) (data.image[IDcube].array.SI32[offset+ii]*data.image[IDcube].array.SI32[offset+ii]);
             }
             for(ii=0; ii<xysize; ii++)
-                data.image[IDout].array.F[ii] += data.image[IDcube].array.SI32[offset+ii];
+                sumarray[ii] += (double) data.image[IDcube].array.SI32[offset+ii];
             break;
             
         case _DATATYPE_FLOAT:
@@ -4265,10 +4273,10 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
             if(mode>0)
             {
                 for(ii=0; ii<xysize; ii++)
-                    data.image[IDrms].array.F[ii] += data.image[IDcube].array.F[offset+ii]*data.image[IDcube].array.F[offset+ii];
+                    sumsqarray[ii] += (double) (data.image[IDcube].array.F[offset+ii]*data.image[IDcube].array.F[offset+ii]);
             }
             for(ii=0; ii<xysize; ii++)
-                data.image[IDout].array.F[ii] += data.image[IDcube].array.F[offset+ii];
+                sumarray[ii] += (double) data.image[IDcube].array.F[offset+ii];
             break;
             
         case _DATATYPE_DOUBLE:
@@ -4279,10 +4287,10 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
             memcpy (ptrcv, ptrv, sizeof(double)*xysize);
             if(mode>0)
             {   for(ii=0; ii<xysize; ii++)
-                    data.image[IDrms].array.F[ii] += data.image[IDcube].array.D[offset+ii]*data.image[IDcube].array.D[offset+ii];
+                    sumsqarray[ii] += (double) (data.image[IDcube].array.D[offset+ii]*data.image[IDcube].array.D[offset+ii]);
             }
             for(ii=0; ii<xysize; ii++)
-                data.image[IDout].array.F[ii] += data.image[IDcube].array.D[offset+ii];
+                sumarray[ii] += (double) data.image[IDcube].array.D[offset+ii];
             break;
             
         case _DATATYPE_UINT16:
@@ -4293,10 +4301,10 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
             memcpy (ptrcv, ptrv, sizeof(uint16_t)*xysize);
             if(mode>0)
             {   for(ii=0; ii<xysize; ii++)
-                    data.image[IDrms].array.F[ii] += data.image[IDcube].array.UI16[offset+ii]*data.image[IDcube].array.UI16[offset+ii];
+                    sumsqarray[ii] += (double) (data.image[IDcube].array.UI16[offset+ii]*data.image[IDcube].array.UI16[offset+ii]);
             }
             for(ii=0; ii<xysize; ii++)
-                data.image[IDout].array.F[ii] += data.image[IDcube].array.UI16[offset+ii];
+                sumarray[ii] += (double) data.image[IDcube].array.UI16[offset+ii];
             break;
             
         default :
@@ -4313,12 +4321,12 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
 
 
     for(ii=0; ii<xysize; ii++)
-        data.image[IDout].array.F[ii] /= k;
+        data.image[IDout].array.F[ii] = (float) (sumarray[ii]/k);
 
     if(mode>0)
     {
         for(ii=0; ii<xysize; ii++)
-            data.image[IDrms].array.F[ii] = data.image[IDrms].array.F[ii]/k - data.image[IDout].array.F[ii]*data.image[IDout].array.F[ii];
+            data.image[IDrms].array.F[ii] = (float) sqrt( (sumsqarray[ii]/k - sumarray[ii]*sumarray[ii]);
     }
 
     if(mode==2)
@@ -4351,7 +4359,9 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
         }
     }
 
-
+	free(sumarray);
+	if(mode > 0)
+		free(sumsqarray);
 
     return(IDout);
 }
