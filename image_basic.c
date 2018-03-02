@@ -4159,7 +4159,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
     if(mode > 0)
     {    
 		IDrms = create_2Dimage_ID("imgstreamrms", xsize, ysize);
-		sumsqarray = (double*) malloc(sizeof(double)*xsize*ysize);
+		sumsqarray = calloc(xsize*ysize, sizeof(double));
 	}
 
     createim = 0;
@@ -4182,7 +4182,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
 
 
     IDout = create_2Dimage_ID(IDoutname, xsize, ysize);
-	sumarray = (double*) malloc(sizeof(double)*xsize*ysize);
+	sumarray = calloc(xsize*ysize, sizeof(double));
 
 
 	// if semindex out of range, use counter
