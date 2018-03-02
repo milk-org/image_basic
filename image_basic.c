@@ -4326,7 +4326,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
     if(mode>0)
     {
         for(ii=0; ii<xysize; ii++)
-            data.image[IDrms].array.F[ii] = (float) sqrt( sumsqarray[ii]/k - sumarray[ii]/k );
+            data.image[IDrms].array.F[ii] = (float) sqrt( sumsqarray[ii]/k - (sumarray[ii]/k)*(sumarray[ii]/k) );
     }
 
     if(mode==2)
