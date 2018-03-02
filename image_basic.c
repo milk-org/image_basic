@@ -4152,7 +4152,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
     imsize[2] = NBcoadd;
     atype = data.image[ID].md[0].atype;
 
-    if(mode>0)
+    if(mode > 0)
         IDrms = create_2Dimage_ID("imgstreamrms", xsize, ysize);
 
 
@@ -4318,7 +4318,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
     if(mode>0)
     {
         for(ii=0; ii<xysize; ii++)
-            data.image[IDrms].array.F[ii] = sqrt(data.image[IDrms].array.F[ii]/k - data.image[IDout].array.F[ii]*data.image[IDout].array.F[ii]);
+            data.image[IDrms].array.F[ii] = data.image[IDrms].array.F[ii]/k - data.image[IDout].array.F[ii]*data.image[IDout].array.F[ii];
     }
 
     if(mode==2)
