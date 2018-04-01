@@ -54,7 +54,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-extern DATA data;
+//extern DATA data;
 
 static int INITSTATUS_image_basic = 0;
 
