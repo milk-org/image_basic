@@ -4292,6 +4292,20 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
             for(ii=0; ii<xysize; ii++)
                 sumarray[ii] += (double) data.image[IDcube].array.D[offset+ii];
             break;
+
+        case _DATATYPE_INT16:
+            ptrv = (char*) data.image[ID].array.SI16;
+            ptrv += sizeof(uint16_t)*k1*xysize;
+            ptrcv = (char*) data.image[IDcube].array.SI16;
+            ptrcv += sizeof(uint16_t)*k*xysize;
+            memcpy (ptrcv, ptrv, sizeof(uint16_t)*xysize);
+            if(mode>0)
+            {   for(ii=0; ii<xysize; ii++)
+                    sumsqarray[ii] += (double) (data.image[IDcube].array.SI16[offset+ii]*data.image[IDcube].array.SI16[offset+ii]);
+            }
+            for(ii=0; ii<xysize; ii++)
+                sumarray[ii] += (double) data.image[IDcube].array.SI16[offset+ii];
+            break;
             
         case _DATATYPE_UINT16:
             ptrv = (char*) data.image[ID].array.UI16;
