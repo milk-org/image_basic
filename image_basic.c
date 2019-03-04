@@ -600,8 +600,8 @@ long basic_add(const char *ID_name1, const char *ID_name2, const char *ID_name_o
     long ii,jj;
     long naxes1[2], naxes2[2], naxes[2];
     long xmin, ymin, xmax, ymax; /* extrema in the ID1 coordinates */
-    int atype1, atype2, atype;
-    int atypeOK;
+    uint8_t datatype1, datatype2, datatype;
+    int datatypeOK;
 
     ID1 = image_ID(ID_name1);
     ID2 = image_ID(ID_name2);
@@ -610,26 +610,26 @@ long basic_add(const char *ID_name1, const char *ID_name2, const char *ID_name_o
     naxes2[0] = data.image[ID2].md[0].size[0];
     naxes2[1] = data.image[ID2].md[0].size[1];
 
-    atype1 = data.image[ID1].md[0].atype;
-    atype2 = data.image[ID2].md[0].atype;
+    datatype1 = data.image[ID1].md[0].datatype;
+    datatype2 = data.image[ID2].md[0].datatype;
 
-    atypeOK = 0;
+    datatypeOK = 0;
 
-    if((atype1==_DATATYPE_FLOAT)&&(atype2==_DATATYPE_FLOAT))
+    if((datatype1==_DATATYPE_FLOAT) && (datatype2==_DATATYPE_FLOAT))
     {
-        atype = _DATATYPE_FLOAT;
-        atypeOK = 1;
+        datatype = _DATATYPE_FLOAT;
+        datatypeOK = 1;
     }
-    if((atype1==_DATATYPE_DOUBLE)&&(atype2==_DATATYPE_DOUBLE))
+    if((datatype1==_DATATYPE_DOUBLE) && (datatype2==_DATATYPE_DOUBLE))
     {
-        atype = _DATATYPE_DOUBLE;
-        atypeOK = 1;
+        datatype = _DATATYPE_DOUBLE;
+        datatypeOK = 1;
     }
 
-    if(atypeOK == 0)
+    if(datatypeOK == 0)
     {
         printf("ERROR in basic_add: data type combination not supported\n");
-        exit(0);
+        exit(EXIT_FAILURE);
     }
 
     /*  if(data.quiet==0)*/
@@ -644,7 +644,7 @@ long basic_add(const char *ID_name1, const char *ID_name2, const char *ID_name_o
     if ((naxes2[1]+off2)>naxes1[1]) ymax = (naxes2[1]+off2);
 
 
-    if(atype==_DATATYPE_FLOAT)
+    if(datatype==_DATATYPE_FLOAT)
     {
         create_2Dimage_ID(ID_name_out,(xmax-xmin),(ymax-ymin));
         ID_out = image_ID(ID_name_out);
@@ -667,7 +667,7 @@ long basic_add(const char *ID_name1, const char *ID_name2, const char *ID_name_o
             }
     }
 
-    if(atype==_DATATYPE_DOUBLE)
+    if(datatype==_DATATYPE_DOUBLE)
     {
         create_2Dimage_ID_double(ID_name_out,(xmax-xmin),(ymax-ymin));
         ID_out = image_ID(ID_name_out);
@@ -703,8 +703,8 @@ long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name
     long ii, jj, kk;
     long naxes1[3], naxes2[3], naxes[3];
     long xmin, ymin, zmin, xmax, ymax, zmax; /* extrema in the ID1 coordinates */
-    int atype1, atype2, atype;
-    int atypeOK;
+    uint8_t datatype1, datatype2, datatype;
+    int datatypeOK;
 
     ID1 = image_ID(ID_name1);
     ID2 = image_ID(ID_name2);
@@ -716,23 +716,23 @@ long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name
     naxes2[1] = data.image[ID2].md[0].size[1];
     naxes2[2] = data.image[ID2].md[0].size[2];
 
-    atype1 = data.image[ID1].md[0].atype;
-    atype2 = data.image[ID2].md[0].atype;
+    datatype1 = data.image[ID1].md[0].datatype;
+    datatype2 = data.image[ID2].md[0].datatype;
 
-    atypeOK = 0;
+    datatypeOK = 0;
 
-    if((atype1==_DATATYPE_FLOAT)&&(atype2==_DATATYPE_FLOAT))
+    if((datatype1==_DATATYPE_FLOAT) && (datatype2==_DATATYPE_FLOAT))
     {
-        atype = _DATATYPE_FLOAT;
-        atypeOK = 1;
+        datatype = _DATATYPE_FLOAT;
+        datatypeOK = 1;
     }
-    if((atype1==_DATATYPE_DOUBLE)&&(atype2==_DATATYPE_DOUBLE))
+    if((datatype1==_DATATYPE_DOUBLE) && (datatype2==_DATATYPE_DOUBLE))
     {
-        atype = _DATATYPE_DOUBLE;
-        atypeOK = 1;
+        datatype = _DATATYPE_DOUBLE;
+        datatypeOK = 1;
     }
 
-    if(atypeOK == 0)
+    if(datatypeOK == 0)
     {
         printf("ERROR in basic_add: data type combination not supported\n");
         exit(0);
@@ -760,7 +760,7 @@ long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name
 
 	
 
-    if(atype==_DATATYPE_FLOAT)
+    if(datatype==_DATATYPE_FLOAT)
     {
         create_3Dimage_ID(ID_name_out,(xmax-xmin),(ymax-ymin),(zmax-zmin));
         ID_out = image_ID(ID_name_out);
@@ -789,7 +789,7 @@ long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name
             }
     }
 
-    if(atype==_DATATYPE_DOUBLE)
+    if(datatype==_DATATYPE_DOUBLE)
     {
         create_3Dimage_ID_double(ID_name_out,(xmax-xmin),(ymax-ymin),(zmax-zmin));
         ID_out = image_ID(ID_name_out);
@@ -1079,10 +1079,10 @@ long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1, int 
     uint32_t naxes[3];
     uint32_t *naxes_out;
     int i,j,k;
-    int atype;
+    uint8_t datatype;
 
     ID = image_ID(ID_name);
-    atype = data.image[ID].md[0].atype;
+    datatype = data.image[ID].md[0].datatype;
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
     naxes[2] = data.image[ID].md[0].size[2];
@@ -1098,12 +1098,12 @@ long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1, int 
     else
     {
         printf("(%ld x %ld x %ld)  ->  (%ld x %ld x %ld)\n", (long) naxes[0], (long) naxes[1], (long) naxes[2], (long) naxes_out[0], (long) naxes_out[1], (long) naxes_out[2]);
-        create_image_ID(ID_name_out, 3, naxes_out, atype, 0, 0);
+        create_image_ID(ID_name_out, 3, naxes_out, datatype, 0, 0);
     }
 
     ID_out = image_ID(ID_name_out);
 
-    switch(atype) {
+    switch(datatype) {
     case _DATATYPE_FLOAT :
         for (jj = 0; jj < naxes_out[1]; jj++)
             for (ii = 0; ii < naxes_out[0]; ii++)
@@ -2790,8 +2790,8 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 	long IDout;
 	long xsize, ysize, xysize;
 	long val_xsize, val_ysize, val_xysize;
-	int atype;
-	int val_atype;
+	uint8_t datatype;
+	uint8_t val_datatype;
 	float *arrayf;
 	long ii, i;
 	
@@ -2801,16 +2801,16 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 	xsize = data.image[IDindex].md[0].size[0];
 	ysize = data.image[IDindex].md[0].size[1];
 	xysize = xsize * ysize;
-	atype = data.image[IDindex].md[0].atype;
+	datatype = data.image[IDindex].md[0].datatype;
 
 	val_xsize = data.image[IDvalues].md[0].size[0];
 	val_ysize = data.image[IDvalues].md[0].size[1];
 	val_xysize = val_xsize * val_ysize;
-	val_atype = data.image[IDindex].md[0].atype;
+	val_datatype = data.image[IDindex].md[0].datatype;
 	
 	IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
 	
-	if(val_atype == _DATATYPE_FLOAT)
+	if(val_datatype == _DATATYPE_FLOAT)
 		arrayf = data.image[IDvalues].array.F;
 	else 
 	{
@@ -2819,7 +2819,7 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 			arrayf[i] = (float) data.image[IDvalues].array.D[i];
 	}
 	
-	switch( atype ) {
+	switch( datatype ) {
 		
 		case _DATATYPE_FLOAT:
 		for(ii=0;ii<xysize;ii++)
@@ -2915,12 +2915,13 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 		
 		default:
 		printf("ERROR: datatype not supported\n");
+		return EXIT_FAILURE;
 		break;
 	}
 	
 
 
-	if(val_atype != _DATATYPE_FLOAT)
+	if(val_datatype != _DATATYPE_FLOAT)
 		free(arrayf);
 	
 	return(IDout);
@@ -3155,21 +3156,21 @@ long basic_resizeim(const char *imname_in, const char *imname_out, long xsizeout
     uint32_t naxesout[2];
     float xf,yf,xf1,yf1,uf,tf,v00f,v01f,v10f,v11f;
     double xd,yd,xd1,yd1,ud,td,v00d,v01d,v10d,v11d;
-    int atype;
+    uint8_t datatype;
     long ii,jj,ii1,jj1;
 
 
     ID = image_ID(imname_in);
-    atype = data.image[ID].md[0].atype;
+    datatype = data.image[ID].md[0].datatype;
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
     naxesout[0] = xsizeout;
     naxesout[1] = ysizeout;
 
 
-    if(atype == _DATATYPE_FLOAT)
+    if(datatype == _DATATYPE_FLOAT)
     {
-        IDout = create_image_ID(imname_out, naxis, naxesout, atype, 0, 0);
+        IDout = create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0);
         for(ii=0; ii<naxesout[0]; ii++)
             for(jj=0; jj<naxesout[1]; jj++)
             {
@@ -3191,9 +3192,9 @@ long basic_resizeim(const char *imname_in, const char *imname_out, long xsizeout
                 }
             }
     }
-    else if(atype == _DATATYPE_DOUBLE)
+    else if(datatype == _DATATYPE_DOUBLE)
     {
-        IDout = create_image_ID(imname_out, naxis, naxesout, atype, 0, 0);
+        IDout = create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0);
         for(ii=0; ii<naxesout[0]-1; ii++)
             for(jj=0; jj<naxesout[1]-1; jj++)
             {
@@ -4123,7 +4124,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
     long xsize, ysize;
     long IDcube;
     uint32_t *imsize;
-    int atype;
+    uint8_t datatype;
     char *ptrv;
     char *ptrcv;
     long xysize;
@@ -4154,7 +4155,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
     imsize[0] = xsize;
     imsize[1] = ysize;
     imsize[2] = NBcoadd;
-    atype = data.image[ID].md[0].atype;
+    datatype = data.image[ID].md[0].datatype;
 
     if(mode > 0)
     {    
@@ -4178,7 +4179,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
         createim = 1;
 
     if(createim == 1)
-        IDcube = create_image_ID("tmpstrcoadd", 3, imsize, atype, 0, 0);
+        IDcube = create_image_ID("tmpstrcoadd", 3, imsize, datatype, 0, 0);
 
 
     IDout = create_2Dimage_ID(IDoutname, xsize, ysize);
@@ -4230,7 +4231,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
 
         offset = k*xysize;
 
-        switch( atype ) {
+        switch( datatype ) {
 			
         case _DATATYPE_UINT8:
             ptrv = (char*) data.image[ID].array.UI8;
@@ -4323,7 +4324,7 @@ long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDo
             
         default :
             printf("ERROR: Data type not supported for function IMAGE_BASIC_streamaverage\n");
-            exit(0);
+            exit(EXIT_FAILURE);
             break;
         }
 
