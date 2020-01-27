@@ -4,7 +4,7 @@
 
 
 void __attribute__ ((constructor)) libinit_image_basic();
-int_fast8_t init_image_basic();
+errno_t init_image_basic();
 
 
 int basic_naninf2zero(const char *ID_name);
@@ -93,23 +93,65 @@ long basic_addimages(const char *prefix, const char *ID_out);
 
 long basic_averageimages(const char *prefix, const char *ID_out);
 
+
 long basic_resizeim(const char *imname_in, const char *imname_out, long xsizeout, long ysizeout);
-long image_basic_3Dto2D(const char *IDname);
-long image_basic_SwapAxis2D(const char *IDin_name, const char *IDout_name);
 
-long basic_tableto2Dim(const char *fname, float xmin, float xmax, float ymin, float ymax, long xsize, long ysize, const char *ID_name, float convsize);
 
-long basic_2Dextrapolate_nearestpixel(const char *IDin_name, const char *IDmask_name, const char *IDout_name);
+imageID image_basic_3Dto2D(
+    const char *IDname
+);
 
-double basic_measure_transl( const char *ID_name1, const char *ID_name2, long tmax);
+imageID image_basic_SwapAxis2D(
+    const char *IDin_name,
+    const char *IDout_name
+);
+
+
+
+imageID basic_tableto2Dim(
+    const char *fname,
+    float       xmin,
+    float       xmax,
+    float       ymin,
+    float       ymax,
+    long        xsize,
+    long        ysize,
+    const char *ID_name,
+    float       convsize
+);
+
+imageID basic_2Dextrapolate_nearestpixel(
+    const char *IDin_name,
+    const char *IDmask_name,
+    const char *IDout_name
+);
+
+double basic_measure_transl(
+    const char *ID_name1,
+    const char *ID_name2,
+    long tmax
+);
 
 // Operations on image streams
 
 /** @brief Average an image stream */
-long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDoutname, int mode, int semindex);
+imageID IMAGE_BASIC_streamaverage(
+    const char *IDname,
+    long        NBcoadd,
+    const char *IDoutname,
+    int         mode,
+    int         semindex
+);
 
-long IMAGE_BASIC_streamfeed(const char *IDname, const char *streamname, float frequ);
+long IMAGE_BASIC_streamfeed(
+    const char *IDname,
+    const char *streamname,
+    float       frequ
+);
 
-long IMAGE_BASIC_streamrecord(const char *streamname, long NBframes, const char *IDname);
-
+imageID IMAGE_BASIC_streamrecord(
+    const char *streamname,
+    long        NBframes,
+    const char *IDname
+);
 #endif

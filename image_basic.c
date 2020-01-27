@@ -4,9 +4,6 @@
  * 
  * Simple image routines
  *   
- * 
- * @bug No known bugs.
- * 
  */
 
 
@@ -72,217 +69,218 @@ char errmsg[SBUFFERSIZE];
 
 
 
-int_fast8_t image_basic_expand_cli()
+
+errno_t image_basic_expand_cli()
 {
   if(CLI_checkarg(1,4)+CLI_checkarg(2,3)+CLI_checkarg(3,2)+CLI_checkarg(4,2) == 0)
     {
       basic_expand(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numl, data.cmdargtoken[4].val.numl);
-      return 0;
+      return CLICMD_SUCCESS;
     }
   else
-    return 1;
+    return CLICMD_INVALID_ARG;
 }
 
-int_fast8_t image_basic_expand3D_cli()
+errno_t image_basic_expand3D_cli()
 {
   if(CLI_checkarg(1,4)+CLI_checkarg(2,3)+CLI_checkarg(3,2)+CLI_checkarg(4,2)+CLI_checkarg(5,2) == 0)
     {
       basic_expand3D(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numl, data.cmdargtoken[4].val.numl, data.cmdargtoken[5].val.numl);
-      return 0;
+      return CLICMD_SUCCESS;
     }
   else
-    return 1;
+    return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_resize_cli()
+errno_t image_basic_resize_cli()
 {
   if(CLI_checkarg(1,4)+CLI_checkarg(2,3)+CLI_checkarg(3,2)+CLI_checkarg(4,2) == 0)
     {
       basic_resizeim(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numl, data.cmdargtoken[4].val.numl);
-      return 0;
+      return CLICMD_SUCCESS;
     }
   else
-    return 1;
+    return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_rotate_cli()
+errno_t image_basic_rotate_cli()
 {
   if(CLI_checkarg(1,4)+CLI_checkarg(2,3)+CLI_checkarg(3,1) == 0)
     {
       basic_rotate(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numf);
-      return 0;
+      return CLICMD_SUCCESS;
     }
   else
-    return 1;
+    return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_3Dto2D_cli() // collapse first 2 axis into one
+errno_t image_basic_3Dto2D_cli() // collapse first 2 axis into one
 {
 	if(CLI_checkarg(1,4) == 0)
     {
 		image_basic_3Dto2D(data.cmdargtoken[1].val.string);
-      return 0;
+      return CLICMD_SUCCESS;
     }
   else
-    return 1;
+    return CLICMD_INVALID_ARG;
 }
 
-int_fast8_t image_basic_SwapAxis2D_cli() // swap axis of a 2D image
+errno_t image_basic_SwapAxis2D_cli() // swap axis of a 2D image
 {
 	if(CLI_checkarg(1,4)+CLI_checkarg(2,3) == 0)
     {
 		image_basic_SwapAxis2D(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string);
-      return 0;
+      return CLICMD_SUCCESS;
     }
   else
-    return 1;
+    return CLICMD_INVALID_ARG;
 }
 
-int_fast8_t image_basic_add_cli()
+errno_t image_basic_add_cli()
 {
   if(CLI_checkarg(1,4)+CLI_checkarg(2,4)+CLI_checkarg(3,3)+CLI_checkarg(4,2)+CLI_checkarg(5,2) == 0)
     {  
       basic_add(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.string, data.cmdargtoken[4].val.numl, data.cmdargtoken[5].val.numl);
-      return 0;
+      return CLICMD_SUCCESS;
     }
   else
-    return 1;
+    return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_add3D_cli()
+errno_t image_basic_add3D_cli()
 {
   if(CLI_checkarg(1,4)+CLI_checkarg(2,4)+CLI_checkarg(3,3)+CLI_checkarg(4,2)+CLI_checkarg(5,2)+CLI_checkarg(6,2) == 0)
     {  
       basic_add3D(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.string, data.cmdargtoken[4].val.numl, data.cmdargtoken[5].val.numl, data.cmdargtoken[6].val.numl);
-      return 0;
+      return CLICMD_SUCCESS;
     }
   else
-    return 1;
+    return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_contract_cli()
+errno_t image_basic_contract_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,3)+CLI_checkarg(3,2)+CLI_checkarg(4,2) == 0)
     {
         basic_contract(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numl, data.cmdargtoken[4].val.numl);
-        return 0;
+        return CLICMD_SUCCESS;
     }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_contract3D_cli()
+errno_t image_basic_contract3D_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,3)+CLI_checkarg(3,2)+CLI_checkarg(4,2)+CLI_checkarg(5,2) == 0)
     {
         basic_contract3D(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numl, data.cmdargtoken[4].val.numl, data.cmdargtoken[5].val.numl);
-        return 0;
+        return CLICMD_SUCCESS;
     }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
 
 
-int_fast8_t IMAGE_BASIC_get_assym_component_cli()
+errno_t IMAGE_BASIC_get_assym_component_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,3)+CLI_checkarg(3,1)+CLI_checkarg(4,1) == 0)
         {
             IMAGE_BASIC_get_assym_component(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numf, data.cmdargtoken[4].val.numf, "");
-            return 0;
+            return CLICMD_SUCCESS;
         }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
-int_fast8_t IMAGE_BASIC_get_sym_component_cli()
+errno_t IMAGE_BASIC_get_sym_component_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,3)+CLI_checkarg(3,1)+CLI_checkarg(4,1) == 0)
         {
             IMAGE_BASIC_get_sym_component(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numf, data.cmdargtoken[4].val.numf);
-            return 0;
+            return CLICMD_SUCCESS;
         }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_load_fitsimages_cube_cli()
+errno_t image_basic_load_fitsimages_cube_cli()
 {
     if(CLI_checkarg(1,3)+CLI_checkarg(2,3) == 0)
     {
         load_fitsimages_cube(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string);
-        return 0;
+        return CLICMD_SUCCESS;
     }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_cubecollapse_cli()
+errno_t image_basic_cubecollapse_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,3) == 0)
     {
         cube_collapse(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string);
-        return 0;
+        return CLICMD_SUCCESS;
     }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_indexmap_cli()
+errno_t image_basic_indexmap_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,4)+CLI_checkarg(3,3) == 0)
     {
         image_basic_indexmap(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.string);
-        return 0;
+        return CLICMD_SUCCESS;
     }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
 
 
 
-int_fast8_t image_basic_streamaverage_cli()
+errno_t image_basic_streamaverage_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,2)+CLI_checkarg(3,3)+CLI_checkarg(4,2)+CLI_checkarg(5,2) == 0)
     {
         IMAGE_BASIC_streamaverage(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.numl, data.cmdargtoken[3].val.string, data.cmdargtoken[4].val.numl, data.cmdargtoken[5].val.numl);
-        return 0;
+        return CLICMD_SUCCESS;
     }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
 
-int_fast8_t image_basic_streamfeed_cli()
+errno_t image_basic_streamfeed_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,4)+CLI_checkarg(3,1) == 0)
     {
         IMAGE_BASIC_streamfeed(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numf);
-        return 0;
+        return CLICMD_SUCCESS;
     }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
-int_fast8_t IMAGE_BASIC_streamrecord_cli()
+errno_t IMAGE_BASIC_streamrecord_cli()
 {
     if(CLI_checkarg(1,4)+CLI_checkarg(2,2)+CLI_checkarg(3,3) == 0)
     {
         IMAGE_BASIC_streamrecord(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.numl, data.cmdargtoken[3].val.string);
-        return 0;
+        return CLICMD_SUCCESS;
     }
     else
-        return 1;
+        return CLICMD_INVALID_ARG;
 }
 
 
@@ -306,7 +304,7 @@ void __attribute__ ((constructor)) libinit_image_basic()
 
 
 
-int_fast8_t init_image_basic()
+errno_t init_image_basic()
 {
 
     strcpy(data.cmd[data.NBcmd].key,"imexpand");
@@ -482,7 +480,7 @@ int_fast8_t init_image_basic()
 
     // add atexit functions here
 
-    return 0;
+    return RETURN_SUCCESS;
 
 }
 
@@ -491,46 +489,57 @@ int_fast8_t init_image_basic()
 
 
 
-
-int basic_naninf2zero(const char *ID_name) /* set all nan and inf pixel values to zero */
+/* set all nan and inf pixel values to zero */
+int basic_naninf2zero(
+    const char *ID_name
+) 
 {
-  int ID;
-  long ii,jj;
-  long naxes[2];
-  long cnt = 0;
+    imageID ID;
+    long ii,jj;
+    long naxes[2];
+    long cnt = 0;
 
-  ID = image_ID(ID_name);
-  naxes[0] = data.image[ID].md[0].size[0];
-  naxes[1] = data.image[ID].md[0].size[1];
-  
-  for (jj = 0; jj < naxes[1]; jj++) 
-    for (ii = 0; ii < naxes[0]; ii++)
-      {
-	if(!(fabs(data.image[ID].array.F[jj*naxes[0]+ii])<HUGE_VAL))
-	  {
-	    data.image[ID].array.F[jj*naxes[0]+ii] = 0.0;
-	    cnt ++;
-	  }
-      }
-  
-  printf("%ld values replaced\n",cnt);
+    ID = image_ID(ID_name);
+    naxes[0] = data.image[ID].md[0].size[0];
+    naxes[1] = data.image[ID].md[0].size[1];
 
-  return(0);
-}
+    for (jj = 0; jj < naxes[1]; jj++)
+        for (ii = 0; ii < naxes[0]; ii++)
+        {
+            if(!(fabs(data.image[ID].array.F[jj*naxes[0]+ii])<HUGE_VAL))
+            {
+                data.image[ID].array.F[jj*naxes[0]+ii] = 0.0;
+                cnt ++;
+            }
+        }
 
-int basic_mincontract(const char *ID_name, long axis, const char *out_name)
-{
-  
-  
+    printf("%ld values replaced\n",cnt);
 
-  return(0);
+    return(0);
 }
 
 
 
-int basic_lmin_im(const char *ID_name, const char *out_name)
+
+int basic_mincontract(
+    __attribute__((unused)) const char *ID_name,
+    __attribute__((unused)) uint8_t     axis,
+    __attribute__((unused)) const char *out_name)
 {
-    int IDin,IDout;
+
+
+
+    return(0);
+}
+
+
+
+int basic_lmin_im(
+    const char *ID_name,
+    const char *out_name
+)
+{
+    imageID IDin,IDout;
     long ii,jj;
     long naxes[2];
     float tmp;
@@ -560,9 +569,12 @@ int basic_lmin_im(const char *ID_name, const char *out_name)
 
 
 
-int basic_lmax_im(const char *ID_name, const char *out_name)
+int basic_lmax_im(
+    const char *ID_name,
+    const char *out_name
+)
 {
-    int IDin,IDout;
+    imageID IDin,IDout;
     long ii,jj;
     long naxes[2];
     float tmp;
@@ -590,9 +602,16 @@ int basic_lmax_im(const char *ID_name, const char *out_name)
 }
 
 
-long basic_add(const char *ID_name1, const char *ID_name2, const char *ID_name_out, long off1, long off2)
+
+imageID basic_add(
+    const char *ID_name1,
+    const char *ID_name2,
+    const char *ID_name_out,
+    long off1,
+    long off2
+)
 {
-    int ID1, ID2; /* ID for the 2 images added */
+    imageID ID1, ID2; /* ID for the 2 images added */
     int ID_out; /* ID for the output image */
     long ii,jj;
     long naxes1[2], naxes2[2], naxes[2];
@@ -693,12 +712,18 @@ long basic_add(const char *ID_name1, const char *ID_name2, const char *ID_name_o
 
 
 
-long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name_out, long off1, long off2, long off3)
+imageID basic_add3D(
+    const char *ID_name1,
+    const char *ID_name2,
+    const char *ID_name_out,
+    long        off1,
+    long        off2,
+    long        off3
+)
 {
-    int ID1, ID2; /* ID for the 2 images added */
-    int ID_out; /* ID for the output image */
-    long ii, jj, kk;
-    long naxes1[3], naxes2[3], naxes[3];
+    imageID ID1, ID2; /* ID for the 2 images added */
+    imageID ID_out; /* ID for the output image */
+    uint32_t  naxes1[3], naxes2[3], naxes[3];
     long xmin, ymin, zmin, xmax, ymax, zmax; /* extrema in the ID1 coordinates */
     uint8_t datatype1, datatype2, datatype;
     int datatypeOK;
@@ -708,7 +733,7 @@ long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name
     naxes1[0] = data.image[ID1].md[0].size[0];
     naxes1[1] = data.image[ID1].md[0].size[1];
     naxes1[2] = data.image[ID1].md[0].size[2];
-        
+
     naxes2[0] = data.image[ID2].md[0].size[0];
     naxes2[1] = data.image[ID2].md[0].size[1];
     naxes2[2] = data.image[ID2].md[0].size[2];
@@ -755,7 +780,7 @@ long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name
     zmax = naxes1[2];
     if ((naxes2[2]+off3)>naxes1[2]) zmax = (naxes2[2]+off3);
 
-	
+
 
     if(datatype==_DATATYPE_FLOAT)
     {
@@ -764,26 +789,26 @@ long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name
         naxes[0] = data.image[ID_out].md[0].size[0];
         naxes[1] = data.image[ID_out].md[0].size[1];
         naxes[2] = data.image[ID_out].md[0].size[2];
-        
-        for (kk = 0; kk < naxes[2]; kk++)
-        for (jj = 0; jj < naxes[1]; jj++)
-            for (ii = 0; ii < naxes[0]; ii++)  
-            {
+
+        for (uint32_t kk = 0; kk < naxes[2]; kk++)
+            for (uint32_t jj = 0; jj < naxes[1]; jj++)
+                for (uint32_t ii = 0; ii < naxes[0]; ii++)
                 {
-                    data.image[ID_out].array.F[kk*naxes[1]*naxes[0]+jj*naxes[0]+ii] = 0;
-                    /* if pixel is in ID1 */
-                    
-                    if(((ii+xmin)>=0)&&((ii+xmin)<naxes1[0]))
-                        if(((jj+ymin)>=0)&&((jj+ymin)<naxes1[1]))
-                        if(((kk+zmin)>=0)&&((kk+zmin)<naxes1[2]))
-                            data.image[ID_out].array.F[kk*naxes[1]*naxes[0] + jj*naxes[0] + ii] += data.image[ID1].array.F[ (kk+zmin)*naxes1[1]*naxes1[0] + (jj+ymin)*naxes1[0] + (ii+xmin)];
-                    /* if pixel is in ID2 */
-                    if(((ii+xmin-off1)>=0)&&((ii+xmin-off1)<naxes2[0]))
-                        if(((jj+ymin-off2)>=0)&&((jj+ymin-off2)<naxes2[1]))
-                        if(((kk+zmin-off3)>=0)&&((kk+zmin-off3)<naxes2[2]))
-                            data.image[ID_out].array.F[kk*naxes[1]*naxes[0] + jj*naxes[0] + ii] += data.image[ID2].array.F[ (kk+zmin-off3)*naxes2[1]*naxes2[0] + (jj+ymin-off2)*naxes2[0] + (ii+xmin-off1)];
+                    {
+                        data.image[ID_out].array.F[kk*naxes[1]*naxes[0]+jj*naxes[0]+ii] = 0;
+                        /* if pixel is in ID1 */
+
+                        if(((ii+xmin)>=0)&&((ii+xmin)<naxes1[0]))
+                            if(((jj+ymin)>=0)&&((jj+ymin)<naxes1[1]))
+                                if(((kk+zmin)>=0)&&((kk+zmin)<naxes1[2]))
+                                    data.image[ID_out].array.F[kk*naxes[1]*naxes[0] + jj*naxes[0] + ii] += data.image[ID1].array.F[ (kk+zmin)*naxes1[1]*naxes1[0] + (jj+ymin)*naxes1[0] + (ii+xmin)];
+                        /* if pixel is in ID2 */
+                        if(((ii+xmin-off1)>=0)&&((ii+xmin-off1)<naxes2[0]))
+                            if(((jj+ymin-off2)>=0)&&((jj+ymin-off2)<naxes2[1]))
+                                if(((kk+zmin-off3)>=0)&&((kk+zmin-off3)<naxes2[2]))
+                                    data.image[ID_out].array.F[kk*naxes[1]*naxes[0] + jj*naxes[0] + ii] += data.image[ID2].array.F[ (kk+zmin-off3)*naxes2[1]*naxes2[0] + (jj+ymin-off2)*naxes2[0] + (ii+xmin-off1)];
+                    }
                 }
-            }
     }
 
     if(datatype==_DATATYPE_DOUBLE)
@@ -794,23 +819,23 @@ long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name
         naxes[1] = data.image[ID_out].md[0].size[1];
         naxes[2] = data.image[ID_out].md[0].size[2];
 
-        for (kk = 0; kk < naxes[2]; kk++)
-        for (jj = 0; jj < naxes[1]; jj++)
-            for (ii = 0; ii < naxes[0]; ii++) {
-                {
-                    data.image[ID_out].array.D[kk*naxes[1]*naxes[0]+jj*naxes[0]+ii] = 0;
-                    /* if pixel is in ID1 */
-                    if(((ii+xmin)>=0)&&((ii+xmin)<naxes1[0]))
-                        if(((jj+ymin)>=0)&&((jj+ymin)<naxes1[1]))
-                        if(((kk+zmin)>=0)&&((kk+zmin)<naxes1[2]))
-                            data.image[ID_out].array.D[ kk*naxes[1]*naxes[0] + jj*naxes[0] + ii] += data.image[ID1].array.D[ (kk+zmin)*naxes1[1]*naxes1[0] + (jj+ymin)*naxes1[0] + (ii+xmin) ];
-                    /* if pixel is in ID2 */
-                    if(((ii+xmin-off1)>=0)&&((ii+xmin-off1)<naxes2[0]))
-                        if(((jj+ymin-off2)>=0)&&((jj+ymin-off2)<naxes2[1]))
-                        if(((kk+zmin-off3)>=0)&&((kk+zmin-off3)<naxes2[2]))
-                            data.image[ID_out].array.D[kk*naxes[1]*naxes[0]+jj*naxes[0]+ii] += data.image[ID2].array.D[(kk+zmin-off3)*naxes2[1]*naxes2[0]+(jj+ymin-off2)*naxes2[0]+(ii+xmin-off1)];
+        for (uint32_t kk = 0; kk < naxes[2]; kk++)
+            for (uint32_t jj = 0; jj < naxes[1]; jj++)
+                for (uint32_t ii = 0; ii < naxes[0]; ii++) {
+                    {
+                        data.image[ID_out].array.D[kk*naxes[1]*naxes[0]+jj*naxes[0]+ii] = 0;
+                        /* if pixel is in ID1 */
+                        if(((ii+xmin)>=0)&&((ii+xmin)<naxes1[0]))
+                            if(((jj+ymin)>=0)&&((jj+ymin)<naxes1[1]))
+                                if(((kk+zmin)>=0)&&((kk+zmin)<naxes1[2]))
+                                    data.image[ID_out].array.D[ kk*naxes[1]*naxes[0] + jj*naxes[0] + ii] += data.image[ID1].array.D[ (kk+zmin)*naxes1[1]*naxes1[0] + (jj+ymin)*naxes1[0] + (ii+xmin) ];
+                        /* if pixel is in ID2 */
+                        if(((ii+xmin-off1)>=0)&&((ii+xmin-off1)<naxes2[0]))
+                            if(((jj+ymin-off2)>=0)&&((jj+ymin-off2)<naxes2[1]))
+                                if(((kk+zmin-off3)>=0)&&((kk+zmin-off3)<naxes2[2]))
+                                    data.image[ID_out].array.D[kk*naxes[1]*naxes[0]+jj*naxes[0]+ii] += data.image[ID2].array.D[(kk+zmin-off3)*naxes2[1]*naxes2[0]+(jj+ymin-off2)*naxes2[0]+(ii+xmin-off1)];
+                    }
                 }
-            }
     }
 
     return(ID_out);
@@ -1068,14 +1093,17 @@ long basic_contract(const char *ID_name, const char *ID_name_out, int n1, int n2
 
 
 
-long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1, int n2, int n3)
+imageID basic_contract3D(
+    const char *ID_name,
+    const char *ID_name_out,
+    int n1,
+    int n2,
+    int n3)
 {
-    long ID;
-    long ID_out; /* ID for the output image */
-    long ii,jj,kk;
+    imageID ID;
+    imageID ID_out; /* ID for the output image */
     uint32_t naxes[3];
-    uint32_t *naxes_out;
-    int i,j,k;
+    uint32_t *naxes_out;    
     uint8_t datatype;
 
     ID = image_ID(ID_name);
@@ -1094,7 +1122,9 @@ long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1, int 
         create_2Dimage_ID(ID_name_out,naxes_out[0],naxes_out[1]);
     else
     {
-        printf("(%ld x %ld x %ld)  ->  (%ld x %ld x %ld)\n", (long) naxes[0], (long) naxes[1], (long) naxes[2], (long) naxes_out[0], (long) naxes_out[1], (long) naxes_out[2]);
+        printf("(%ld x %ld x %ld)  ->  (%ld x %ld x %ld)\n",
+               (long) naxes[0], (long) naxes[1], (long) naxes[2],
+               (long) naxes_out[0], (long) naxes_out[1], (long) naxes_out[2]);
         create_image_ID(ID_name_out, 3, naxes_out, datatype, 0, 0);
     }
 
@@ -1102,45 +1132,53 @@ long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1, int 
 
     switch(datatype) {
     case _DATATYPE_FLOAT :
-        for (jj = 0; jj < naxes_out[1]; jj++)
-            for (ii = 0; ii < naxes_out[0]; ii++)
-                for (kk = 0; kk < naxes_out[2]; kk++)
-                    for (i = 0; i < n1; i++)
-                        for (j = 0; j < n2; j++)
-                            for (k = 0; k < n3; k++)
-                                data.image[ID_out].array.F[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii] += data.image[ID].array.F[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i];
+        for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
+            for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
+                for (uint32_t kk = 0; kk < naxes_out[2]; kk++)
+                    for (int i = 0; i < n1; i++)
+                        for (int j = 0; j < n2; j++)
+                            for (int k = 0; k < n3; k++) {
+                                data.image[ID_out].array.F[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii] +=
+                                    data.image[ID].array.F[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i];
+								}
         break;
     case _DATATYPE_DOUBLE :
-        for (jj = 0; jj < naxes_out[1]; jj++)
-            for (ii = 0; ii < naxes_out[0]; ii++)
-                for (kk = 0; kk < naxes_out[2]; kk++)
-                    for (i = 0; i < n1; i++)
-                        for (j = 0; j < n2; j++)
-                            for (k = 0; k < n3; k++)
-                                data.image[ID_out].array.D[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii] += data.image[ID].array.D[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i];
+        for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
+            for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
+                for (uint32_t kk = 0; kk < naxes_out[2]; kk++)
+                    for (int i = 0; i < n1; i++)
+                        for (int j = 0; j < n2; j++)
+                            for (int k = 0; k < n3; k++) {
+                                data.image[ID_out].array.D[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii] +=
+                                    data.image[ID].array.D[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i];
+								}
         break;
     case _DATATYPE_COMPLEX_FLOAT :
-        for (jj = 0; jj < naxes_out[1]; jj++)
-            for (ii = 0; ii < naxes_out[0]; ii++)
-                for (kk = 0; kk < naxes_out[2]; kk++)
-                    for (i = 0; i < n1; i++)
-                        for (j = 0; j < n2; j++)
-                            for (k = 0; k < n3; k++)
+        for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
+            for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
+                for (uint32_t kk = 0; kk < naxes_out[2]; kk++)
+                    for (int i = 0; i < n1; i++)
+                        for (int j = 0; j < n2; j++)
+                            for (int k = 0; k < n3; k++)
                             {
-                                data.image[ID_out].array.CF[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii].re += data.image[ID].array.CF[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i].re;
-                                data.image[ID_out].array.CF[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii].im += data.image[ID].array.CF[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i].im;
+                                data.image[ID_out].array.CF[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii].re +=
+                                    data.image[ID].array.CF[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i].re;
+                                data.image[ID_out].array.CF[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii].im +=
+                                    data.image[ID].array.CF[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i].im;
                             }
         break;
     case _DATATYPE_COMPLEX_DOUBLE :
-        for (jj = 0; jj < naxes_out[1]; jj++)
-            for (ii = 0; ii < naxes_out[0]; ii++)
-                for (kk = 0; kk < naxes_out[2]; kk++)
-                    for (i = 0; i < n1; i++)
-                        for (j = 0; j < n2; j++)
-                            for (k = 0; k < n3; k++)
+        for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
+            for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
+                for (uint32_t kk = 0; kk < naxes_out[2]; kk++)
+                    for (int i = 0; i < n1; i++)
+                        for (int j = 0; j < n2; j++)
+                            for (int k = 0; k < n3; k++)
                             {
-                                data.image[ID_out].array.CD[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii].re += data.image[ID].array.CD[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i].re;
-                                data.image[ID_out].array.CD[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii].im += data.image[ID].array.CD[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i].im;
+                                data.image[ID_out].array.CD[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii].re +=
+                                    data.image[ID].array.CD[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i].re;
+                                data.image[ID_out].array.CD[kk*naxes_out[0]*naxes_out[1]+jj*naxes_out[0]+ii].im +=
+                                    data.image[ID].array.CD[(kk*n3+k)*naxes[0]*naxes[1]+(jj*n2+j)*naxes[0]+ii*n1+i].im;
                             }
         break;
     }
@@ -1151,21 +1189,29 @@ long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1, int 
 }
 
 
-long basic_average_column(const char *ID_name, const char *IDout_name)
+long basic_average_column(
+    __attribute__((unused)) const char *ID_name,
+    __attribute__((unused)) const char *IDout_name
+)
 {
     long IDout = -1;
 
-	// TO BE WRITTEN
+    // TO BE WRITTEN
 
     return(IDout);
 }
 
 
 
-long basic_padd(const char *ID_name, const char *ID_name_out, int n1, int n2)
+imageID basic_padd(
+    const char *ID_name,
+    const char *ID_name_out,
+    int n1,
+    int n2
+)
 {
-    long ID;
-    long ID_out; /* ID for the output image */
+    imageID ID;
+    imageID ID_out; /* ID for the output image */
     long ii,jj;
     long naxes[2], naxes_out[2];
 
@@ -1188,9 +1234,11 @@ long basic_padd(const char *ID_name, const char *ID_name_out, int n1, int n2)
 
 
 /* flip an image relative to the horizontal axis */
-long basic_fliph(const char *ID_name)
+imageID basic_fliph(
+    const char *ID_name
+)
 {
-    long ID;
+    imageID ID;
     long ii,jj;
     long naxes[2];
     long tmp_long;
@@ -1218,9 +1266,11 @@ long basic_fliph(const char *ID_name)
 
 
 /* flip an image relative to the vertical axis */
-long basic_flipv(const char *ID_name)
+imageID basic_flipv(
+    const char *ID_name
+)
 {
-    long ID;
+    imageID ID;
     long ii,jj;
     long naxes[2];
     long tmp_long;
@@ -1247,9 +1297,11 @@ long basic_flipv(const char *ID_name)
 
 
 /* flip an image horizontally and vertically */
-long basic_fliphv(const char *ID_name)
+imageID basic_fliphv(
+    const char *ID_name
+)
 {
-    long ID;
+    imageID ID;
     long ii,jj;
     long naxes[2];
     long tmp_long;
@@ -1275,10 +1327,13 @@ long basic_fliphv(const char *ID_name)
 
 
 /* median of the images specified in options, output is ID_name */
-int basic_median(const char *ID_name, const char *options)
+int basic_median(
+    const char *ID_name,
+    const char *options
+)
 {
     unsigned int Nb_files;
-    int ID;
+    imageID ID;
     unsigned int file_nb;
     long ii,jj;
     int str_pos;
@@ -1369,9 +1424,11 @@ int basic_median(const char *ID_name, const char *options)
 }
 
 
-long basic_renorm_max(const char *ID_name)
+imageID basic_renorm_max(
+    const char *ID_name
+)
 {
-    long ID;
+    imageID ID;
     long ii,jj;
     long naxes[2];
     float max;
@@ -1398,9 +1455,13 @@ long basic_renorm_max(const char *ID_name)
 
 
 
-long basic_rotate(const char *ID_name, const char *IDout_name, float angle)
+imageID basic_rotate(
+    const char *ID_name,
+    const char *IDout_name,
+    float angle
+)
 {
-    int ID, IDout;
+    imageID ID, IDout;
     long ii,jj,iis,jjs;
     long naxes[2];
 
@@ -1423,63 +1484,79 @@ long basic_rotate(const char *ID_name, const char *IDout_name, float angle)
 }
 
 
-int basic_rotate90(const char *ID_name, const char *ID_out_name)
+int basic_rotate90(
+    const char *ID_name,
+    const char *ID_out_name
+)
 {
-  int ID,ID_out;
-  long ii,jj,iis,jjs;
-  long naxes[2];
-  
-  ID = image_ID(ID_name);
-  naxes[0] = data.image[ID].md[0].size[0];
-  naxes[1] = data.image[ID].md[0].size[1]; 
-  create_2Dimage_ID(ID_out_name,naxes[1],naxes[0]);
-  ID_out = image_ID(ID_out_name);
-  
-  for (jj = 0; jj < naxes[0]; jj++) 
-    for (ii = 0; ii < naxes[1]; ii++)   
-      {
-	iis = jj;
-	jjs = naxes[1] - ii-1;
-	/*	if ((iis>0)&&(jjs>0)&&(iis<naxes[0])&&(jjs<naxes[1])) */
-	data.image[ID_out].array.F[jj*naxes[1]+ii] = data.image[ID].array.F[jjs*naxes[0]+iis];
-      }
-      
-  return(0);
+    int ID,ID_out;
+    long ii,jj,iis,jjs;
+    long naxes[2];
+
+    ID = image_ID(ID_name);
+    naxes[0] = data.image[ID].md[0].size[0];
+    naxes[1] = data.image[ID].md[0].size[1];
+    create_2Dimage_ID(ID_out_name,naxes[1],naxes[0]);
+    ID_out = image_ID(ID_out_name);
+
+    for (jj = 0; jj < naxes[0]; jj++)
+        for (ii = 0; ii < naxes[1]; ii++)
+        {
+            iis = jj;
+            jjs = naxes[1] - ii-1;
+            /*	if ((iis>0)&&(jjs>0)&&(iis<naxes[0])&&(jjs<naxes[1])) */
+            data.image[ID_out].array.F[jj*naxes[1]+ii] = data.image[ID].array.F[jjs*naxes[0]+iis];
+        }
+
+    return(0);
 }
 
-int basic_rotate_int(const char *ID_name, const char *ID_out_name, long nbstep)
+
+
+int basic_rotate_int(
+    const char *ID_name,
+    const char *ID_out_name,
+    long nbstep
+)
 {
-  float angle;
-  int i;
-  int ID,ID_out;
-  long ii,jj,iis,jjs;
-  long naxes[2];
-  
-  ID = image_ID(ID_name);
-  naxes[0] = data.image[ID].md[0].size[0];
-  naxes[1] = data.image[ID].md[0].size[1]; 
-  create_2Dimage_ID(ID_out_name,naxes[0],naxes[1]);
-  ID_out = image_ID(ID_out_name);
-  
-  for(i=0;i<nbstep;i++)
+    float angle;
+    int i;
+    imageID ID, ID_out;
+    long ii,jj,iis,jjs;
+    long naxes[2];
+
+    ID = image_ID(ID_name);
+    naxes[0] = data.image[ID].md[0].size[0];
+    naxes[1] = data.image[ID].md[0].size[1];
+    create_2Dimage_ID(ID_out_name,naxes[0],naxes[1]);
+    ID_out = image_ID(ID_out_name);
+
+    for(i=0; i<nbstep; i++)
     {
-      angle = M_PI*i/nbstep;
-      for (jj = 0; jj < naxes[1]; jj++) 
-	for (ii = 0; ii < naxes[0]; ii++)   
-	  {
-	    iis = (long) (naxes[0]/2 + (ii-naxes[0]/2)*cos(angle) + (jj-naxes[1]/2)*sin(angle));
-	    jjs = (long) (naxes[1]/2 + (ii-naxes[0]/2)*sin(angle) - (jj-naxes[1]/2)*cos(angle));
-	    if ((iis>0)&&(jjs>0)&&(iis<naxes[0])&&(jjs<naxes[1]))
-	      data.image[ID_out].array.F[jj*naxes[0]+ii] += data.image[ID].array.F[jjs*naxes[0]+iis];
-	  }
-    } 
+        angle = M_PI*i/nbstep;
+        for (jj = 0; jj < naxes[1]; jj++)
+            for (ii = 0; ii < naxes[0]; ii++)
+            {
+                iis = (long) (naxes[0]/2 + (ii-naxes[0]/2)*cos(angle) + (jj-naxes[1]/2)*sin(angle));
+                jjs = (long) (naxes[1]/2 + (ii-naxes[0]/2)*sin(angle) - (jj-naxes[1]/2)*cos(angle));
+                if ((iis>0)&&(jjs>0)&&(iis<naxes[0])&&(jjs<naxes[1]))
+                    data.image[ID_out].array.F[jj*naxes[0]+ii] += data.image[ID].array.F[jjs*naxes[0]+iis];
+            }
+    }
 
-  return(0);
+    return(0);
 }
 
-int basic_translate(const char *ID_name, const char *ID_out, float xtransl, float ytransl)
+
+
+int basic_translate(
+    const char *ID_name,
+    const char *ID_out,
+    float xtransl,
+    float ytransl
+)
 {
-    int ID;
+    imageID ID;
     long naxes[2];
     long onaxes[2];
     long ii,jj;
@@ -1572,13 +1649,15 @@ int basic_translate(const char *ID_name, const char *ID_out, float xtransl, floa
 
 
 
-float basic_correlation(const char *ID_name1, const char *ID_name2)
+float basic_correlation(
+    const char *ID_name1,
+    const char *ID_name2
+)
 {
     float correl;
-    int ID1,ID2;
-    long naxes1[2];
-    long naxes2[2];
-    long ii,jj;
+    imageID ID1, ID2;
+    uint32_t naxes1[2];
+    uint32_t naxes2[2];
 
     ID1 = image_ID(ID_name1);
     naxes1[0] = data.image[ID1].md[0].size[0];
@@ -1594,8 +1673,8 @@ float basic_correlation(const char *ID_name1, const char *ID_name2)
     }
     correl = 0;
 
-    for (jj = 0; jj < naxes1[1]; jj++)
-        for (ii = 0; ii < naxes1[0]; ii++)
+    for (uint32_t jj = 0; jj < naxes1[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes1[0]; ii++)
             correl += (data.image[ID1].array.F[jj*naxes1[0]+ii]-data.image[ID2].array.F[jj*naxes1[0]+ii])*(data.image[ID1].array.F[jj*naxes1[0]+ii]-data.image[ID2].array.F[jj*naxes1[0]+ii]);
 
     return(correl);
@@ -1605,13 +1684,17 @@ float basic_correlation(const char *ID_name1, const char *ID_name2)
 
 
 
-long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter, const char *options)
+imageID IMAGE_BASIC_get_assym_component(
+    const char *ID_name,
+    const char *ID_out_name,
+    float xcenter,
+    float ycenter,
+    const char *options
+)
 {
     float step = 1.0;
-    int ID;
-    long ii,jj;
-    long naxes[2];
-    long nelements;
+    imageID ID;
+    uint32_t naxes[2];
     float distance;
     float *dist;
     float *mean;
@@ -1619,7 +1702,7 @@ long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_nam
     long *counts;
     long i;
     long nb_step;
-    int IDout;
+    imageID IDout;
     char input[50];
     int str_pos;
     float perc;
@@ -1646,7 +1729,6 @@ long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_nam
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
-    nelements = naxes[0] * naxes[1];
     nb_step = naxes[0]/2;
 
     dist = (float*) malloc(sizeof(float)*nb_step);
@@ -1689,8 +1771,8 @@ long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_nam
         counts[i] = 0;
     }
 
-    for (jj = 0; jj < naxes[1]; jj++)
-        for (ii = 0; ii < naxes[0]; ii++) {
+    for (uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++) {
             distance = sqrt((1.0*ii-xcenter)*(1.0*ii-xcenter)+(1.0*jj-ycenter)*(1.0*jj-ycenter));
             i = (long) (1.0*distance/step+0.5);
             if(i<nb_step)
@@ -1709,16 +1791,16 @@ long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_nam
         rms[i] = sqrt(rms[i]-1.0*counts[i]*mean[i]*mean[i])/sqrt(counts[i]);
     }
 
-    printf("%ld %ld\n",naxes[0],naxes[1]);
+    printf("%u %u\n", naxes[0], naxes[1]);
     create_2Dimage_ID(ID_out_name,naxes[0],naxes[1]);
     IDout = image_ID(ID_out_name);
-    for (jj = 0; jj < naxes[1]; jj++)
-        for (ii = 0; ii < naxes[0]; ii++) {
+    for (uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++) {
             distance = sqrt((1.0*ii-xcenter)*(1.0*ii-xcenter)+(1.0*jj-ycenter)*(1.0*jj-ycenter));
             i = (long) (1.0*distance/step);
             ifloat = 1.0*distance/step;
             x = ifloat-i;
-            
+
             if((i+1)<nb_step)
                 data.image[IDout].array.F[jj*naxes[0]+ii] = data.image[ID].array.F[jj*naxes[0]+ii] - ((1.0-x)*mean[i] + x*mean[i+1]);
         }
@@ -1733,13 +1815,16 @@ long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_nam
 
 
 
-long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter)
+imageID IMAGE_BASIC_get_sym_component(
+    const char *ID_name,
+    const char *ID_out_name,
+    float       xcenter,
+    float       ycenter
+)
 {
     float step = 1.0;
-    int ID;
-    long ii,jj;
-    long naxes[2];
-    long nelements;
+    imageID ID;
+    uint32_t naxes[2];
     float distance;
     float *dist;
     float *mean;
@@ -1747,13 +1832,12 @@ long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name,
     long *counts;
     long i;
     long nb_step;
-    int IDout;
+    imageID IDout;
     float ifloat, x;
 
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
-    nelements = naxes[0] * naxes[1];
     nb_step = naxes[0]/2;
 
     dist = (float*) malloc(sizeof(float)*nb_step);
@@ -1797,8 +1881,8 @@ long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name,
     }
 
 
-    for (jj = 0; jj < naxes[1]; jj++)
-        for (ii = 0; ii < naxes[0]; ii++) {
+    for (uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++) {
             distance = sqrt((1.0*ii-xcenter)*(1.0*ii-xcenter)+(1.0*jj-ycenter)*(1.0*jj-ycenter));
             i = (long) (1.0*distance/step+0.5);
             if(i<nb_step)
@@ -1817,16 +1901,16 @@ long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name,
         rms[i] = sqrt(rms[i]-1.0*counts[i]*mean[i]*mean[i])/sqrt(counts[i]);
     }
 
-    printf("%ld %ld\n",naxes[0],naxes[1]);
+    printf("%u %u\n",naxes[0],naxes[1]);
     create_2Dimage_ID(ID_out_name,naxes[0],naxes[1]);
     IDout = image_ID(ID_out_name);
-    for (jj = 0; jj < naxes[1]; jj++)
-        for (ii = 0; ii < naxes[0]; ii++) {
+    for (uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++) {
             distance = sqrt((1.0*ii-xcenter)*(1.0*ii-xcenter)+(1.0*jj-ycenter)*(1.0*jj-ycenter));
             i = (long) (1.0*distance/step);
             ifloat = 1.0*distance/step;
             x = ifloat-i;
-            
+
             if((i+1)<nb_step)
                 data.image[IDout].array.F[jj*naxes[0]+ii] = ((1.0-x)*mean[i] + x*mean[i+1]);
         }
@@ -1845,652 +1929,695 @@ long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name,
 
 
 /* rotation that keeps photometry - angle is in radians */
-int basic_rotate2(const char *ID_name_in, const char *ID_name_out, float angle)
+int basic_rotate2(
+    const char *ID_name_in,
+    const char *ID_name_out,
+    float angle
+)
 {
-  int ID_in;
-  int ID_out,ID_wout;
-  long ii,jj;
-  long naxes[2];
-  long naxes2[2];
-  long nelements;
-  float rotangle;
-  float *pixcorner_x;
-  float *pixcorner_y;
-  float x,y;
-  int NB_step = 20;
-  int i,j;
-  float f1,f2,f3,f4,f5,f6,f7,f8,f9;
-  /*  float *f1a;
-      float *f2a;
-      float *f3a;
-      float *f4a;
-      float *f5a;
-      float *f6a;
-      float *f7a;
-      float *f8a;
-      float *f9a;*/
-  int *f1a;
-  int *f2a;
-  int *f3a;
-  int *f4a;
-  int *f5a;
-  int *f6a;
-  int *f7a;
-  int *f8a;
-  int *f9a;
-  float pixcx, pixcy;
-  float total;
-  int xint,yint;
-  float ccos,ssin;
+    imageID ID_in;
+    imageID ID_out,ID_wout;
+    uint32_t naxes[2];
+    uint32_t naxes2[2];
+    uint64_t nelements;
+    float rotangle;
+    float *pixcorner_x;
+    float *pixcorner_y;
+    float x,y;
+    uint32_t NB_step = 20;
+    uint32_t i,j;
+    float f1,f2,f3,f4,f5,f6,f7,f8,f9;
+    /*  float *f1a;
+        float *f2a;
+        float *f3a;
+        float *f4a;
+        float *f5a;
+        float *f6a;
+        float *f7a;
+        float *f8a;
+        float *f9a;*/
+    int *f1a;
+    int *f2a;
+    int *f3a;
+    int *f4a;
+    int *f5a;
+    int *f6a;
+    int *f7a;
+    int *f8a;
+    int *f9a;
+    float pixcx, pixcy;
+    float total;
+    int xint,yint;
+    float ccos,ssin;
 
-  printf("rotating %s by %f radians ...\n",ID_name_in,angle);
-  fflush(stdout);
-  rotangle = angle;
-  while (rotangle<0)
-    rotangle += 2.0*M_PI;
-  while (rotangle>2*M_PI)
-    rotangle -= 2.0*M_PI;
-  /* now the angle is between 0 and 2*PI */
-  while (rotangle>(M_PI/2))
+    printf("rotating %s by %f radians ...\n",ID_name_in,angle);
+    fflush(stdout);
+    rotangle = angle;
+    while (rotangle<0)
+        rotangle += 2.0*M_PI;
+    while (rotangle>2*M_PI)
+        rotangle -= 2.0*M_PI;
+    /* now the angle is between 0 and 2*PI */
+    while (rotangle>(M_PI/2))
     {
-      basic_rotate90(ID_name_in,"tmprot");
-      delete_image_ID(ID_name_in);
-      copy_image_ID("tmprot", ID_name_in, 0);
-      delete_image_ID("tmprot");
-      rotangle -= M_PI/2.0;
+        basic_rotate90(ID_name_in,"tmprot");
+        delete_image_ID(ID_name_in);
+        copy_image_ID("tmprot", ID_name_in, 0);
+        delete_image_ID("tmprot");
+        rotangle -= M_PI/2.0;
     }
 
-  /* now the angle is between 0 and PI/2 */
+    /* now the angle is between 0 and PI/2 */
 
-  ID_in = image_ID(ID_name_in);
-  naxes[0] = data.image[ID_in].md[0].size[0];
-  naxes[1] = data.image[ID_in].md[0].size[1];    
-  nelements = naxes[0]*naxes[1]; 
-  printf("creating temporary arrays\n");
-  fflush(stdout);
-  f1a = (int*) calloc(NB_step*NB_step,sizeof(int));
-  f2a = (int*) calloc(NB_step*NB_step,sizeof(int));
-  f3a = (int*) calloc(NB_step*NB_step,sizeof(int));
-  f4a = (int*) calloc(NB_step*NB_step,sizeof(int));
-  f5a = (int*) calloc(NB_step*NB_step,sizeof(int));
-  f6a = (int*) calloc(NB_step*NB_step,sizeof(int));
-  f7a = (int*) calloc(NB_step*NB_step,sizeof(int));
-  f8a = (int*) calloc(NB_step*NB_step,sizeof(int));
-  f9a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    ID_in = image_ID(ID_name_in);
+    naxes[0] = data.image[ID_in].md[0].size[0];
+    naxes[1] = data.image[ID_in].md[0].size[1];
+    nelements = naxes[0]*naxes[1];
+    printf("creating temporary arrays\n");
+    fflush(stdout);
+    f1a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    f2a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    f3a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    f4a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    f5a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    f6a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    f7a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    f8a = (int*) calloc(NB_step*NB_step,sizeof(int));
+    f9a = (int*) calloc(NB_step*NB_step,sizeof(int));
 
-  printf("filling up calibration array ... ");
-  fflush(stdout);
-  total = 1.0/NB_step/NB_step;
-  ccos = cos(rotangle);
-  ssin = sin(rotangle);
-  
-  for (ii=0;ii<NB_step;ii++)
-    for (jj=0;jj<NB_step;jj++)
-      {
-	pixcx = 1.0*ii/NB_step;
-	pixcy = 1.0*jj/NB_step;
+    printf("filling up calibration array ... ");
+    fflush(stdout);
+    total = 1.0/NB_step/NB_step;
+    ccos = cos(rotangle);
+    ssin = sin(rotangle);
 
-	for(i=0;i<NB_step;i++)
-	  for(j=0;j<NB_step;j++)
-	    {
-	      x = pixcx+1.0*(0.5+i)/NB_step*ccos-1.0*(0.5+j)/NB_step*ssin;
-	      y = pixcy+1.0*(0.5+i)/NB_step*ssin+1.0*(0.5+j)/NB_step*ccos;
-	      if (x<0)
-		{
-		  if(y<1)
-		    f1a[jj*NB_step+ii]++;
-		  else
-		    {
-		      if(y>2)
-			f7a[jj*NB_step+ii]++;
-		      else
-			f4a[jj*NB_step+ii]++;
-		    }
-		}
-	      else
-		{
-		  if (x>1)
-		    {
-		      if(y<1)
-			f3a[jj*NB_step+ii]++;
-		      else
-			{
-			  if(y>2)
-			    f9a[jj*NB_step+ii]++;
-			  else
-			    f6a[jj*NB_step+ii]++;
-			}
-		    }
-		  else
-		    {
-		      if(y<1)
-			f2a[jj*NB_step+ii]++;
-		      else
-			{
-			  if(y>2)
-			    f8a[jj*NB_step+ii]++;
-			  else
-			    f5a[jj*NB_step+ii]++;
-			}
-		    }
-		}
-	    }
-      }	
-  printf("done\n");
-  fflush(stdout);
+    for (uint32_t ii=0; ii<NB_step; ii++)
+        for (uint32_t jj=0; jj<NB_step; jj++)
+        {
+            pixcx = 1.0*ii/NB_step;
+            pixcy = 1.0*jj/NB_step;
 
-  pixcorner_x = (float*) malloc(sizeof(float)*nelements);
-  if(pixcorner_x==NULL)
+            for(i=0; i<NB_step; i++)
+                for(j=0; j<NB_step; j++)
+                {
+                    x = pixcx+1.0*(0.5+i)/NB_step*ccos-1.0*(0.5+j)/NB_step*ssin;
+                    y = pixcy+1.0*(0.5+i)/NB_step*ssin+1.0*(0.5+j)/NB_step*ccos;
+                    if (x<0)
+                    {
+                        if(y<1)
+                            f1a[jj*NB_step+ii]++;
+                        else
+                        {
+                            if(y>2)
+                                f7a[jj*NB_step+ii]++;
+                            else
+                                f4a[jj*NB_step+ii]++;
+                        }
+                    }
+                    else
+                    {
+                        if (x>1)
+                        {
+                            if(y<1)
+                                f3a[jj*NB_step+ii]++;
+                            else
+                            {
+                                if(y>2)
+                                    f9a[jj*NB_step+ii]++;
+                                else
+                                    f6a[jj*NB_step+ii]++;
+                            }
+                        }
+                        else
+                        {
+                            if(y<1)
+                                f2a[jj*NB_step+ii]++;
+                            else
+                            {
+                                if(y>2)
+                                    f8a[jj*NB_step+ii]++;
+                                else
+                                    f5a[jj*NB_step+ii]++;
+                            }
+                        }
+                    }
+                }
+        }
+    printf("done\n");
+    fflush(stdout);
+
+    pixcorner_x = (float*) malloc(sizeof(float)*nelements);
+    if(pixcorner_x==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  pixcorner_y = (float*) malloc(sizeof(float)*nelements);
-  if(pixcorner_y==NULL)
+    pixcorner_y = (float*) malloc(sizeof(float)*nelements);
+    if(pixcorner_y==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  for (jj = 0; jj < naxes[1]; jj++) 
-    for (ii = 0; ii < naxes[0]; ii++)
-      {  
-	pixcorner_x[jj*naxes[0]+ii] = ii*ccos-jj*ssin+ssin*naxes[1]+1.0;
-	pixcorner_y[jj*naxes[0]+ii] = ii*ssin+jj*ccos;
-      }
+    for (uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++)
+        {
+            pixcorner_x[jj*naxes[0]+ii] = ii*ccos-jj*ssin+ssin*naxes[1]+1.0;
+            pixcorner_y[jj*naxes[0]+ii] = ii*ssin+jj*ccos;
+        }
 
-  naxes2[0] = (long) (sin(rotangle)*naxes[1]+cos(rotangle)*naxes[0]+2.0);
-  naxes2[1] = (long) (cos(rotangle)*naxes[1]+sin(rotangle)*naxes[0]+2.0);
+    naxes2[0] = (long) (sin(rotangle)*naxes[1]+cos(rotangle)*naxes[0]+2.0);
+    naxes2[1] = (long) (cos(rotangle)*naxes[1]+sin(rotangle)*naxes[0]+2.0);
 
-  create_2Dimage_ID(ID_name_out,naxes2[0],naxes2[1]);
-  create_2Dimage_ID("wtmp",naxes2[0],naxes2[1]);
-  ID_out = image_ID(ID_name_out);
-  ID_wout = image_ID("wtmp");
+    create_2Dimage_ID(ID_name_out,naxes2[0],naxes2[1]);
+    create_2Dimage_ID("wtmp",naxes2[0],naxes2[1]);
+    ID_out = image_ID(ID_name_out);
+    ID_wout = image_ID("wtmp");
 
-  for (jj = 0; jj < naxes[1]; jj++) 
-    for (ii = 0; ii < naxes[0]; ii++)
-      {
-	x = pixcorner_x[jj*naxes[0]+ii];
-	y = pixcorner_y[jj*naxes[0]+ii];
-	      /*printf("%ld %ld %d %d %f %f %f %f\n",ii,jj,i,j,pixcorner_x[jj*naxes[0]+ii],pixcorner_y[jj*naxes[0]+ii],x,y);*/
-	xint = (int) (((x+3*naxes[0]) - (int) (x+3*naxes[0]))*NB_step);
-	yint = (int) ((y - (int) y)*NB_step);
-	/*	printf("%d %d\n",xint,yint);*/
-	f1 = 1.0*f1a[yint*NB_step+xint];
-	f2 = 1.0*f2a[yint*NB_step+xint];
-	f3 = 1.0*f3a[yint*NB_step+xint];
-	f4 = 1.0*f4a[yint*NB_step+xint];
-	f5 = 1.0*f5a[yint*NB_step+xint];
-	f6 = 1.0*f6a[yint*NB_step+xint];
-	f7 = 1.0*f7a[yint*NB_step+xint];
-	f8 = 1.0*f8a[yint*NB_step+xint];
-	f9 = 1.0*f9a[yint*NB_step+xint];
+    for (uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++)
+        {
+            x = pixcorner_x[jj*naxes[0]+ii];
+            y = pixcorner_y[jj*naxes[0]+ii];
+            /*printf("%ld %ld %d %d %f %f %f %f\n",ii,jj,i,j,pixcorner_x[jj*naxes[0]+ii],pixcorner_y[jj*naxes[0]+ii],x,y);*/
+            xint = (int) (((x+3*naxes[0]) - (int) (x+3*naxes[0]))*NB_step);
+            yint = (int) ((y - (int) y)*NB_step);
+            /*	printf("%d %d\n",xint,yint);*/
+            f1 = 1.0*f1a[yint*NB_step+xint];
+            f2 = 1.0*f2a[yint*NB_step+xint];
+            f3 = 1.0*f3a[yint*NB_step+xint];
+            f4 = 1.0*f4a[yint*NB_step+xint];
+            f5 = 1.0*f5a[yint*NB_step+xint];
+            f6 = 1.0*f6a[yint*NB_step+xint];
+            f7 = 1.0*f7a[yint*NB_step+xint];
+            f8 = 1.0*f8a[yint*NB_step+xint];
+            f9 = 1.0*f9a[yint*NB_step+xint];
 
-	data.image[ID_out].array.F[((long) y)*naxes2[0]+((long) (x))-1] += f1*data.image[ID_in].array.F[jj*naxes[0]+ii];
-	data.image[ID_out].array.F[((long) y)*naxes2[0]+((long) (x))] += f2*data.image[ID_in].array.F[jj*naxes[0]+ii];
-	data.image[ID_out].array.F[((long) y)*naxes2[0]+((long) (x))+1] += f3*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y)*naxes2[0]+((long) (x))-1] += f1*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y)*naxes2[0]+((long) (x))] += f2*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y)*naxes2[0]+((long) (x))+1] += f3*data.image[ID_in].array.F[jj*naxes[0]+ii];
 
-	data.image[ID_out].array.F[((long) y+1)*naxes2[0]+((long) (x))-1] += f4*data.image[ID_in].array.F[jj*naxes[0]+ii];
-	data.image[ID_out].array.F[((long) y+1)*naxes2[0]+((long) (x))] += f5*data.image[ID_in].array.F[jj*naxes[0]+ii];
-	data.image[ID_out].array.F[((long) y+1)*naxes2[0]+((long) (x))+1] += f6*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y+1)*naxes2[0]+((long) (x))-1] += f4*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y+1)*naxes2[0]+((long) (x))] += f5*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y+1)*naxes2[0]+((long) (x))+1] += f6*data.image[ID_in].array.F[jj*naxes[0]+ii];
 
-	data.image[ID_out].array.F[((long) y+2)*naxes2[0]+((long) (x))-1] += f7*data.image[ID_in].array.F[jj*naxes[0]+ii];
-	data.image[ID_out].array.F[((long) y+2)*naxes2[0]+((long) (x))] += f8*data.image[ID_in].array.F[jj*naxes[0]+ii];
-	data.image[ID_out].array.F[((long) y+2)*naxes2[0]+((long) (x))+1] += f9*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y+2)*naxes2[0]+((long) (x))-1] += f7*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y+2)*naxes2[0]+((long) (x))] += f8*data.image[ID_in].array.F[jj*naxes[0]+ii];
+            data.image[ID_out].array.F[((long) y+2)*naxes2[0]+((long) (x))+1] += f9*data.image[ID_in].array.F[jj*naxes[0]+ii];
 
-	data.image[ID_wout].array.F[((long) y)*naxes2[0]+((long) (x))-1] += f1;
-	data.image[ID_wout].array.F[((long) y)*naxes2[0]+((long) (x))] += f2;
-	data.image[ID_wout].array.F[((long) y)*naxes2[0]+((long) (x))+1] += f3;
+            data.image[ID_wout].array.F[((long) y)*naxes2[0]+((long) (x))-1] += f1;
+            data.image[ID_wout].array.F[((long) y)*naxes2[0]+((long) (x))] += f2;
+            data.image[ID_wout].array.F[((long) y)*naxes2[0]+((long) (x))+1] += f3;
 
-	data.image[ID_wout].array.F[((long) y+1)*naxes2[0]+((long) (x))-1] += f4;
-	data.image[ID_wout].array.F[((long) y+1)*naxes2[0]+((long) (x))] += f5;
-	data.image[ID_wout].array.F[((long) y+1)*naxes2[0]+((long) (x))+1] += f6;
+            data.image[ID_wout].array.F[((long) y+1)*naxes2[0]+((long) (x))-1] += f4;
+            data.image[ID_wout].array.F[((long) y+1)*naxes2[0]+((long) (x))] += f5;
+            data.image[ID_wout].array.F[((long) y+1)*naxes2[0]+((long) (x))+1] += f6;
 
-	data.image[ID_wout].array.F[((long) y+2)*naxes2[0]+((long) (x))-1] += f7;
-	data.image[ID_wout].array.F[((long) y+2)*naxes2[0]+((long) (x))] += f8;
-	data.image[ID_wout].array.F[((long) y+2)*naxes2[0]+((long) (x))+1] += f9;
+            data.image[ID_wout].array.F[((long) y+2)*naxes2[0]+((long) (x))-1] += f7;
+            data.image[ID_wout].array.F[((long) y+2)*naxes2[0]+((long) (x))] += f8;
+            data.image[ID_wout].array.F[((long) y+2)*naxes2[0]+((long) (x))+1] += f9;
 
-      }
+        }
 
-  for (jj = 0; jj < naxes2[1]; jj++) 
-    for (ii = 0; ii < naxes2[0]; ii++)
-      {
-	if(data.image[ID_wout].array.F[jj*naxes2[0]+ii]>(0.9*NB_step*NB_step))
-	  data.image[ID_out].array.F[jj*naxes2[0]+ii] /= data.image[ID_wout].array.F[jj*naxes2[0]+ii];
-	else
-	  data.image[ID_out].array.F[jj*naxes2[0]+ii] *= total;
-      }
+    for (uint32_t jj = 0; jj < naxes2[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes2[0]; ii++)
+        {
+            if(data.image[ID_wout].array.F[jj*naxes2[0]+ii]>(0.9*NB_step*NB_step))
+                data.image[ID_out].array.F[jj*naxes2[0]+ii] /= data.image[ID_wout].array.F[jj*naxes2[0]+ii];
+            else
+                data.image[ID_out].array.F[jj*naxes2[0]+ii] *= total;
+        }
 
-  delete_image_ID("wtmp");
-  
-  free(pixcorner_x);
-  free(pixcorner_y);
+    delete_image_ID("wtmp");
 
-  free(f1a);
-  free(f2a);
-  free(f3a);
-  free(f4a);
-  free(f5a);
-  free(f6a);
-  free(f7a);
-  free(f8a);
-  free(f9a);
+    free(pixcorner_x);
+    free(pixcorner_y);
 
-  printf("done\n");
-  fflush(stdout);
+    free(f1a);
+    free(f2a);
+    free(f3a);
+    free(f4a);
+    free(f5a);
+    free(f6a);
+    free(f7a);
+    free(f8a);
+    free(f9a);
 
-  return(0);
+    printf("done\n");
+    fflush(stdout);
+
+    return(0);
 }
 
+
+
 /* this routine uses the Owen algorith - the image has to be square and power of 2 on the side */
-int basic_rotate3(const char *ID_name_in, const char *ID_name_out, float angle)
+int basic_rotate3(
+    const char *ID_name_in,
+    const char *ID_name_out,
+    float angle
+)
 {
-  long Np, Npp;
-  float delta;
-  long N;
-  long ID;
-  /* IDout; */
-  long i,j;
-  float tmp;
-  long IDre,IDim,IDfre,IDfim;
-  
-  ID = image_ID(ID_name_in);
-  N = data.image[ID].md[0].size[0];
-  
-  printf("%s\n",ID_name_out);
+    long Np, Npp;
+    float delta;
+    long N;
+    imageID ID;
+    /* IDout; */
+    long i,j;
+    float tmp;
+    imageID IDre, IDim, IDfre, IDfim;
 
-  Np = 2*N;
-  Npp = 2*N;
+    ID = image_ID(ID_name_in);
+    N = data.image[ID].md[0].size[0];
 
-  /* step 1 : padding of the image */
-  create_2Dimage_ID("im_im",Np,Npp/2);
-  basic_add("im_im",ID_name_in,"im_re",0,0);
-  IDre = image_ID("im_re");
-  IDim = image_ID("im_im");
-  
-  /* step 2 & 3 : FFT on all rows and phase-shifting */
-  for(i=0;i<Npp/2;i++)
+    printf("%s\n",ID_name_out);
+
+    Np = 2*N;
+    Npp = 2*N;
+
+    /* step 1 : padding of the image */
+    create_2Dimage_ID("im_im",Np,Npp/2);
+    basic_add("im_im",ID_name_in,"im_re",0,0);
+    IDre = image_ID("im_re");
+    IDim = image_ID("im_im");
+
+    /* step 2 & 3 : FFT on all rows and phase-shifting */
+    for(i=0; i<Npp/2; i++)
     {
-      basic_extract("im_re","rowre",Np,1,0,i);
-      basic_extract("im_im","rowim",Np,1,0,i);
-      pupfft("rowre","rowim","rowfre","rowfim","-reim");
-      /*      permut("rowfre");
-	      permut("rowfim");*/
-      delete_image_ID("rowre");
-      delete_image_ID("rowim");
-      IDfre = image_ID("rowfre");
-      IDfim = image_ID("rowfim");
-      delta = -tan(angle/2)*i;
-      for(j=0;j<Np;j++)
-	{
-	  tmp = 2.0*M_PI*j*delta/Np;
-	  data.image[IDre].array.F[i*Np+j] = (float) (data.image[IDfre].array.F[j]*cos(tmp)-data.image[IDfim].array.F[j]*sin(tmp));
-	  data.image[IDim].array.F[i*Np+j] = (float) (data.image[IDfre].array.F[j]*sin(tmp)+data.image[IDfim].array.F[j]*cos(tmp));
-	}
-      delete_image_ID("rowfre");
-      delete_image_ID("rowfim");
+        basic_extract("im_re","rowre",Np,1,0,i);
+        basic_extract("im_im","rowim",Np,1,0,i);
+        pupfft("rowre","rowim","rowfre","rowfim","-reim");
+        /*      permut("rowfre");
+          permut("rowfim");*/
+        delete_image_ID("rowre");
+        delete_image_ID("rowim");
+        IDfre = image_ID("rowfre");
+        IDfim = image_ID("rowfim");
+        delta = -tan(angle/2)*i;
+        for(j=0; j<Np; j++)
+        {
+            tmp = 2.0*M_PI*j*delta/Np;
+            data.image[IDre].array.F[i*Np+j] = (float) (data.image[IDfre].array.F[j]*cos(tmp)-data.image[IDfim].array.F[j]*sin(tmp));
+            data.image[IDim].array.F[i*Np+j] = (float) (data.image[IDfre].array.F[j]*sin(tmp)+data.image[IDfim].array.F[j]*cos(tmp));
+        }
+        delete_image_ID("rowfre");
+        delete_image_ID("rowfim");
     }
-  
-  /* step 4 : FFT on columns */
-  printf("Step 4\n");
-  for(i=0;i<Np;i++)
+
+    /* step 4 : FFT on columns */
+    printf("Step 4\n");
+    for(i=0; i<Np; i++)
     {
-      basic_extract("im_re","colre",1,Npp/2,i,0);
-      basic_extract("im_im","colim",1,Npp/2,i,0);
+        basic_extract("im_re","colre",1,Npp/2,i,0);
+        basic_extract("im_im","colim",1,Npp/2,i,0);
 
-      pupfft("colre","colim","colfre","colfim","-reim");
-      /*permut("colfre");
-	permut("colfim");*/
-      delete_image_ID("colre");
-      delete_image_ID("colim");
-      IDfre = image_ID("colfre");
-      IDfim = image_ID("colfim");
+        pupfft("colre","colim","colfre","colfim","-reim");
+        /*permut("colfre");
+        permut("colfim");*/
+        delete_image_ID("colre");
+        delete_image_ID("colim");
+        IDfre = image_ID("colfre");
+        IDfim = image_ID("colfim");
 
-      fflush(stdout);
-      for(j=0;j<Npp/2;j++)
-	{
-	  data.image[IDre].array.F[j*Np+i] = data.image[IDfre].array.F[j];
-	  data.image[IDim].array.F[j*Np+i] = data.image[IDfim].array.F[j];
-	}
-      delete_image_ID("colfre");
-      delete_image_ID("colfim");
+        fflush(stdout);
+        for(j=0; j<Npp/2; j++)
+        {
+            data.image[IDre].array.F[j*Np+i] = data.image[IDfre].array.F[j];
+            data.image[IDim].array.F[j*Np+i] = data.image[IDfim].array.F[j];
+        }
+        delete_image_ID("colfre");
+        delete_image_ID("colfim");
     }
-  printf("Step 4 done\n");
-  fflush(stdout);
+    printf("Step 4 done\n");
+    fflush(stdout);
 
-  /* step 5 : Doubling image vertically */
-  printf("Step 5\n");
-  create_2Dimage_ID("nre",Np,Npp);
-  create_2Dimage_ID("nim",Np,Npp);
-  IDre = image_ID("nre");
-  IDim = image_ID("nim");
-  for(i=0;i<Npp/2;i++)
+    /* step 5 : Doubling image vertically */
+    printf("Step 5\n");
+    create_2Dimage_ID("nre",Np,Npp);
+    create_2Dimage_ID("nim",Np,Npp);
+    IDre = image_ID("nre");
+    IDim = image_ID("nim");
+    for(i=0; i<Npp/2; i++)
     {
-      for(j=0;j<Np;j++)
-	{
-	  
-	}
+        for(j=0; j<Np; j++)
+        {
+
+        }
     }
-  return(0);
+    return(0);
 }
 
 int basic_stretch(const char *name_in, const char *name_out, float coeff, long Xcenter, long Ycenter)
 {
-  
-  long ii,jj;
-  long naxes[2];
-  long ID_in, ID_out;
-  long i,j;
 
-  ID_in = image_ID(name_in);
-  naxes[0]=data.image[ID_in].md[0].size[0];
-  naxes[1]=data.image[ID_in].md[0].size[1];
+    long ii,jj;
+    long naxes[2];
+    long ID_in, ID_out;
+    long i,j;
 
-  ID_out=create_2Dimage_ID(name_out,naxes[0],naxes[1]);
+    ID_in = image_ID(name_in);
+    naxes[0]=data.image[ID_in].md[0].size[0];
+    naxes[1]=data.image[ID_in].md[0].size[1];
 
-  for(ii=0;ii<naxes[0];ii++)
-    for(jj=0;jj<naxes[0];jj++)
-      {
-	i = Xcenter + (long) (1.0*(ii-Xcenter)*coeff);
-	j = Ycenter + (long) (1.0*(jj-Ycenter)*coeff);
-	if((i<naxes[0])&&(j<naxes[1])&&(i>-1)&&(j>-1))
-	  data.image[ID_out].array.F[jj*naxes[0]+ii] += data.image[ID_in].array.F[j*naxes[0]+i]/coeff/coeff;
-      }
-  
-  arith_image_cstmult_inplace(name_out,arith_image_total(name_in)/arith_image_total(name_out));
+    ID_out=create_2Dimage_ID(name_out,naxes[0],naxes[1]);
 
-  return(0);
+    for(ii=0; ii<naxes[0]; ii++)
+        for(jj=0; jj<naxes[0]; jj++)
+        {
+            i = Xcenter + (long) (1.0*(ii-Xcenter)*coeff);
+            j = Ycenter + (long) (1.0*(jj-Ycenter)*coeff);
+            if((i<naxes[0])&&(j<naxes[1])&&(i>-1)&&(j>-1))
+                data.image[ID_out].array.F[jj*naxes[0]+ii] += data.image[ID_in].array.F[j*naxes[0]+i]/coeff/coeff;
+        }
+
+    arith_image_cstmult_inplace(name_out,arith_image_total(name_in)/arith_image_total(name_out));
+
+    return(0);
 }
 
-int basic_stretch_range(const char *name_in, const char *name_out, float coeff1, float coeff2, long Xcenter, long Ycenter, long NBstep, float ApoCoeff)
+
+
+
+int basic_stretch_range(
+    const char *name_in,
+    const char *name_out,
+    float       coeff1,
+    float       coeff2,
+    long        Xcenter,
+    long        Ycenter,
+    long        NBstep,
+    float       ApoCoeff
+)
 {
-  // ApoCoeff should be between 0 and 1
-  long ii,jj;
-  long naxes[2];
-  long ID_in, ID_out;
-  long i,j;
-  float coeff;
-  long step;
-  float mcoeff;
-  float x,y;
-  float eps = 1.0e-5;
-  float u,t,tmp;
+    // ApoCoeff should be between 0 and 1
+    uint32_t naxes[2];
+    imageID ID_in, ID_out;
+    long i,j;
+    float coeff;
+    long step;
+    float mcoeff;
+    float x,y;
+    float eps = 1.0e-5;
+    float u,t,tmp;
 
 
-  ID_in = image_ID(name_in);
-  naxes[0]=data.image[ID_in].md[0].size[0];
-  naxes[1]=data.image[ID_in].md[0].size[1];
+    ID_in = image_ID(name_in);
+    naxes[0]=data.image[ID_in].md[0].size[0];
+    naxes[1]=data.image[ID_in].md[0].size[1];
 
-  ID_out=create_2Dimage_ID(name_out,naxes[0],naxes[1]);
+    ID_out=create_2Dimage_ID(name_out,naxes[0],naxes[1]);
 
- 
 
-  for(step = 0; step < NBstep; step ++)
+
+    for(step = 0; step < NBstep; step ++)
     {
-      fprintf(stdout,".");
-      fflush(stdout);
-      coeff = coeff1 + (coeff2-coeff1)*(1.0*step/(NBstep-1));
-      x = (coeff - (coeff1+coeff2)/2.0)/((coeff2-coeff1)/2.0);
-      // x goes from -1 to 1
-      if(ApoCoeff > eps)
-	mcoeff = pow((1.0-pow((fabs(x)-(1.0-ApoCoeff))/ApoCoeff,2.0)),4.0);
-      else
-	mcoeff = 1.0;
-      
-      if((1.0-x*x)<eps)
-	mcoeff = 0.0;
-      if(fabs(x)<ApoCoeff)
-	mcoeff = 1.0;
-      //      fprintf(stdout,"(%f %f %f %f %f)",coeff,coeff1,coeff2,x,mcoeff);
+        fprintf(stdout,".");
+        fflush(stdout);
+        coeff = coeff1 + (coeff2-coeff1)*(1.0*step/(NBstep-1));
+        x = (coeff - (coeff1+coeff2)/2.0)/((coeff2-coeff1)/2.0);
+        // x goes from -1 to 1
+        if(ApoCoeff > eps)
+            mcoeff = pow((1.0-pow((fabs(x)-(1.0-ApoCoeff))/ApoCoeff,2.0)),4.0);
+        else
+            mcoeff = 1.0;
 
-      for(ii=0;ii<naxes[0];ii++)
-	for(jj=0;jj<naxes[1];jj++)
-	  {
-	    x = (1.0*(ii-Xcenter)*coeff)+Xcenter;
-	    y = (1.0*(jj-Ycenter)*coeff)+Ycenter;
-	    i = (long) x;
-	    j = (long) y;
-	    u = x-i;
-	    t = y-j;
-	    if((i<naxes[0]-1)&&(j<naxes[1]-1)&&(i>-1)&&(j>-1))
-	      {
-		tmp = (1.0-u)*(1.0-t)*data.image[ID_in].array.F[j*naxes[0]+i];
-		tmp += (1.0-u)*t*data.image[ID_in].array.F[(j+1)*naxes[0]+i];
-		tmp += u*(1.0-t)*data.image[ID_in].array.F[j*naxes[0]+i+1];
-		tmp += u*t*data.image[ID_in].array.F[(j+1)*naxes[0]+i+1];
-		data.image[ID_out].array.F[jj*naxes[0]+ii] += mcoeff*tmp/coeff/coeff;
-	      }
-	  }
+        if((1.0-x*x)<eps)
+            mcoeff = 0.0;
+        if(fabs(x)<ApoCoeff)
+            mcoeff = 1.0;
+        //      fprintf(stdout,"(%f %f %f %f %f)",coeff,coeff1,coeff2,x,mcoeff);
+
+        for(uint32_t ii=0; ii<naxes[0]; ii++)
+            for(uint32_t jj=0; jj<naxes[1]; jj++)
+            {
+                x = (1.0*(ii-Xcenter)*coeff)+Xcenter;
+                y = (1.0*(jj-Ycenter)*coeff)+Ycenter;
+                i = (long) x;
+                j = (long) y;
+                u = x-i;
+                t = y-j;
+                if((i<naxes[0]-1)&&(j<naxes[1]-1)&&(i>-1)&&(j>-1))
+                {
+                    tmp = (1.0-u)*(1.0-t)*data.image[ID_in].array.F[j*naxes[0]+i];
+                    tmp += (1.0-u)*t*data.image[ID_in].array.F[(j+1)*naxes[0]+i];
+                    tmp += u*(1.0-t)*data.image[ID_in].array.F[j*naxes[0]+i+1];
+                    tmp += u*t*data.image[ID_in].array.F[(j+1)*naxes[0]+i+1];
+                    data.image[ID_out].array.F[jj*naxes[0]+ii] += mcoeff*tmp/coeff/coeff;
+                }
+            }
     }
 
-  fprintf(stdout,"\n");
-  arith_image_cstmult_inplace(name_out,arith_image_total(name_in)/arith_image_total(name_out));
+    fprintf(stdout,"\n");
+    arith_image_cstmult_inplace(name_out,arith_image_total(name_in)/arith_image_total(name_out));
 
-  return(0);
+    return(0);
 }
 
 
-int basic_stretchc(const char *name_in, const char *name_out, float coeff)
+
+int basic_stretchc(
+    const char *name_in,
+    const char *name_out,
+    float coeff
+)
 {
-  
-  long ii,jj;
-  long naxes[2];
-  long ID_in, ID_out;
-  long i,j;
-  long Xcenter,Ycenter;
 
-  ID_in = image_ID(name_in);
-  naxes[0]=data.image[ID_in].md[0].size[0];
-  naxes[1]=data.image[ID_in].md[0].size[1];
-  Xcenter = naxes[0]/2;
-  Ycenter = naxes[1]/2;
+    uint32_t naxes[2];
+    imageID ID_in, ID_out;
+    long i,j;
+    long Xcenter,Ycenter;
 
-  ID_out=create_2Dimage_ID(name_out,naxes[0],naxes[1]);
+    ID_in = image_ID(name_in);
+    naxes[0]=data.image[ID_in].md[0].size[0];
+    naxes[1]=data.image[ID_in].md[0].size[1];
+    Xcenter = naxes[0]/2;
+    Ycenter = naxes[1]/2;
 
-  for(ii=0;ii<naxes[0];ii++)
-    for(jj=0;jj<naxes[0];jj++)
-      {
-	i=Xcenter+(long) (1.0*(ii-Xcenter)*coeff);
-	j=Ycenter+(long) (1.0*(jj-Ycenter)*coeff);
-	if((i<naxes[0])&&(j<naxes[1])&&(i>-1)&&(j>-1))
-	  data.image[ID_out].array.F[jj*naxes[0]+ii] += data.image[ID_in].array.F[j*naxes[0]+i]/coeff/coeff;
-      }
-  
-  /*  basic_mult(name_out,arith_image_total(name_in)/arith_image_total(name_out));*/
+    ID_out=create_2Dimage_ID(name_out,naxes[0],naxes[1]);
 
-  return(0);
+    for(uint32_t ii=0; ii<naxes[0]; ii++)
+        for(uint32_t jj=0; jj<naxes[0]; jj++)
+        {
+            i=Xcenter+(long) (1.0*(ii-Xcenter)*coeff);
+            j=Ycenter+(long) (1.0*(jj-Ycenter)*coeff);
+            if((i<naxes[0])&&(j<naxes[1])&&(i>-1)&&(j>-1))
+                data.image[ID_out].array.F[jj*naxes[0]+ii] += data.image[ID_in].array.F[j*naxes[0]+i]/coeff/coeff;
+        }
+
+    /*  basic_mult(name_out,arith_image_total(name_in)/arith_image_total(name_out));*/
+
+    return(0);
 }
 
-int gauss_histo_image(const char *ID_name, const char *ID_out_name, float sigma, float center)
+
+
+
+
+int gauss_histo_image(
+    const char *ID_name,
+    const char *ID_out_name,
+    float sigma,
+    float center
+)
 {
-  long ID,ID_out;
-  long ii,jj;
-  long naxes[2];
-  long k,k1;
-  float x;
-  long N=100000;
-  float *histo = NULL;
-  float *imp = NULL;
-  float *impr = NULL;
-  float *imprinv = NULL;
+    imageID ID,ID_out;
+    uint32_t naxes[2];
+    long k,k1;
+    float x;
+    long N=100000;
+    float *histo = NULL;
+    float *imp = NULL;
+    float *impr = NULL;
+    float *imprinv = NULL;
 
-  ID = image_ID(ID_name);
-  naxes[0] = data.image[ID].md[0].size[0];
-  naxes[1] = data.image[ID].md[0].size[1];    
-  
-  histo = (float*) malloc(sizeof(float)*N);
-  if(histo==NULL)
+    ID = image_ID(ID_name);
+    naxes[0] = data.image[ID].md[0].size[0];
+    naxes[1] = data.image[ID].md[0].size[1];
+
+    histo = (float*) malloc(sizeof(float)*N);
+    if(histo==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  imp = (float*) malloc(sizeof(float)*N);
-  if(imp==NULL)
+    imp = (float*) malloc(sizeof(float)*N);
+    if(imp==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  impr = (float*) malloc(sizeof(float)*N);
-  if(impr==NULL)
+    impr = (float*) malloc(sizeof(float)*N);
+    if(impr==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  imprinv = (float*) malloc(sizeof(float)*N);
-  if(imprinv==NULL)
+    imprinv = (float*) malloc(sizeof(float)*N);
+    if(imprinv==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  for(ii=0;ii<N;ii++)
+    for(uint32_t ii=0; ii<N; ii++)
     {
-      histo[ii] = 0.0;
-      imp[ii] = 0.0;
-    }
-  
-  for(jj = 0; jj < naxes[1]; jj++) 
-    for (ii = 0; ii < naxes[0]; ii++)
-      {
-	k = (long) (data.image[ID].array.F[jj*naxes[0]+ii]*N);
-	if(k<0)
-	  k = 0;
-	if(k>N-1)
-	  k = N-1;
-	histo[k]++;
-      }
-  for(k=0;k<N;k++)
-    histo[k] *= 1.0/naxes[1]/naxes[0];
-
-  imp[0] = histo[0];
-  for(k=1;k<N;k++)
-    imp[k] = imp[k-1]+histo[k];
-  for(k=0;k<N;k++)
-    imp[k] /= imp[N-1];
-
-
-  printf("SIGMA = %f, CENTER = %f\n",sigma,center);
-
-  for(ii=0;ii<N;ii++)
-    {
-      x = 2.0*(1.0*ii/N-center);
-      histo[ii] = exp(-(x*x)/sigma/sigma);
-      impr[ii] = 0.0;
-    }
-  impr[0] = histo[0];
-  for(k=1;k<N;k++)
-    impr[k] = impr[k-1]+histo[k];
-  for(k=0;k<N;k++)
-    impr[k] /= impr[N-1];
-
-  k = 0;
-  for(k1=0;k1<N;k1++)
-    {
-      x = 1.0*k1/N;
-      while(impr[k]<x)
-	k++;
-      if(k>N-1)
-	k = N-1;
-      imprinv[k1] = 1.0*k/N;
+        histo[ii] = 0.0;
+        imp[ii] = 0.0;
     }
 
-  ID_out = create_2Dimage_ID(ID_out_name,naxes[0],naxes[1]);
-  for(jj = 0; jj < naxes[1]; jj++) 
-    for (ii = 0; ii < naxes[0]; ii++)
-      {
-	k1 = (long) (data.image[ID].array.F[jj*naxes[0]+ii]*N);
-	if(k1<0)
-	  k1 = 0;
-	if(k1>N-1)
-	  k1 = N-1;
-	k = (long) (imp[k1]*N);
-	if(k<0)
-	  k = 0;
-	if(k>N-1)
-	  k = N-1;
-	data.image[ID_out].array.F[jj*naxes[0]+ii] = imprinv[k];
-      }
+    for(uint32_t  jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t  ii = 0; ii < naxes[0]; ii++)
+        {
+            k = (long) (data.image[ID].array.F[jj*naxes[0]+ii]*N);
+            if(k<0)
+                k = 0;
+            if(k>N-1)
+                k = N-1;
+            histo[k]++;
+        }
+    for(k=0; k<N; k++)
+        histo[k] *= 1.0/naxes[1]/naxes[0];
 
-  free(histo);
-  free(imp);
-  free(impr);
-  free(imprinv);
+    imp[0] = histo[0];
+    for(k=1; k<N; k++)
+        imp[k] = imp[k-1]+histo[k];
+    for(k=0; k<N; k++)
+        imp[k] /= imp[N-1];
 
-  return(0);
+
+    printf("SIGMA = %f, CENTER = %f\n",sigma,center);
+
+    for(uint32_t  ii=0; ii<N; ii++)
+    {
+        x = 2.0*(1.0*ii/N-center);
+        histo[ii] = exp(-(x*x)/sigma/sigma);
+        impr[ii] = 0.0;
+    }
+    impr[0] = histo[0];
+    for(k=1; k<N; k++)
+        impr[k] = impr[k-1]+histo[k];
+    for(k=0; k<N; k++)
+        impr[k] /= impr[N-1];
+
+    k = 0;
+    for(k1=0; k1<N; k1++)
+    {
+        x = 1.0*k1/N;
+        while(impr[k]<x)
+            k++;
+        if(k>N-1)
+            k = N-1;
+        imprinv[k1] = 1.0*k/N;
+    }
+
+    ID_out = create_2Dimage_ID(ID_out_name,naxes[0],naxes[1]);
+    for(uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++)
+        {
+            k1 = (long) (data.image[ID].array.F[jj*naxes[0]+ii]*N);
+            if(k1<0)
+                k1 = 0;
+            if(k1>N-1)
+                k1 = N-1;
+            k = (long) (imp[k1]*N);
+            if(k<0)
+                k = 0;
+            if(k>N-1)
+                k = N-1;
+            data.image[ID_out].array.F[jj*naxes[0]+ii] = imprinv[k];
+        }
+
+    free(histo);
+    free(imp);
+    free(impr);
+    free(imprinv);
+
+    return(0);
 }
+
+
+
+
 
 // load all images matching strfilter + .fits
 // return number of images loaded
 // image name in buffer is same as file name without extension
-long load_fitsimages(const char *strfilter)
+long load_fitsimages(
+    const char *strfilter
+)
 {
-  long cnt = 0;
-  char command[SBUFFERSIZE];
-  char fname[SBUFFERSIZE];
-  char fname1[SBUFFERSIZE];
-  FILE *fp;
-  int n;
+    long cnt = 0;
+    char command[SBUFFERSIZE];
+    char fname[SBUFFERSIZE];
+    char fname1[SBUFFERSIZE];
+    FILE *fp;
+    int n;
 
-  n = snprintf(command,SBUFFERSIZE,"ls %s.fits > flist.tmp\n",strfilter);
-  if(n >= SBUFFERSIZE) 
-    printERROR(__FILE__,__func__,__LINE__,"Attempted to write string buffer with too many characters");
+    n = snprintf(command,SBUFFERSIZE,"ls %s.fits > flist.tmp\n",strfilter);
+    if(n >= SBUFFERSIZE)
+        printERROR(__FILE__,__func__,__LINE__,"Attempted to write string buffer with too many characters");
 
-  if(system(command)==-1)
+    if(system(command)==-1)
     {
-      printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n",command,__func__,__FILE__,__LINE__);
-      exit(0);
-    }
-  
-  if((fp = fopen("flist.tmp","r"))==NULL)
-     {
-       C_ERRNO = errno;
-       printERROR(__FILE__,__func__,__LINE__,"fopen() error");
-       exit(0);
-     }
-
-  while(fgets(fname,200,fp)!=NULL)
-    {
-      fname[strlen(fname)-1] = '\0';
-      strncpy(fname1,fname,strlen(fname)-5);
-      fname1[strlen(fname)-5] = '\0';
-      load_fits(fname,fname1, 1);
-      printf("[%ld] Image %s loaded -> %s\n",cnt,fname,fname1);
-      fflush(stdout);
-      cnt++;
+        printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n",command,__func__,__FILE__,__LINE__);
+        exit(0);
     }
 
-  fclose(fp);
-  n = snprintf(command,SBUFFERSIZE,"rm flist.tmp");
-  if(n >= SBUFFERSIZE) 
-    printERROR(__FILE__,__func__,__LINE__,"Attempted to write string buffer with too many characters");
-
-  if(system(command)==-1)
+    if((fp = fopen("flist.tmp","r"))==NULL)
     {
-      printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n",command,__func__,__FILE__,__LINE__);
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"fopen() error");
+        exit(0);
     }
-  
-  printf("%ld images loaded\n",cnt);
 
-  return(cnt);
+    while(fgets(fname,200,fp)!=NULL)
+    {
+        fname[strlen(fname)-1] = '\0';
+        strncpy(fname1,fname,strlen(fname)-5);
+        fname1[strlen(fname)-5] = '\0';
+        load_fits(fname,fname1, 1);
+        printf("[%ld] Image %s loaded -> %s\n",cnt,fname,fname1);
+        fflush(stdout);
+        cnt++;
+    }
+
+    fclose(fp);
+    n = snprintf(command,SBUFFERSIZE,"rm flist.tmp");
+    if(n >= SBUFFERSIZE)
+        printERROR(__FILE__,__func__,__LINE__,"Attempted to write string buffer with too many characters");
+
+    if(system(command)==-1)
+    {
+        printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n",command,__func__,__FILE__,__LINE__);
+        exit(0);
+    }
+
+    printf("%ld images loaded\n",cnt);
+
+    return(cnt);
 }
+
+
 
 
 
 // load all images matching strfilter + .fits into a data cube
 // return number of images loaded
 // image name in buffer is same as file name without extension
-long load_fitsimages_cube(const char *strfilter, const char *ID_out_name)
+long load_fitsimages_cube(
+    const char *strfilter,
+    const char *ID_out_name
+)
 {
     long cnt = 0;
     char command[SBUFFERSIZE];
@@ -2578,17 +2705,17 @@ long load_fitsimages_cube(const char *strfilter, const char *ID_out_name)
     }
 
     fclose(fp);
-  /*  n = snprintf(command,SBUFFERSIZE,"rm flist.tmp");
-    if(n >= SBUFFERSIZE)
-        printERROR(__FILE__,__func__,__LINE__,"Attempted to write string buffer with too many characters");
+    /*  n = snprintf(command,SBUFFERSIZE,"rm flist.tmp");
+      if(n >= SBUFFERSIZE)
+          printERROR(__FILE__,__func__,__LINE__,"Attempted to write string buffer with too many characters");
 
-    if(system(command)==-1)
-    {
-        printf("WARNING: system(\"%s\") failed [function: %s  file: %s  line: %d ]\n",command,__func__,__FILE__,__LINE__);
-        //exit(0);
-    }
+      if(system(command)==-1)
+      {
+          printf("WARNING: system(\"%s\") failed [function: %s  file: %s  line: %d ]\n",command,__func__,__FILE__,__LINE__);
+          //exit(0);
+      }
 
-*/
+    */
     printf("%ld images loaded into cube %s\n",cnt,ID_out_name);
 
     return(cnt);
@@ -2596,11 +2723,16 @@ long load_fitsimages_cube(const char *strfilter, const char *ID_out_name)
 
 
 
+
+
 // recenter cube frames such that the photocenter is on the central pixel
 // images are recentered by integer number of pixels
-long basic_cube_center(const char *ID_in_name, const char *ID_out_name)
+imageID basic_cube_center(
+    const char *ID_in_name,
+    const char *ID_out_name
+)
 {
-    long IDin,IDout;
+    imageID IDin,IDout;
     long xsize,ysize,ksize;
     long ii,jj,kk,ii1,jj1;
     double tot,totii,totjj;
@@ -2672,7 +2804,7 @@ long basic_cube_center(const char *ID_in_name, const char *ID_out_name)
     free(tx);
     free(ty);
 
-    return(0);
+    return IDout;
 }
 
 
@@ -2683,9 +2815,13 @@ long basic_cube_center(const char *ID_in_name, const char *ID_out_name)
 // excludes point which are more than alpha x sigma
 // writes an rms value frame as rmsim
 //
-long cube_average(const char *ID_in_name, const char *ID_out_name, float alpha)
+imageID cube_average(
+    const char *ID_in_name,
+    const char *ID_out_name,
+    float alpha
+)
 {
-    long IDin,IDout,IDrms;
+    imageID IDin,IDout,IDrms;
     long xsize,ysize,ksize;
     long ii,kk;
     double *array = NULL;
@@ -2756,9 +2892,12 @@ long cube_average(const char *ID_in_name, const char *ID_out_name, float alpha)
 
 
 
-long cube_collapse(const char *ID_in_name, const char *ID_out_name)
+imageID cube_collapse(
+    const char *ID_in_name,
+    const char *ID_out_name
+)
 {
-    long IDin, IDout;
+    imageID IDin, IDout;
     long xsize, ysize, ksize;
     long ii,kk;
 
@@ -2781,147 +2920,151 @@ long cube_collapse(const char *ID_in_name, const char *ID_out_name)
 
 
 
-long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout_name)
+imageID image_basic_indexmap(
+    char *ID_index_name,
+    char *ID_values_name,
+    char *IDout_name
+)
 {
-	long IDindex, IDvalues;
-	long IDout;
-	long xsize, ysize, xysize;
-	long val_xsize, val_ysize, val_xysize;
-	uint8_t datatype;
-	uint8_t val_datatype;
-	float *arrayf;
-	long ii, i;
-	
-	IDindex = image_ID(ID_index_name);
-	IDvalues = image_ID(ID_values_name);
-	
-	xsize = data.image[IDindex].md[0].size[0];
-	ysize = data.image[IDindex].md[0].size[1];
-	xysize = xsize * ysize;
-	datatype = data.image[IDindex].md[0].datatype;
+    imageID IDindex, IDvalues;
+    imageID IDout;
+    long xsize, ysize, xysize;
+    long val_xsize, val_ysize, val_xysize;
+    uint8_t datatype;
+    uint8_t val_datatype;
+    float *arrayf;
+    long ii, i;
 
-	val_xsize = data.image[IDvalues].md[0].size[0];
-	val_ysize = data.image[IDvalues].md[0].size[1];
-	val_xysize = val_xsize * val_ysize;
-	val_datatype = data.image[IDindex].md[0].datatype;
-	
-	IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
-	
-	if(val_datatype == _DATATYPE_FLOAT)
-		arrayf = data.image[IDvalues].array.F;
-	else 
-	{
-		arrayf = (float*) malloc(sizeof(float)*val_xysize);
-		for(i=0;i<val_xysize;i++)
-			arrayf[i] = (float) data.image[IDvalues].array.D[i];
-	}
-	
-	switch( datatype ) {
-		
-		case _DATATYPE_FLOAT:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) (data.image[IDindex].array.F[ii]+0.1);
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];					
-			}
-		break;
-		
-		case _DATATYPE_DOUBLE:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) (data.image[IDindex].array.D[ii]+0.1);
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
+    IDindex = image_ID(ID_index_name);
+    IDvalues = image_ID(ID_values_name);
 
+    xsize = data.image[IDindex].md[0].size[0];
+    ysize = data.image[IDindex].md[0].size[1];
+    xysize = xsize * ysize;
+    datatype = data.image[IDindex].md[0].datatype;
 
-		
-		case _DATATYPE_UINT8:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) data.image[IDindex].array.UI8[ii];
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
-		
-		case _DATATYPE_INT8:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) data.image[IDindex].array.SI8[ii];
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
-		
-		case _DATATYPE_UINT16:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) data.image[IDindex].array.UI16[ii];
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
-		
-		case _DATATYPE_INT16:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) data.image[IDindex].array.SI16[ii];
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
-		
-		case _DATATYPE_UINT32:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) data.image[IDindex].array.UI32[ii];
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
-		
-		case _DATATYPE_INT32:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) data.image[IDindex].array.SI32[ii];
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
-		
-		case _DATATYPE_UINT64:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) data.image[IDindex].array.UI64[ii];
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
-		
-		case _DATATYPE_INT64:
-		for(ii=0;ii<xysize;ii++)
-			{
-				i = (long) data.image[IDindex].array.SI64[ii];
-				if((i>-1)&&(i<val_xysize))
-					data.image[IDout].array.F[ii] = arrayf[i];
-			}
-		break;
-		
-		default:
-		printf("ERROR: datatype not supported\n");
-		return EXIT_FAILURE;
-		break;
-	}
-	
+    val_xsize = data.image[IDvalues].md[0].size[0];
+    val_ysize = data.image[IDvalues].md[0].size[1];
+    val_xysize = val_xsize * val_ysize;
+    val_datatype = data.image[IDindex].md[0].datatype;
+
+    IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
+
+    if(val_datatype == _DATATYPE_FLOAT)
+        arrayf = data.image[IDvalues].array.F;
+    else
+    {
+        arrayf = (float*) malloc(sizeof(float)*val_xysize);
+        for(i=0; i<val_xysize; i++)
+            arrayf[i] = (float) data.image[IDvalues].array.D[i];
+    }
+
+    switch( datatype ) {
+
+    case _DATATYPE_FLOAT:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) (data.image[IDindex].array.F[ii]+0.1);
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    case _DATATYPE_DOUBLE:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) (data.image[IDindex].array.D[ii]+0.1);
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
 
 
-	if(val_datatype != _DATATYPE_FLOAT)
-		free(arrayf);
-	
-	return(IDout);
+
+    case _DATATYPE_UINT8:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) data.image[IDindex].array.UI8[ii];
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    case _DATATYPE_INT8:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) data.image[IDindex].array.SI8[ii];
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    case _DATATYPE_UINT16:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) data.image[IDindex].array.UI16[ii];
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    case _DATATYPE_INT16:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) data.image[IDindex].array.SI16[ii];
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    case _DATATYPE_UINT32:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) data.image[IDindex].array.UI32[ii];
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    case _DATATYPE_INT32:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) data.image[IDindex].array.SI32[ii];
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    case _DATATYPE_UINT64:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) data.image[IDindex].array.UI64[ii];
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    case _DATATYPE_INT64:
+        for(ii=0; ii<xysize; ii++)
+        {
+            i = (long) data.image[IDindex].array.SI64[ii];
+            if((i>-1)&&(i<val_xysize))
+                data.image[IDout].array.F[ii] = arrayf[i];
+        }
+        break;
+
+    default:
+        printf("ERROR: datatype not supported\n");
+        return EXIT_FAILURE;
+        break;
+    }
+
+
+
+    if(val_datatype != _DATATYPE_FLOAT)
+        free(arrayf);
+
+    return(IDout);
 }
 
 
@@ -2930,14 +3073,17 @@ long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout
 
 // coadd all images matching strfilter + .fits
 // return number of images added
-long basic_addimagesfiles(const char *strfilter, const char *outname)
+long basic_addimagesfiles(
+    const char *strfilter,
+    const char *outname
+)
 {
     long cnt = 0;
     char command[SBUFFERSIZE];
     char fname[SBUFFERSIZE];
     char fname1[SBUFFERSIZE];
     FILE *fp;
-    long ID;
+    imageID ID;
     int init = 0; // becomes 1 when first image encountered
     int n;
 
@@ -3000,26 +3146,31 @@ long basic_addimagesfiles(const char *strfilter, const char *outname)
 
 // coadd all images matching strfilter + .fits
 // return number of images added
-long basic_aveimagesfiles(const char *strfilter, const char *outname)
+long basic_aveimagesfiles(
+    const char *strfilter,
+    const char *outname
+)
 {
-  long cnt;
-  
-  cnt = basic_addimagesfiles(strfilter, outname);
-  arith_image_cstmult_inplace(outname,1.0/cnt);  
+    long cnt;
 
-  return(cnt);
+    cnt = basic_addimagesfiles(strfilter, outname);
+    arith_image_cstmult_inplace(outname,1.0/cnt);
+
+    return(cnt);
 }
 
 
 
 // add all images starting with prefix
 // return number of images added
-long basic_addimages(const char *prefix, const char *ID_out)
+long basic_addimages(
+    const char *prefix,
+    const char *ID_out
+)
 {
     long i;
     int init = 0; // becomes 1 when first image encountered
     long cnt = 0;
-    long nelements;
 
     for (i=0; i<data.NB_MAX_IMAGE; i++)
         if(data.image[i].used == 1)
@@ -3029,7 +3180,6 @@ long basic_addimages(const char *prefix, const char *ID_out)
                 if(init==0)
                 {
                     init = 1;
-                    nelements = data.image[i].md[0].nelement;
                     copy_image_ID(data.image[i].name, ID_out, 0);
                 }
                 else
@@ -3044,7 +3194,11 @@ long basic_addimages(const char *prefix, const char *ID_out)
 
 
 // paste all images starting with prefix
-long basic_pasteimages(const char *prefix, long NBcol, const char *IDout_name)
+long basic_pasteimages(
+    const char *prefix,
+    long        NBcol,
+    const char *IDout_name
+)
 {
     long i;
     long cnt = 0;
@@ -3058,7 +3212,7 @@ long basic_pasteimages(const char *prefix, long NBcol, const char *IDout_name)
     long xsize1,ysize1;
     long iioffset,jjoffset;
     long ii,jj,ii1,jj1;
-    long IDout;
+    imageID IDout;
 
     for (i=0; i<data.NB_MAX_IMAGE; i++)
         if(data.image[i].used == 1)
@@ -3125,14 +3279,17 @@ long basic_pasteimages(const char *prefix, long NBcol, const char *IDout_name)
 
 // average all images starting with prefix
 // return number of images added
-long basic_averageimages(const char *prefix, const char *ID_out)
+long basic_averageimages(
+    const char *prefix,
+    const char *ID_out
+)
 {
-  long cnt;
+    long cnt;
 
-  cnt = basic_addimages(prefix,ID_out);
-  arith_image_cstmult_inplace(ID_out,(float) (1.0/cnt));
+    cnt = basic_addimages(prefix,ID_out);
+    arith_image_cstmult_inplace(ID_out,(float) (1.0/cnt));
 
-  return(cnt);
+    return(cnt);
 }
 
 
@@ -3145,9 +3302,14 @@ long basic_averageimages(const char *prefix, const char *ID_out)
  * ---------------------------------------------------------------------- */
 
 
-long basic_resizeim(const char *imname_in, const char *imname_out, long xsizeout, long ysizeout)
+long basic_resizeim(
+    const char *imname_in,
+    const char *imname_out,
+    long xsizeout,
+    long ysizeout
+)
 {
-    long ID, IDout;
+    imageID ID, IDout;
     long naxis = 2;
     uint32_t naxes[2];
     uint32_t naxesout[2];
@@ -3235,49 +3397,54 @@ long basic_resizeim(const char *imname_in, const char *imname_out, long xsizeout
  * ---------------------------------------------------------------------- */
 
 
-long image_basic_3Dto2D(const char *IDname)
+imageID image_basic_3Dto2D(
+    const char *IDname
+)
 {
-	long ID;
-	
-	ID = image_ID(IDname);
-	if(data.image[ID].md[0].naxis != 3)
-	{
-		printf("ERROR: image needs to have 3 axis\n");
-	}
-	else
-	{
-		data.image[ID].md[0].size[0] *= data.image[ID].md[0].size[1];
-		data.image[ID].md[0].size[1] =  data.image[ID].md[0].size[2];
-		data.image[ID].md[0].naxis = 2;
-	}
+    imageID ID;
 
-	return(ID);
+    ID = image_ID(IDname);
+    if(data.image[ID].md[0].naxis != 3)
+    {
+        printf("ERROR: image needs to have 3 axis\n");
+    }
+    else
+    {
+        data.image[ID].md[0].size[0] *= data.image[ID].md[0].size[1];
+        data.image[ID].md[0].size[1] =  data.image[ID].md[0].size[2];
+        data.image[ID].md[0].naxis = 2;
+    }
+
+    return(ID);
 }
 
 
 
 
 
-long image_basic_SwapAxis2D(const char *IDin_name, const char *IDout_name)
+imageID image_basic_SwapAxis2D(
+    const char *IDin_name,
+    const char *IDout_name
+)
 {
-	long IDin;
-	long IDout = -1;
-	long ii, jj;
-	
-	IDin = image_ID(IDin_name);
-	if(data.image[IDin].md[0].naxis != 2)
-	{
-		printf("ERROR: image needs to have 2 axis\n");
-	}
-	else
-	{
-		IDout = create_2Dimage_ID(IDout_name, data.image[IDin].md[0].size[1], data.image[IDin].md[0].size[0]);
-		for(ii=0;ii<data.image[IDin].md[0].size[0];ii++)
-			for(jj=0;jj<data.image[IDin].md[0].size[1];jj++)
-				data.image[IDout].array.F[ii*data.image[IDin].md[0].size[1]+jj] = data.image[IDin].array.F[jj*data.image[IDin].md[0].size[0]+ii];
-	}
+    imageID IDin;
+    imageID IDout = -1;
+    long ii, jj;
 
-	return(IDout);
+    IDin = image_ID(IDin_name);
+    if(data.image[IDin].md[0].naxis != 2)
+    {
+        printf("ERROR: image needs to have 2 axis\n");
+    }
+    else
+    {
+        IDout = create_2Dimage_ID(IDout_name, data.image[IDin].md[0].size[1], data.image[IDin].md[0].size[0]);
+        for(ii=0; ii<data.image[IDin].md[0].size[0]; ii++)
+            for(jj=0; jj<data.image[IDin].md[0].size[1]; jj++)
+                data.image[IDout].array.F[ii*data.image[IDin].md[0].size[1]+jj] = data.image[IDin].array.F[jj*data.image[IDin].md[0].size[0]+ii];
+    }
+
+    return(IDout);
 }
 
 
@@ -3299,793 +3466,811 @@ long image_basic_SwapAxis2D(const char *IDin_name, const char *IDout_name)
  * 
  * ---------------------------------------------------------------------- */
 
-long basic_tableto2Dim(const char *fname, float xmin, float xmax, float ymin, float ymax, long xsize, long ysize, const char *ID_name, float convsize)
+imageID basic_tableto2Dim(
+    const char *fname,
+    float       xmin,
+    float       xmax,
+    float       ymin,
+    float       ymax,
+    long        xsize,
+    long        ysize,
+    const char *ID_name,
+    float       convsize
+)
 {
-  FILE *fp;
-  long ID;
-  float x,y;
-  long ii,jj;
-  double tot,cnt,cntx,cnty,totx,toty,slx,sly,xave,yave,vave,totsx,totsy;
-  long i;
-  long NBpts;
-  double *xarray = NULL;
-  double *yarray = NULL;
-  double *varray = NULL;
-  void *ptree = NULL;
-  double buf[2];
-  double pt[2];
-  double radius, radius0;
-  double *pv = NULL;
-  struct kdres *presults = NULL;
-  double dist;
-  double *pos;
-  //  double tmp1;
-  int ok;
-  
-  long long cnttotal = 0;
-  long long cntrejected = 0;
-  double valm,val0,val1;
+    FILE *fp;
+    imageID ID;
+    float x,y;
+    long ii,jj;
+    double tot,cnt,cntx,cnty,totx,toty,slx,sly,xave,yave,vave,totsx,totsy;
+    long i;
+    long NBpts;
+    double *xarray = NULL;
+    double *yarray = NULL;
+    double *varray = NULL;
+    void *ptree = NULL;
+    double buf[2];
+    double pt[2];
+    double radius, radius0;
+    double *pv = NULL;
+    struct kdres *presults = NULL;
+    double dist;
+    double *pos;
+    //  double tmp1;
+    int ok;
 
-  // nearest points
-  long NBnpt,NBnptmax;
-  double *pt_x = NULL;
-  double *pt_y = NULL;
-  double *pt_val = NULL;
-  float *pt_val_cp;
-  double *pt_coeff = NULL;
-  double *pt_coeff1 = NULL;
+    long long cnttotal = 0;
+    long long cntrejected = 0;
+    double valm,val0,val1;
 
-  long IDslx,IDsly,IDxerr,IDyerr;
-  double xerr,yerr;
+    // nearest points
+    long NBnpt,NBnptmax;
+    double *pt_x = NULL;
+    double *pt_y = NULL;
+    double *pt_val = NULL;
+    float *pt_val_cp;
+    double *pt_coeff = NULL;
+    double *pt_coeff1 = NULL;
 
-  double radiusmax = 50.0;
+    long IDslx,IDsly,IDxerr,IDyerr;
 
-  printf("table : %s\n",fname);
-  printf("range : %f -> %f    %f -> %f\n",xmin,xmax,ymin,ymax);
-  printf("output: %s (%ld x %ld)\n",ID_name,xsize,ysize);
-  printf("kernel size = %f\n",convsize);
-  printf("radiusmax = %f\n",radiusmax);
-  
-  pos = (double*) malloc(sizeof(double)*2);
-  if(pos==NULL)
+    double radiusmax = 50.0;
+
+    printf("table : %s\n",fname);
+    printf("range : %f -> %f    %f -> %f\n",xmin,xmax,ymin,ymax);
+    printf("output: %s (%ld x %ld)\n",ID_name,xsize,ysize);
+    printf("kernel size = %f\n",convsize);
+    printf("radiusmax = %f\n",radiusmax);
+
+    pos = (double*) malloc(sizeof(double)*2);
+    if(pos==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
-  pos[0] = 0.0;
-  pos[1] = 0.0;
+    pos[0] = 0.0;
+    pos[1] = 0.0;
 
-  // load table into array
-  NBpts = file_number_lines(fname);
-  xarray = (double*) malloc(sizeof(double)*NBpts);
-  if(xarray==NULL)
+    // load table into array
+    NBpts = file_number_lines(fname);
+    xarray = (double*) malloc(sizeof(double)*NBpts);
+    if(xarray==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
-    }
-
-  yarray = (double*) malloc(sizeof(double)*NBpts);
-  if(yarray==NULL)
-    {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  varray = (double*) malloc(sizeof(double)*NBpts);
-  if(varray==NULL)
+    yarray = (double*) malloc(sizeof(double)*NBpts);
+    if(yarray==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
-    }
-  
-  if((fp = fopen(fname,"r"))==NULL)
-     {
-       C_ERRNO = errno;
-       printERROR(__FILE__,__func__,__LINE__,"fopen() error");
-       exit(0);
-     }
-  
-  for(i=0;i<NBpts;i++)
-    {
-      if(fscanf(fp,"%lf %lf %lf\n",&xarray[i],&yarray[i],&varray[i])!=3)
-	{
-	  fprintf(stderr,"%c[%d;%dm ERROR: fscanf [ %s  %s  %d ] %c[%d;m\n", (char) 27, 1, 31, __FILE__, __func__, __LINE__, (char) 27, 0);
-	  exit(0);
-	}	
-     }
-  fclose(fp);
-
-  printf("%ld points read\n",NBpts);
-  fflush(stdout);
-
-
-  /* create a k-d tree for 2-dimensional points */
-  ptree = kd_create( 2 );
-  
-  
-  /* add nodes to the tree */
-  for( i=0; i<NBpts; i++ ) {
-    buf[0] = xarray[i];
-    buf[1] = yarray[i];
-    kd_insert( ptree, buf, &varray[i] );
-  }
-
-  ID = create_2Dimage_ID(ID_name,xsize,ysize);
-
-  IDslx = create_2Dimage_ID("tmp2dinterpslx",xsize,ysize);
-  IDsly = create_2Dimage_ID("tmp2dinterpsly",xsize,ysize);
-  IDxerr = create_2Dimage_ID("tmp2dinterpxerr",xsize,ysize);
-  IDyerr = create_2Dimage_ID("tmp2dinterpyerr",xsize,ysize);
-
-  // automatically set radius0 such that if points are randomly distributed, a circle of radius radius0 includes sqrt(NBpts) points
-  //  tmp1 = sqrt(NBpts);
-  //  if(tmp1<100.0)
-  //   tmp1 = 100.0;
-  // if(tmp1>1000.0)
-  //  tmp1 = 1000.0;
-  // radius0 = sqrt(tmp1/PI)*sqrt((xmax-xmin)*(ymax-ymin))/sqrt(NBpts);
-  radius0 = 5.0*convsize/sqrt(1.0*xsize*ysize);
-  radius0 *= sqrt((xmax-xmin)*(ymax-ymin));
-
-  NBnpt = 15000;
-  NBnptmax = NBnpt;
-  pt_x = (double*) malloc(sizeof(double)*NBnpt);
-  if(pt_x==NULL)
-    {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  pt_y = (double*) malloc(sizeof(double)*NBnpt);
-  if(pt_y==NULL)
+    varray = (double*) malloc(sizeof(double)*NBpts);
+    if(varray==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  pt_val = (double*) malloc(sizeof(double)*NBnpt);
-  if(pt_val==NULL)
+    if((fp = fopen(fname,"r"))==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"fopen() error");
+        exit(0);
     }
 
-  pt_coeff = (double*) malloc(sizeof(double)*NBnpt);
-  if(pt_coeff==NULL)
+    for(i=0; i<NBpts; i++)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
+        if(fscanf(fp,"%lf %lf %lf\n",&xarray[i],&yarray[i],&varray[i])!=3)
+        {
+            fprintf(stderr,"%c[%d;%dm ERROR: fscanf [ %s  %s  %d ] %c[%d;m\n", (char) 27, 1, 31, __FILE__, __func__, __LINE__, (char) 27, 0);
+            exit(0);
+        }
+    }
+    fclose(fp);
+
+    printf("%ld points read\n",NBpts);
+    fflush(stdout);
+
+
+    /* create a k-d tree for 2-dimensional points */
+    ptree = kd_create( 2 );
+
+
+    /* add nodes to the tree */
+    for( i=0; i<NBpts; i++ ) {
+        buf[0] = xarray[i];
+        buf[1] = yarray[i];
+        kd_insert( ptree, buf, &varray[i] );
     }
 
-  pt_coeff1 = (double*) malloc(sizeof(double)*NBnpt);
-  if(pt_coeff1==NULL)
+    ID = create_2Dimage_ID(ID_name,xsize,ysize);
+
+    IDslx = create_2Dimage_ID("tmp2dinterpslx",xsize,ysize);
+    IDsly = create_2Dimage_ID("tmp2dinterpsly",xsize,ysize);
+    IDxerr = create_2Dimage_ID("tmp2dinterpxerr",xsize,ysize);
+    IDyerr = create_2Dimage_ID("tmp2dinterpyerr",xsize,ysize);
+
+    // automatically set radius0 such that if points are randomly distributed, a circle of radius radius0 includes sqrt(NBpts) points
+    //  tmp1 = sqrt(NBpts);
+    //  if(tmp1<100.0)
+    //   tmp1 = 100.0;
+    // if(tmp1>1000.0)
+    //  tmp1 = 1000.0;
+    // radius0 = sqrt(tmp1/PI)*sqrt((xmax-xmin)*(ymax-ymin))/sqrt(NBpts);
+    radius0 = 5.0*convsize/sqrt(1.0*xsize*ysize);
+    radius0 *= sqrt((xmax-xmin)*(ymax-ymin));
+
+    NBnpt = 15000;
+    NBnptmax = NBnpt;
+    pt_x = (double*) malloc(sizeof(double)*NBnpt);
+    if(pt_x==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
-    }
-  
-  pt_val_cp = (float*) malloc(sizeof(float)*NBnpt);
-  if(pt_val_cp==NULL)
-    {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc() error");
-      exit(0);
-    }
-
-
-  pt_x[0] = 0.0;
-  pt_y[0] = 0.0;
-  pt_val[0] = 0.0;
-  pt_coeff[0] = 0.0;
-  pt_coeff1[0] = 0.0;
-  pt_val_cp[0] = 0.0;
-  
-
-  printf("radius = %g\n",radius0);
-  fflush(stdout);
-
-  printf("\n");
-  for(ii=0;ii<xsize;ii++)
-    {
-      printf("\r[%ld/%ld]   ",ii,xsize);
-      fflush(stdout);
-      for(jj=0;jj<ysize;jj++)
-	{
-	  //	printf("[%ld %ld]\n",ii,jj);
-	  //	fflush(stdout);
-
-	  x = (float) (1.0*xmin + 1.0*(xmax-xmin)*ii/xsize);
-	  y = (float) (1.0*ymin + 1.0*(ymax-ymin)*jj/ysize);
-	  
-	  
-	  /* find points closest to the origin and within distance radius */
-	  pt[0] = x;
-	  pt[1] = y;
-	  
-	  radius = radius0;
-	  ok = 0;
-	  while(ok==0)
-	    {
-	      presults = kd_nearest_range( ptree, pt, radius );
-	      
-	      //presults = kd_nearest( ptree, pt );
-	      
-	      /* print out all the points found in results */
-	      //  printf( "[%g %g] found %d results (radius = %f):\n", x,y, kd_res_size(presults), radius );
-	      if((kd_res_size(presults)<30)&&(radius<radiusmax))
-		{
-		  radius *= 1.5;
-		  //	  printf("        radius -> %f\n",radius);
-		  //  fflush(stdout);
-		}
-	      else
-		ok = 1;
-	    }
-	  
-	  if(radius < 0.99*radiusmax)
-	    {
-	      NBnpt = kd_res_size(presults);
-	      //printf("NBnpt = %ld\n",NBnpt);
-	      //fflush(stdout);
-	      if(NBnpt>NBnptmax)
-		{
-		  pt_x = realloc(pt_x,sizeof(double)*NBnpt);
-		  pt_y = realloc(pt_y,sizeof(double)*NBnpt);
-		  pt_val = realloc(pt_val,sizeof(double)*NBnpt);
-		  pt_coeff = realloc(pt_coeff,sizeof(double)*NBnpt);
-		  pt_coeff1 = realloc(pt_coeff1,sizeof(double)*NBnpt);
-		  NBnptmax = NBnpt;
-		  //  printf("Reallocation to %ld points\n",NBnpt);
-		  // fflush(stdout);
-		}
-	      
-	      
-	      i = 0;
-	      while( kd_res_end( presults ) == 0 ) {
-		/* get the data and position of the current result item */
-		pv = (double*) kd_res_item( presults, pos );
-		
-		/* compute the distance of the current result from the pt */
-		dist = sqrt( (pos[0]-pt[0])*(pos[0]-pt[0]) + (pos[1]-pt[1])*(pos[1]-pt[1]));
-		
-		pt_x[i] = pos[0];
-		pt_y[i] = pos[1];
-		pt_val[i] = *pv;
-		pt_val_cp[i] = (float) pt_val[i];
-		pt_coeff[i] = pow( (1.0+cos(M_PI*dist/radius0))/2.0 ,2.0);
-		pt_coeff1[i] = pow(dist/radius0,2.0)*(1.0+cos(M_PI*dist/radius0))/2.0;
-		/* go to the next entry */
-		free(pv);
-		kd_res_next( presults );
-		
-		i++;
-	      }
-	      
-	      
-	      // reject outliers
-	      // sort values
-	      quick_sort_float(pt_val_cp,NBnpt);
-	      valm = pt_val_cp[(long) (NBnpt/2)]; // median
-	      val0 = pt_val_cp[(long) (0.3*NBnpt)];
-	      val1 = pt_val_cp[(long) (0.7*NBnpt)];
-	      for(i=0;i<NBnpt;i++)
-		{
-		  cnttotal ++;
-		  if(fabs(pt_val[i]-valm)>3.0*(val1-val0))
-		    {
-		      pt_coeff[i] = 0.0;
-		      pt_coeff1[i] = 0.0;
-		      cntrejected ++;
-		    }
-		}
-	      
-	      
-	      
-	      tot = 0.0;
-	      totx = 0.0;
-	      toty = 0.0;
-	      cnt = 0.0;
-	      for(i=0;i<NBnpt;i++)
-		{
-		  tot += pt_val[i] * pt_coeff[i];
-		  totx += pt_x[i] * pt_coeff[i];
-		  toty += pt_y[i] * pt_coeff[i];
-		  cnt += pt_coeff[i];
-		}
-	      
-	      xave = totx/cnt;
-	      yave = toty/cnt;
-	      vave = tot/cnt;
-	      
-	      totsx = 0.0;
-	      totsy = 0.0;
-	      cntx = 0.0;
-	      cnty = 0.0;
-	      
-	      for(i=0;i<NBnpt;i++)
-		{
-		  if(fabs(pt_x[i]-xave)>0.01*radius0)
-		    {
-		      cntx += pt_coeff1[i];
-		      totsx += (pt_val[i]-vave) / (pt_x[i]-xave) * pt_coeff1[i];
-		    }
-		  if(fabs(pt_y[i]-yave)>0.01*radius0)
-		    {
-		      cnty += pt_coeff1[i];
-		      totsy += (pt_val[i]-vave) / (pt_y[i]-yave) * pt_coeff1[i];	    
-		    }
-		}
-	      if(cntx<0.0001)
-		cntx = 0.0001;
-	      if(cnty<0.0001)
-		cnty = 0.0001;
-	      slx = totsx / cntx;
-	      sly = totsy / cnty;
-	      
-	      data.image[ID].array.F[jj*xsize+ii] = (float) vave; //vave + (x-xave)*slx + (y-yave)*sly;
-	      
-	      data.image[IDxerr].array.F[jj*xsize+ii] = (float) (x-xave);
-	      data.image[IDyerr].array.F[jj*xsize+ii] = (float) (y-yave);
-	      data.image[IDslx].array.F[jj*xsize+ii] = (float) (slx);
-	      data.image[IDsly].array.F[jj*xsize+ii] = (float) (sly);
-	    }
-	}
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
 
-  free(pos);
-  printf("\n");
-
-  printf("fraction of points rejected = %g\n",(double) (1.0*cntrejected/cnttotal));
-
-  free(pt_x);
-  free(pt_y);
-  free(pt_val);
-  free(pt_val_cp);
-  free(pt_coeff);
-  free(pt_coeff1);
-
-  free(xarray);
-  free(yarray);
-  free(varray);
-  if(presults != NULL)
-    kd_res_free( presults );
-  if(presults != NULL)
+    pt_y = (double*) malloc(sizeof(double)*NBnpt);
+    if(pt_y==NULL)
     {
-      printERROR(__FILE__,__func__,__LINE__,"presults was not freed by kd_res_free. Attempting free(presults) and continuing.");
-      free(presults);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
-  kd_free(ptree);
-  if(ptree!=NULL)
+
+    pt_val = (double*) malloc(sizeof(double)*NBnpt);
+    if(pt_val==NULL)
     {
-      printERROR(__FILE__,__func__,__LINE__,"ptree was not freed by kd_free. Attempting free(ptree) and continuing.");
-      free(ptree);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
     }
-  save_fl_fits(ID_name,"!tmp2dinterp.fits");
 
-  make_gauss("kerg", xsize, ysize, convsize, (float) 1.0); //(long) (10.0*convsize+2.0));
+    pt_coeff = (double*) malloc(sizeof(double)*NBnpt);
+    if(pt_coeff==NULL)
+    {
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
+    }
 
-  fconvolve_padd("tmp2dinterpxerr","kerg",(long) (10.0*convsize+2.0),"tmp2dinterpxerrg");
-  fconvolve_padd("tmp2dinterpyerr","kerg",(long) (10.0*convsize+2.0),"tmp2dinterpyerrg");
-  fconvolve_padd("tmp2dinterpslx","kerg",(long) (10.0*convsize+2.0),"tmp2dinterpslxg");
-  fconvolve_padd("tmp2dinterpsly","kerg",(long) (10.0*convsize+2.0),"tmp2dinterpslyg");
+    pt_coeff1 = (double*) malloc(sizeof(double)*NBnpt);
+    if(pt_coeff1==NULL)
+    {
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
+    }
 
-  delete_image_ID("tmp2dinterpxerr");
-  delete_image_ID("tmp2dinterpyerr");
-  delete_image_ID("tmp2dinterpslx");
-  delete_image_ID("tmp2dinterpsly");
-
-  IDxerr = image_ID("tmp2dinterpxerrg");
-  IDyerr = image_ID("tmp2dinterpyerrg");
-  IDslx = image_ID("tmp2dinterpslxg");
-  IDsly = image_ID("tmp2dinterpslyg");
-  ID = image_ID(ID_name);
-
-  for(ii=0;ii<xsize;ii++)
-    for(jj=0;jj<ysize;jj++)
-      {						
-	xerr = data.image[IDxerr].array.F[jj*xsize+ii];
-	yerr = data.image[IDyerr].array.F[jj*xsize+ii];
-	slx = data.image[IDslx].array.F[jj*xsize+ii];
-	sly = data.image[IDsly].array.F[jj*xsize+ii];
-	//	data.image[ID].array.F[jj*xsize+ii] += xerr*slx+yerr*sly;
-      }
-
-  delete_image_ID("tmp2dinterpxerrg");
-  delete_image_ID("tmp2dinterpyerrg");
-  delete_image_ID("tmp2dinterpslxg");
-  delete_image_ID("tmp2dinterpslyg");
+    pt_val_cp = (float*) malloc(sizeof(float)*NBnpt);
+    if(pt_val_cp==NULL)
+    {
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc() error");
+        exit(0);
+    }
 
 
-  ID = image_ID(ID_name);
-  delete_image_ID("kerg");
+    pt_x[0] = 0.0;
+    pt_y[0] = 0.0;
+    pt_val[0] = 0.0;
+    pt_coeff[0] = 0.0;
+    pt_coeff1[0] = 0.0;
+    pt_val_cp[0] = 0.0;
 
-  return(ID);
+
+    printf("radius = %g\n",radius0);
+    fflush(stdout);
+
+    printf("\n");
+    for(ii=0; ii<xsize; ii++)
+    {
+        printf("\r[%ld/%ld]   ",ii,xsize);
+        fflush(stdout);
+        for(jj=0; jj<ysize; jj++)
+        {
+            //	printf("[%ld %ld]\n",ii,jj);
+            //	fflush(stdout);
+
+            x = (float) (1.0*xmin + 1.0*(xmax-xmin)*ii/xsize);
+            y = (float) (1.0*ymin + 1.0*(ymax-ymin)*jj/ysize);
+
+
+            /* find points closest to the origin and within distance radius */
+            pt[0] = x;
+            pt[1] = y;
+
+            radius = radius0;
+            ok = 0;
+            while(ok==0)
+            {
+                presults = kd_nearest_range( ptree, pt, radius );
+
+                //presults = kd_nearest( ptree, pt );
+
+                /* print out all the points found in results */
+                //  printf( "[%g %g] found %d results (radius = %f):\n", x,y, kd_res_size(presults), radius );
+                if((kd_res_size(presults)<30)&&(radius<radiusmax))
+                {
+                    radius *= 1.5;
+                    //	  printf("        radius -> %f\n",radius);
+                    //  fflush(stdout);
+                }
+                else
+                    ok = 1;
+            }
+
+            if(radius < 0.99*radiusmax)
+            {
+                NBnpt = kd_res_size(presults);
+                //printf("NBnpt = %ld\n",NBnpt);
+                //fflush(stdout);
+                if(NBnpt>NBnptmax)
+                {
+                    pt_x = realloc(pt_x,sizeof(double)*NBnpt);
+                    pt_y = realloc(pt_y,sizeof(double)*NBnpt);
+                    pt_val = realloc(pt_val,sizeof(double)*NBnpt);
+                    pt_coeff = realloc(pt_coeff,sizeof(double)*NBnpt);
+                    pt_coeff1 = realloc(pt_coeff1,sizeof(double)*NBnpt);
+                    NBnptmax = NBnpt;
+                    //  printf("Reallocation to %ld points\n",NBnpt);
+                    // fflush(stdout);
+                }
+
+
+                i = 0;
+                while( kd_res_end( presults ) == 0 ) {
+                    /* get the data and position of the current result item */
+                    pv = (double*) kd_res_item( presults, pos );
+
+                    /* compute the distance of the current result from the pt */
+                    dist = sqrt( (pos[0]-pt[0])*(pos[0]-pt[0]) + (pos[1]-pt[1])*(pos[1]-pt[1]));
+
+                    pt_x[i] = pos[0];
+                    pt_y[i] = pos[1];
+                    pt_val[i] = *pv;
+                    pt_val_cp[i] = (float) pt_val[i];
+                    pt_coeff[i] = pow( (1.0+cos(M_PI*dist/radius0))/2.0,2.0);
+                    pt_coeff1[i] = pow(dist/radius0,2.0)*(1.0+cos(M_PI*dist/radius0))/2.0;
+                    /* go to the next entry */
+                    free(pv);
+                    kd_res_next( presults );
+
+                    i++;
+                }
+
+
+                // reject outliers
+                // sort values
+                quick_sort_float(pt_val_cp,NBnpt);
+                valm = pt_val_cp[(long) (NBnpt/2)]; // median
+                val0 = pt_val_cp[(long) (0.3*NBnpt)];
+                val1 = pt_val_cp[(long) (0.7*NBnpt)];
+                for(i=0; i<NBnpt; i++)
+                {
+                    cnttotal ++;
+                    if(fabs(pt_val[i]-valm)>3.0*(val1-val0))
+                    {
+                        pt_coeff[i] = 0.0;
+                        pt_coeff1[i] = 0.0;
+                        cntrejected ++;
+                    }
+                }
+
+
+
+                tot = 0.0;
+                totx = 0.0;
+                toty = 0.0;
+                cnt = 0.0;
+                for(i=0; i<NBnpt; i++)
+                {
+                    tot += pt_val[i] * pt_coeff[i];
+                    totx += pt_x[i] * pt_coeff[i];
+                    toty += pt_y[i] * pt_coeff[i];
+                    cnt += pt_coeff[i];
+                }
+
+                xave = totx/cnt;
+                yave = toty/cnt;
+                vave = tot/cnt;
+
+                totsx = 0.0;
+                totsy = 0.0;
+                cntx = 0.0;
+                cnty = 0.0;
+
+                for(i=0; i<NBnpt; i++)
+                {
+                    if(fabs(pt_x[i]-xave)>0.01*radius0)
+                    {
+                        cntx += pt_coeff1[i];
+                        totsx += (pt_val[i]-vave) / (pt_x[i]-xave) * pt_coeff1[i];
+                    }
+                    if(fabs(pt_y[i]-yave)>0.01*radius0)
+                    {
+                        cnty += pt_coeff1[i];
+                        totsy += (pt_val[i]-vave) / (pt_y[i]-yave) * pt_coeff1[i];
+                    }
+                }
+                if(cntx<0.0001)
+                    cntx = 0.0001;
+                if(cnty<0.0001)
+                    cnty = 0.0001;
+                slx = totsx / cntx;
+                sly = totsy / cnty;
+
+                data.image[ID].array.F[jj*xsize+ii] = (float) vave; //vave + (x-xave)*slx + (y-yave)*sly;
+
+                data.image[IDxerr].array.F[jj*xsize+ii] = (float) (x-xave);
+                data.image[IDyerr].array.F[jj*xsize+ii] = (float) (y-yave);
+                data.image[IDslx].array.F[jj*xsize+ii] = (float) (slx);
+                data.image[IDsly].array.F[jj*xsize+ii] = (float) (sly);
+            }
+        }
+    }
+
+    free(pos);
+    printf("\n");
+
+    printf("fraction of points rejected = %g\n",(double) (1.0*cntrejected/cnttotal));
+
+    free(pt_x);
+    free(pt_y);
+    free(pt_val);
+    free(pt_val_cp);
+    free(pt_coeff);
+    free(pt_coeff1);
+
+    free(xarray);
+    free(yarray);
+    free(varray);
+    if(presults != NULL)
+        kd_res_free( presults );
+    if(presults != NULL)
+    {
+        printERROR(__FILE__,__func__,__LINE__,"presults was not freed by kd_res_free. Attempting free(presults) and continuing.");
+        free(presults);
+    }
+    kd_free(ptree);
+    if(ptree!=NULL)
+    {
+        printERROR(__FILE__,__func__,__LINE__,"ptree was not freed by kd_free. Attempting free(ptree) and continuing.");
+        free(ptree);
+    }
+    save_fl_fits(ID_name,"!tmp2dinterp.fits");
+
+    make_gauss("kerg", xsize, ysize, convsize, (float) 1.0); //(long) (10.0*convsize+2.0));
+
+    fconvolve_padd("tmp2dinterpxerr","kerg",(long) (10.0*convsize+2.0),"tmp2dinterpxerrg");
+    fconvolve_padd("tmp2dinterpyerr","kerg",(long) (10.0*convsize+2.0),"tmp2dinterpyerrg");
+    fconvolve_padd("tmp2dinterpslx","kerg",(long) (10.0*convsize+2.0),"tmp2dinterpslxg");
+    fconvolve_padd("tmp2dinterpsly","kerg",(long) (10.0*convsize+2.0),"tmp2dinterpslyg");
+
+    delete_image_ID("tmp2dinterpxerr");
+    delete_image_ID("tmp2dinterpyerr");
+    delete_image_ID("tmp2dinterpslx");
+    delete_image_ID("tmp2dinterpsly");
+
+    IDxerr = image_ID("tmp2dinterpxerrg");
+    IDyerr = image_ID("tmp2dinterpyerrg");
+    IDslx = image_ID("tmp2dinterpslxg");
+    IDsly = image_ID("tmp2dinterpslyg");
+    ID = image_ID(ID_name);
+
+    for(ii=0; ii<xsize; ii++)
+        for(jj=0; jj<ysize; jj++)
+        {
+            //xerr = data.image[IDxerr].array.F[jj*xsize+ii];
+            //yerr = data.image[IDyerr].array.F[jj*xsize+ii];
+            slx = data.image[IDslx].array.F[jj*xsize+ii];
+            sly = data.image[IDsly].array.F[jj*xsize+ii];
+            //	data.image[ID].array.F[jj*xsize+ii] += xerr*slx+yerr*sly;
+        }
+
+    delete_image_ID("tmp2dinterpxerrg");
+    delete_image_ID("tmp2dinterpyerrg");
+    delete_image_ID("tmp2dinterpslxg");
+    delete_image_ID("tmp2dinterpslyg");
+
+
+    ID = image_ID(ID_name);
+    delete_image_ID("kerg");
+
+    return(ID);
 }
 
 
 
-long basic_2Dextrapolate_nearestpixel(const char *IDin_name, const char *IDmask_name, const char *IDout_name)
+
+
+imageID basic_2Dextrapolate_nearestpixel(
+    const char *IDin_name,
+    const char *IDmask_name,
+    const char *IDout_name
+)
 {
-  long IDin, IDmask, IDout;
-  long ii,jj,ii1,jj1,k;
-  double bdist, dist;
-  long naxes[2];
-  long step;
+    imageID IDin, IDmask, IDout;
+    long ii,jj,ii1,jj1,k;
+    double bdist, dist;
+    long naxes[2];
 
-  long *maskii = NULL;
-  long *maskjj = NULL;
-  long NBmaskpts;
 
-  long IDmask1;
-  int OKpix = 0;
-  
+    long *maskii = NULL;
+    long *maskjj = NULL;
+    long NBmaskpts;
 
-  IDin = image_ID(IDin_name);
-  IDmask = image_ID(IDmask_name);
+    long IDmask1;
 
-  list_image_ID();
-  IDmask1 = image_ID("_mask1");
-  if(IDmask1!=-1)
-    printf("USING MASK\n");
 
-  naxes[0] = data.image[IDin].md[0].size[0];
-  naxes[1] = data.image[IDin].md[0].size[1];
-  
-  NBmaskpts = 0;
-  for(ii=0;ii<naxes[0];ii++)
-    for(jj=0;jj<naxes[1];jj++)
-      if(data.image[IDmask].array.F[jj*naxes[0]+ii]>0.5)
-	NBmaskpts++;
 
-  maskii = (long*) malloc(sizeof(long)*NBmaskpts);
-  if(maskii==NULL)
+    IDin = image_ID(IDin_name);
+    IDmask = image_ID(IDmask_name);
+
+    list_image_ID();
+    IDmask1 = image_ID("_mask1");
+    if(IDmask1!=-1)
+        printf("USING MASK\n");
+
+    naxes[0] = data.image[IDin].md[0].size[0];
+    naxes[1] = data.image[IDin].md[0].size[1];
+
+    NBmaskpts = 0;
+    for(ii=0; ii<naxes[0]; ii++)
+        for(jj=0; jj<naxes[1]; jj++)
+            if(data.image[IDmask].array.F[jj*naxes[0]+ii]>0.5)
+                NBmaskpts++;
+
+    maskii = (long*) malloc(sizeof(long)*NBmaskpts);
+    if(maskii==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc error");
+        exit(0);
     }
-  maskii[0] = 0; // avoids warning about unused maskii
-  
-  maskjj = (long*) malloc(sizeof(long)*NBmaskpts);
-  if(maskjj==NULL)
+    maskii[0] = 0; // avoids warning about unused maskii
+
+    maskjj = (long*) malloc(sizeof(long)*NBmaskpts);
+    if(maskjj==NULL)
     {
-      C_ERRNO = errno;
-      printERROR(__FILE__,__func__,__LINE__,"malloc error");
-      exit(0);
+        C_ERRNO = errno;
+        printERROR(__FILE__,__func__,__LINE__,"malloc error");
+        exit(0);
     }
-  maskjj[0] = 0; // avoids warning about unused maskjj
+    maskjj[0] = 0; // avoids warning about unused maskjj
 
-  NBmaskpts = 0;
-  for(ii=0;ii<naxes[0];ii++)
-    for(jj=0;jj<naxes[1];jj++)
-      if(data.image[IDmask].array.F[jj*naxes[0]+ii]>0.5)
-	{
-	  maskii[NBmaskpts] = ii;
-	  maskjj[NBmaskpts] = jj;
-	  NBmaskpts++;
-	}
+    NBmaskpts = 0;
+    for(ii=0; ii<naxes[0]; ii++)
+        for(jj=0; jj<naxes[1]; jj++)
+            if(data.image[IDmask].array.F[jj*naxes[0]+ii]>0.5)
+            {
+                maskii[NBmaskpts] = ii;
+                maskjj[NBmaskpts] = jj;
+                NBmaskpts++;
+            }
 
-  IDout  = create_2Dimage_ID(IDout_name,naxes[0],naxes[1]);
-  printf("imout = %s\n",IDout_name);
-  printf("\n");
- 
-  for(ii=0;ii<naxes[0];ii++)
+    IDout  = create_2Dimage_ID(IDout_name,naxes[0],naxes[1]);
+    printf("imout = %s\n",IDout_name);
+    printf("\n");
+
+    for(ii=0; ii<naxes[0]; ii++)
     {
-      printf("\r%ld / %ld  ",ii,naxes[0]);
-      fflush(stdout);
-      step = 1;
-      for(jj=0;jj<naxes[1];jj++)
-	{
-	  if(IDmask1==-1)
-	    OKpix = 1;
-	  else
-	    {
-	      if(data.image[IDmask1].array.F[jj*naxes[1]+ii]>0.5)
-		OKpix = 1;
-	      else
-		OKpix = 0;
-	    }
-	  bdist = (double) (naxes[0]+naxes[1]);
-	  bdist = bdist*bdist;
-	  for(k=0;k<NBmaskpts;k++)
-	    {
-	      ii1 = maskii[k];
-	      jj1 = maskjj[k];
-	      dist = 1.0*((ii1-ii)*(ii1-ii)+(jj1-jj)*(jj1-jj));	     
-	      if(dist<bdist)
-		{
-		  bdist = dist;
-		  data.image[IDout].array.F[jj*naxes[0]+ii] = data.image[IDin].array.F[jj1*naxes[0]+ii1];		  		 
-		}	     
-	    }
-	}
-    }
-  
-  printf("\n");
-  
-  free(maskii);
-  free(maskjj);
+        printf("\r%ld / %ld  ",ii,naxes[0]);
+        fflush(stdout);
 
-  return(IDout);
+        for(jj=0; jj<naxes[1]; jj++)
+        {
+            /*if(IDmask1==-1)
+                OKpix = 1;
+            else
+            {
+                if(data.image[IDmask1].array.F[jj*naxes[1]+ii]>0.5)
+                    OKpix = 1;
+                else
+                    OKpix = 0;
+            }*/
+            bdist = (double) (naxes[0]+naxes[1]);
+            bdist = bdist*bdist;
+            for(k=0; k<NBmaskpts; k++)
+            {
+                ii1 = maskii[k];
+                jj1 = maskjj[k];
+                dist = 1.0*((ii1-ii)*(ii1-ii)+(jj1-jj)*(jj1-jj));
+                if(dist<bdist)
+                {
+                    bdist = dist;
+                    data.image[IDout].array.F[jj*naxes[0]+ii] = data.image[IDin].array.F[jj1*naxes[0]+ii1];
+                }
+            }
+        }
+    }
+
+    printf("\n");
+
+    free(maskii);
+    free(maskjj);
+
+    return(IDout);
 }
 
 
 
 // measure offset between 2 images
 
-double basic_measure_transl( const char *ID_name1, const char *ID_name2, long tmax)
+double basic_measure_transl(
+    const char *ID_name1,
+    const char *ID_name2,
+    long tmax
+)
 {
-  long ID1, ID2, ID;
-  long IDout, IDcnt;
-  long dx, dy, ii1, jj1, ii2, jj2, iio, jjo;
-  long sx_out, sy_out;
-  long size1x, size1y;
-  long size2x, size2y;
-  double val;
-  long cnt;
-  double tmp, v1, v2;
-  int SCALE = 64; // must be power of 2
-  long step1 = 1;
-  long step2 = 1;
-  double vmin;
-  double vdx, vdy;
-  long ii2min, ii2max, jj2min, jj2max;
-  long dxmin, dymin;
-  int SCALEindex;
-  long dsize;
-  double vmincnt;
-  long dx1, dy1;
-  int QUICKMODE = 0;
-  long ii1min, ii1max, jj1min, jj1max;
-  long iiomin, iiomax, jjomin, jjomax;
-  long ID1mask;
-  long xsizemask, ysizemask;
-  double vlim;
-  long contractfactor;
-  long ii, jj;
-  long ii1m, jj1m;
-  double Mlim;
+    imageID ID1, ID2, ID;
+    imageID IDout, IDcnt;
+    long dx, dy, ii1, jj1, ii2, jj2, iio, jjo;
+    long sx_out, sy_out;
+    long size1x, size1y;
+    long size2x, size2y;
+    double val;
+    double tmp, v1, v2;
+    int SCALE = 64; // must be power of 2
+    long step1 = 1;
+    long step2 = 1;
+    double vmin;
+    double vdx, vdy;
+    long ii2min, ii2max, jj2min, jj2max;
+    long dxmin, dymin;
+    int SCALEindex;
+    long dsize;
+    double vmincnt;
+    long dx1, dy1;
+    int QUICKMODE = 0;
+    long ii1min, ii1max, jj1min, jj1max;
+    long iiomin, iiomax, jjomin, jjomax;
+    imageID ID1mask;
+    long xsizemask, ysizemask;
+    double vlim;
+    long contractfactor;
+    long ii;
+    long ii1m, jj1m;
+    double Mlim;
 
-  double fitval = 0.0;
+    double fitval = 0.0;
 
-  step1 = SCALE;
-  step2 = SCALE;
+    step1 = SCALE;
+    step2 = SCALE;
 
-  ID1 = image_ID(ID_name1);
-  size1x = data.image[ID1].md[0].size[0];
-  size1y = data.image[ID1].md[0].size[1];
-  
-  ID2 = image_ID(ID_name2);
-  size2x = data.image[ID2].md[0].size[0];
-  size2y = data.image[ID2].md[0].size[1];
-  
-  sx_out = 2*tmax;
-  sy_out = 2*tmax;
-  IDout = create_2Dimage_ID("TranslMap", sx_out, sy_out);
-  IDcnt = create_2Dimage_ID("TranslMapcnt", sx_out, sy_out);
-  for(iio=0;iio<sx_out;iio++)
-    for(jjo=0;jjo<sy_out;jjo++)
-      {
-	data.image[IDout].array.F[jjo*sx_out+iio] = 0.0;
-	data.image[IDcnt].array.F[jjo*sx_out+iio] = 0.0;
-      }
+    ID1 = image_ID(ID_name1);
+    size1x = data.image[ID1].md[0].size[0];
+    size1y = data.image[ID1].md[0].size[1];
 
-  dxmin = 0;
-  dymin = 0;
-  SCALEindex = 1;
-  
+    ID2 = image_ID(ID_name2);
+    size2x = data.image[ID2].md[0].size[0];
+    size2y = data.image[ID2].md[0].size[1];
 
-  // STEP 1 : quickly identify regions of image 1 where flux gradient is large
-  // select 30% of image pixels
-  contractfactor = 2;
-  basic_contract(ID_name1, "_im1C", contractfactor, contractfactor);
-  gauss_filter("_im1C","_im1Cg", 5.0, 10);
-  execute_arith("_im1HF=_im1C-_im1Cg");
-  execute_arith("_im1HF2=_im1HF*_im1HF");
-  gauss_filter("_im1HF2","_im1mask", 5.0, 10);
-  delete_image_ID("_im1C");
-  delete_image_ID("_im1HF");
-  delete_image_ID("_im1Cg");
-  delete_image_ID("_im1HF2");
+    sx_out = 2*tmax;
+    sy_out = 2*tmax;
+    IDout = create_2Dimage_ID("TranslMap", sx_out, sy_out);
+    IDcnt = create_2Dimage_ID("TranslMapcnt", sx_out, sy_out);
+    for(iio=0; iio<sx_out; iio++)
+        for(jjo=0; jjo<sy_out; jjo++)
+        {
+            data.image[IDout].array.F[jjo*sx_out+iio] = 0.0;
+            data.image[IDcnt].array.F[jjo*sx_out+iio] = 0.0;
+        }
 
-  vlim = (double) img_percentile("_im1mask", 0.8);
-  printf("vlim = %g\n",vlim);
-  save_fl_fits("_im1mask","!_im1mask.0.fits");
-  ID1mask = image_ID("_im1mask");
-  xsizemask = data.image[ID1mask].md[0].size[0];
-  ysizemask = data.image[ID1mask].md[0].size[1];
-  
-  for(ii=0;ii<xsizemask*ysizemask;ii++)
+    dxmin = 0;
+    dymin = 0;
+    SCALEindex = 1;
+
+
+    // STEP 1 : quickly identify regions of image 1 where flux gradient is large
+    // select 30% of image pixels
+    contractfactor = 2;
+    basic_contract(ID_name1, "_im1C", contractfactor, contractfactor);
+    gauss_filter("_im1C","_im1Cg", 5.0, 10);
+    execute_arith("_im1HF=_im1C-_im1Cg");
+    execute_arith("_im1HF2=_im1HF*_im1HF");
+    gauss_filter("_im1HF2","_im1mask", 5.0, 10);
+    delete_image_ID("_im1C");
+    delete_image_ID("_im1HF");
+    delete_image_ID("_im1Cg");
+    delete_image_ID("_im1HF2");
+
+    vlim = (double) img_percentile("_im1mask", 0.8);
+    printf("vlim = %g\n",vlim);
+    save_fl_fits("_im1mask","!_im1mask.0.fits");
+    ID1mask = image_ID("_im1mask");
+    xsizemask = data.image[ID1mask].md[0].size[0];
+    ysizemask = data.image[ID1mask].md[0].size[1];
+
+    for(ii=0; ii<xsizemask*ysizemask; ii++)
     {
-      if(data.image[ID1mask].array.F[ii] > vlim)
-	data.image[ID1mask].array.F[ii] = 1.0;
-      else
-	data.image[ID1mask].array.F[ii] = 0.0;
-    }
-  
-  save_fl_fits("_im1mask","!_im1mask.fits");
-  //exit(0);
-
-  dsize = tmax*2;
-  while(SCALE!=0)
-    {
-      step1 = SCALE;
-      step2 = 1; //SCALE;
-
-      dsize /= 2; //(long) (1.0*tmax/pow(SCALEindex,2.0));
-      if(dsize<1.2*SCALE)
-	dsize = (long) (1.2*SCALE);
-
-      //      if(SCALE>1)
-      //Mlim = -1;
-      // else
-      Mlim = 0.5;
-      
-      ii1min = 0;
-      ii1max = size1x;
-      jj1min = 0;
-      jj1max = size1y;
-    
-      if(QUICKMODE == 1)
-	{
-	  step1 *= 5;
-	  step2 *= 3;
-	}
-      if(SCALE == 1)
-	{
-	  step1 = 1;
-	  step2 = 1;
-	}
-
-      for(ii1=ii1min;ii1<ii1max;ii1 += step1)
-	for(jj1=jj1min;jj1<jj1max;jj1 += step1)
-	  {
-	    ii1m = (long) (ii1/contractfactor);
-	    jj1m = (long) (jj1/contractfactor);
-	    if(data.image[ID1mask].array.F[jj1m*xsizemask+ii1m] > Mlim)
-	      {
-		v1 = data.image[ID1].array.F[jj1*size1x+ii1];
-		
-		ii2min = ii1 + dxmin - dsize;
-		ii2max = ii1 + dxmin + dsize;
-		while(ii2min<0)
-		  ii2min += step2;
-		while(ii2min>size2x-1)
-		  ii2min -= step2;
-		while(ii2max<0)
-		  ii2max += step2;
-		while(ii2max>size2x-1)
-		  ii2max -= step2;
-		
-		jj2min = jj1 + dymin - dsize;
-		jj2max = jj1 + dymin + dsize;
-		while(jj2min<0)
-		  jj2min += step2;
-		while(jj2min>size2y-1)
-		  jj2min -= step2;
-		while(jj2max<0)
-		  jj2max += step2;
-		while(jj2max>size2y-1)
-		  jj2max -= step2;
-		
-		for(ii2=ii2min;ii2<ii2max;ii2 += step2)
-		  for(jj2=jj2min;jj2<jj2max;jj2 += step2)
-		    {
-		      dx = ii2-ii1;
-		      dy = jj2-jj1;
-		      dx1 = dx-dxmin;
-		      dy1 = dy-dymin;
-		      if(dx1*dx1+dy1*dy1< 1.0*dsize*dsize)
-			{
-			  iio = dx + tmax;
-			  jjo = dy + tmax;
-			  if((iio>-1)&&(iio<sx_out)&&(jjo>-1)&&(jjo<sy_out))
-			    {
-			      v2 = data.image[ID2].array.F[jj2*size2x+ii2];
-			      tmp = (v1-v2);
-			      data.image[IDout].array.F[jjo*sx_out+iio] += tmp*tmp;
-			      data.image[IDcnt].array.F[jjo*sx_out+iio] += 1.0;
-			      //   if((iio == 87)&&(jjo == 100))
-			      //printf("%g (%ld %ld %g) (%ld %ld %g)\n",data.image[IDcnt].array.F[jjo*sx_out+iio], ii1, jj1, v1, ii2, jj2, v2);
-			    }
-			}
-		    }
-	      }
-	  }
-      
-      vmin =  1.0e100;
-      for(iio=0;iio<sx_out;iio++)
-	for(jjo=0;jjo<sy_out;jjo++)
-	  {
-	    if(data.image[IDcnt].array.F[jjo*sx_out+iio]>0.1)
-	      {
-		val = data.image[IDout].array.F[jjo*sx_out+iio]/data.image[IDcnt].array.F[jjo*sx_out+iio];
-		if(val<vmin)
-		  {
-		    vmin = val;
-		    vmincnt = data.image[IDcnt].array.F[jjo*sx_out+iio];
-		    vdx = 1.0*iio-tmax;
-		    vdy = 1.0*jjo-tmax;
-		  }
-	      }
-	  }
-      printf("------- SCALE = %d [%ld] --------\n",SCALE, dsize);
-      printf("vdx = %g  (%ld)\n", vdx, dxmin);
-      printf("vdy = %g  (%ld)\n", vdy, dymin);
-      printf("vmin = %g [%g]\n", vmin, vmincnt);
-      
-      dxmin = (long) (vdx + 0.5 + 10000) - 10000;
-      dymin = (long) (vdy + 0.5 + 10000) - 10000;
-      
-
-      printf("-------- %ld %ld --------\n", dxmin, dymin);
- 
-      if(SCALE == 1)
-	SCALE = 0;
-      else
-	{
-	  SCALEindex ++;
-	  SCALE /= 2;
-	}
-      
+        if(data.image[ID1mask].array.F[ii] > vlim)
+            data.image[ID1mask].array.F[ii] = 1.0;
+        else
+            data.image[ID1mask].array.F[ii] = 0.0;
     }
 
-    for(iio=0;iio<sx_out;iio++)
-	for(jjo=0;jjo<sy_out;jjo++)
-	  {
-	    if(data.image[IDcnt].array.F[jjo*sx_out+iio]>0.1)
-	      {
-		data.image[IDout].array.F[jjo*sx_out+iio] /= data.image[IDcnt].array.F[jjo*sx_out+iio];
-	      }
-	  }
+    save_fl_fits("_im1mask","!_im1mask.fits");
+    //exit(0);
+
+    dsize = tmax*2;
+    while(SCALE!=0)
+    {
+        step1 = SCALE;
+        step2 = 1; //SCALE;
+
+        dsize /= 2; //(long) (1.0*tmax/pow(SCALEindex,2.0));
+        if(dsize<1.2*SCALE)
+            dsize = (long) (1.2*SCALE);
+
+        //      if(SCALE>1)
+        //Mlim = -1;
+        // else
+        Mlim = 0.5;
+
+        ii1min = 0;
+        ii1max = size1x;
+        jj1min = 0;
+        jj1max = size1y;
+
+        if(QUICKMODE == 1)
+        {
+            step1 *= 5;
+            step2 *= 3;
+        }
+        if(SCALE == 1)
+        {
+            step1 = 1;
+            step2 = 1;
+        }
+
+        for(ii1=ii1min; ii1<ii1max; ii1 += step1)
+            for(jj1=jj1min; jj1<jj1max; jj1 += step1)
+            {
+                ii1m = (long) (ii1/contractfactor);
+                jj1m = (long) (jj1/contractfactor);
+                if(data.image[ID1mask].array.F[jj1m*xsizemask+ii1m] > Mlim)
+                {
+                    v1 = data.image[ID1].array.F[jj1*size1x+ii1];
+
+                    ii2min = ii1 + dxmin - dsize;
+                    ii2max = ii1 + dxmin + dsize;
+                    while(ii2min<0)
+                        ii2min += step2;
+                    while(ii2min>size2x-1)
+                        ii2min -= step2;
+                    while(ii2max<0)
+                        ii2max += step2;
+                    while(ii2max>size2x-1)
+                        ii2max -= step2;
+
+                    jj2min = jj1 + dymin - dsize;
+                    jj2max = jj1 + dymin + dsize;
+                    while(jj2min<0)
+                        jj2min += step2;
+                    while(jj2min>size2y-1)
+                        jj2min -= step2;
+                    while(jj2max<0)
+                        jj2max += step2;
+                    while(jj2max>size2y-1)
+                        jj2max -= step2;
+
+                    for(ii2=ii2min; ii2<ii2max; ii2 += step2)
+                        for(jj2=jj2min; jj2<jj2max; jj2 += step2)
+                        {
+                            dx = ii2-ii1;
+                            dy = jj2-jj1;
+                            dx1 = dx-dxmin;
+                            dy1 = dy-dymin;
+                            if(dx1*dx1+dy1*dy1< 1.0*dsize*dsize)
+                            {
+                                iio = dx + tmax;
+                                jjo = dy + tmax;
+                                if((iio>-1)&&(iio<sx_out)&&(jjo>-1)&&(jjo<sy_out))
+                                {
+                                    v2 = data.image[ID2].array.F[jj2*size2x+ii2];
+                                    tmp = (v1-v2);
+                                    data.image[IDout].array.F[jjo*sx_out+iio] += tmp*tmp;
+                                    data.image[IDcnt].array.F[jjo*sx_out+iio] += 1.0;
+                                    //   if((iio == 87)&&(jjo == 100))
+                                    //printf("%g (%ld %ld %g) (%ld %ld %g)\n",data.image[IDcnt].array.F[jjo*sx_out+iio], ii1, jj1, v1, ii2, jj2, v2);
+                                }
+                            }
+                        }
+                }
+            }
+
+        vmin =  1.0e100;
+        for(iio=0; iio<sx_out; iio++)
+            for(jjo=0; jjo<sy_out; jjo++)
+            {
+                if(data.image[IDcnt].array.F[jjo*sx_out+iio]>0.1)
+                {
+                    val = data.image[IDout].array.F[jjo*sx_out+iio]/data.image[IDcnt].array.F[jjo*sx_out+iio];
+                    if(val<vmin)
+                    {
+                        vmin = val;
+                        vmincnt = data.image[IDcnt].array.F[jjo*sx_out+iio];
+                        vdx = 1.0*iio-tmax;
+                        vdy = 1.0*jjo-tmax;
+                    }
+                }
+            }
+        printf("------- SCALE = %d [%ld] --------\n",SCALE, dsize);
+        printf("vdx = %g  (%ld)\n", vdx, dxmin);
+        printf("vdy = %g  (%ld)\n", vdy, dymin);
+        printf("vmin = %g [%g]\n", vmin, vmincnt);
+
+        dxmin = (long) (vdx + 0.5 + 10000) - 10000;
+        dymin = (long) (vdy + 0.5 + 10000) - 10000;
+
+
+        printf("-------- %ld %ld --------\n", dxmin, dymin);
+
+        if(SCALE == 1)
+            SCALE = 0;
+        else
+        {
+            SCALEindex ++;
+            SCALE /= 2;
+        }
+
+    }
+
+    for(iio=0; iio<sx_out; iio++)
+        for(jjo=0; jjo<sy_out; jjo++)
+        {
+            if(data.image[IDcnt].array.F[jjo*sx_out+iio]>0.1)
+            {
+                data.image[IDout].array.F[jjo*sx_out+iio] /= data.image[IDcnt].array.F[jjo*sx_out+iio];
+            }
+        }
 
     ID = gauss_filter("TranslMap","TranslMapg", 5.0, 10);
-    
+
     vmin =  1.0e100;
-    
+
     iiomin = sx_out/2 + dxmin - 20;
     if(iiomin<0)
-      iiomin = 0;
+        iiomin = 0;
     iiomax = sx_out/2 + dxmin + 20;
     if(iiomax>sx_out-1)
-      iiomax = sx_out-1;
-  
+        iiomax = sx_out-1;
+
     jjomin = sy_out/2 + dymin - 20;
     if(jjomin<0)
-      jjomin = 0;
+        jjomin = 0;
     jjomax = sy_out/2 + dymin + 20;
     if(jjomax>sy_out-1)
-      jjomax = sy_out-1;
+        jjomax = sy_out-1;
 
 
-    for(iio=iiomin;iio<iiomax;iio++)
-      for(jjo=jjomin;jjo<jjomax;jjo++)
-	{
-	  if(data.image[IDcnt].array.F[jjo*sx_out+iio]>0.1)
-	    {
-	      val = data.image[ID].array.F[jjo*sx_out+iio];
-	      if(val<vmin)
-		{
-		  vmin = val;
-		  vdx = 1.0*iio-tmax;
-		  vdy = 1.0*jjo-tmax;
-		}
-	    }
-	}
+    for(iio=iiomin; iio<iiomax; iio++)
+        for(jjo=jjomin; jjo<jjomax; jjo++)
+        {
+            if(data.image[IDcnt].array.F[jjo*sx_out+iio]>0.1)
+            {
+                val = data.image[ID].array.F[jjo*sx_out+iio];
+                if(val<vmin)
+                {
+                    vmin = val;
+                    vdx = 1.0*iio-tmax;
+                    vdy = 1.0*jjo-tmax;
+                }
+            }
+        }
 
     create_variable_ID("vdx",vdx);
     create_variable_ID("vdy",vdy);
     printf("-------- %f %f --------\n", vdx, vdy);
-    
+
     save_fl_fits("TranslMapg","!_TranslMap.fits");
     save_fl_fits("TranslMapcnt","!_TranslMapcnt.fits");
 
@@ -4113,15 +4298,16 @@ double basic_measure_transl( const char *ID_name1, const char *ID_name2, long tm
  * @note If semindex<0, use counter instead of semaphore
  *
  * */
-long IMAGE_BASIC_streamaverage(
+imageID IMAGE_BASIC_streamaverage(
     const char *IDname,
-    long NBcoadd,
+    long        NBcoadd,
     const char *IDoutname,
-    int mode,
-    int semindex)
+    int         mode,
+    int         semindex
+)
 {
-    long ID;
-    long cnt = 0;
+    imageID ID;
+    unsigned long cnt = 0;
     long k;
     long xsize, ysize;
     long IDcube;
@@ -4133,8 +4319,8 @@ long IMAGE_BASIC_streamaverage(
     long k1;
     long IDout;
     long ii;
-    long IDrms;
-    long IDbadpix;
+    imageID IDrms;
+    imageID IDbadpix;
     float rmsmean;
     float vmin, vmax;
     float darkp20, darkp80;
@@ -4213,7 +4399,7 @@ long IMAGE_BASIC_streamaverage(
         fflush(stdout);
         if(CounterWatch == 1)
         {
-            while(data.image[ID].md[0].cnt0==cnt) // test if new frame exists
+            while(data.image[ID].md[0].cnt0 == cnt) // test if new frame exists
             {
                 usleep(5);
                 // do nothing, wait
@@ -4391,27 +4577,34 @@ long IMAGE_BASIC_streamaverage(
 
 // feed image to data stream
 // only works on slice #1 out output
-long IMAGE_BASIC_streamfeed(const char *IDname, const char *streamname, float frequ)
+long IMAGE_BASIC_streamfeed(
+    const char *IDname,
+    const char *streamname,
+    float       frequ
+)
 {
-    long ID, IDs;
+    imageID ID, IDs;
     long xsize, ysize, xysize, zsize;
     long k;
     long tdelay;
     int RT_priority = 95; //any number from 0-99
     struct sched_param schedpar;
-    int r;
     int semval;
-    const char *ptr0;  
+    const char *ptr0;
     const char *ptr1;
     int loopOK;
     long ii;
-   
+
     schedpar.sched_priority = RT_priority;
-    #ifndef __MACH__
-    r = seteuid(data.euid); //This goes up to maximum privileges
+#ifndef __MACH__
+    if( seteuid(data.euid) != 0 ) { //This goes up to maximum privileges
+		printERROR(__FILE__, __func__, __LINE__, "seteuid error");
+	}        
     sched_setscheduler(0, SCHED_FIFO, &schedpar); //other option is SCHED_RR, might be faster
-    r = seteuid(data.ruid);//Go back to normal privileges
-    #endif
+    if( seteuid(data.ruid) != 0 ) { //Go back to normal privileges
+		printERROR(__FILE__, __func__, __LINE__, "seteuid error");
+	}
+#endif
 
     ID = image_ID(IDname);
     xsize = data.image[ID].md[0].size[0];
@@ -4431,7 +4624,7 @@ long IMAGE_BASIC_streamfeed(const char *IDname, const char *streamname, float fr
     }
     zsize = data.image[ID].md[0].size[2];
 
-    ptr1 = (char*) data.image[IDs].array.F; // destination 
+    ptr1 = (char*) data.image[IDs].array.F; // destination
 
 
 
@@ -4482,25 +4675,25 @@ long IMAGE_BASIC_streamfeed(const char *IDname, const char *streamname, float fr
         k++;
         if(k==zsize)
             k = 0;
-    
+
         if((data.signal_INT == 1)||(data.signal_TERM == 1)||(data.signal_ABRT==1)||(data.signal_BUS==1)||(data.signal_SEGV==1)||(data.signal_HUP==1)||(data.signal_PIPE==1))
             loopOK = 0;
     }
 
 
     data.image[IDs].md[0].write = 1;
-    for(ii=0;ii<xysize;ii++)
+    for(ii=0; ii<xysize; ii++)
         data.image[IDs].array.F[ii] = 0.0;
     if(data.image[IDs].md[0].sem > 0)
-        {
-            sem_getvalue(data.image[IDs].semptr[0], &semval);
-            if(semval<SEMAPHORE_MAXVAL)
-                sem_post(data.image[IDs].semptr[0]);
-        }
-        data.image[IDs].md[0].write = 0;
-        data.image[IDs].md[0].cnt0++;
-        
-        
+    {
+        sem_getvalue(data.image[IDs].semptr[0], &semval);
+        if(semval<SEMAPHORE_MAXVAL)
+            sem_post(data.image[IDs].semptr[0]);
+    }
+    data.image[IDs].md[0].write = 0;
+    data.image[IDs].md[0].cnt0++;
+
+
     return(0);
 }
 
@@ -4508,39 +4701,43 @@ long IMAGE_BASIC_streamfeed(const char *IDname, const char *streamname, float fr
 
 // works only for floats
 //
-long IMAGE_BASIC_streamrecord(const char *streamname, long NBframes, const char *IDname)
+imageID IMAGE_BASIC_streamrecord(
+    const char *streamname,
+    long        NBframes,
+    const char *IDname
+)
 {
-    long ID;
-    long IDstream;
+    imageID ID;
+    imageID IDstream;
     long xsize, ysize, zsize, xysize;
-    long cnt;
+    unsigned long cnt;
     long waitdelayus = 50;
-    long ii, jj, kk;
+    long kk;
     char *ptr;
-    
-    
+
+
     IDstream = image_ID(streamname);
     xsize = data.image[IDstream].md[0].size[0];
     ysize = data.image[IDstream].md[0].size[1];
     zsize = NBframes;
     xysize = xsize*ysize;
-    
+
     ID = create_3Dimage_ID(IDname, xsize, ysize, zsize);
     cnt = data.image[IDstream].md[0].cnt0;
-    
+
     kk = 0;
-    
+
     ptr = (char*) data.image[ID].array.F;
     while(kk!=NBframes)
     {
-        while(cnt>data.image[IDstream].md[0].cnt0)
-                usleep(waitdelayus);
+        while(cnt > data.image[IDstream].md[0].cnt0)
+            usleep(waitdelayus);
 
         cnt++;
-        
+
         printf("\r%ld / %ld  [%ld %ld]      ", kk, NBframes, cnt, data.image[ID].md[0].cnt0);
         fflush(stdout);
-        
+
         memcpy(ptr, data.image[IDstream].array.F, sizeof(float)*xysize);
         ptr += sizeof(float)*xysize;
         kk++;
