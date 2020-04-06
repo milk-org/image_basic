@@ -9,6 +9,32 @@
 
 
 
+/* ================================================================== */
+/* ================================================================== */
+/*            MODULE INFO                                             */
+/* ================================================================== */
+/* ================================================================== */
+
+// module default short name
+// all CLI calls to this module functions will be <shortname>.<funcname>
+// if set to "", then calls use <funcname>
+#define MODULE_SHORTNAME_DEFAULT ""
+
+// Module short description 
+#define MODULE_DESCRIPTION       "Common image operations"
+
+// Application to which module belongs
+#define MODULE_APPLICATION       "milk"
+
+
+
+
+
+
+
+
+
+
 #include <stdint.h>
 #include <string.h>
 #include <math.h>
@@ -48,9 +74,6 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-//extern DATA data;
-
-static int INITSTATUS_image_basic = 0;
 
 char errmsg[SBUFFERSIZE];
 
@@ -58,15 +81,24 @@ char errmsg[SBUFFERSIZE];
 
 
 
-// CLI commands
-//
-// function CLI_checkarg used to check arguments
-// 1: float
-// 2: long
-// 3: string
-// 4: existing image
-//
 
+/* ================================================================== */
+/* ================================================================== */
+/*            INITIALIZE LIBRARY                                      */
+/* ================================================================== */
+/* ================================================================== */
+
+// Module initialization macro in CLIcore.h
+// macro argument defines module name for bindings
+//
+INIT_MODULE_LIB(image_basic)
+
+
+/* ================================================================== */
+/* ================================================================== */
+/*            COMMAND LINE INTERFACE (CLI) FUNCTIONS                  */
+/* ================================================================== */
+/* ================================================================== */
 
 
 
@@ -289,22 +321,7 @@ errno_t IMAGE_BASIC_streamrecord_cli()
 
 
 
-void __attribute__ ((constructor)) libinit_image_basic()
-{
-	if ( INITSTATUS_image_basic == 0 )
-	{
-		init_image_basic();
-		RegisterModule(__FILE__, "milk", "Basic image routines");
-		INITSTATUS_image_basic = 1;
-	}
-}
-
-
-
-
-
-
-errno_t init_image_basic()
+static errno_t init_module_CLI()
 {
 
     strcpy(data.cmd[data.NBcmd].key,"imexpand");

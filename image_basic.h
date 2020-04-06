@@ -4,8 +4,6 @@
 
 
 void __attribute__ ((constructor)) libinit_image_basic();
-errno_t init_image_basic();
-
 
 int basic_naninf2zero(const char *ID_name);
 
