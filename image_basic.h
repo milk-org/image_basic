@@ -19,21 +19,21 @@ long basic_add3D(const char *ID_name1, const char *ID_name2,
 long basic_diff(const char *ID1_name, const char *ID2_name,
                 const char *ID3_name, long off1, long off2);
 
-long basic_extract(const char *ID_in_name, const char *ID_out_name, long n1,
+imageID basic_extract(const char *ID_in_name, const char *ID_out_name, long n1,
                    long n2, long n3, long n4);
 
 int basic_trunc_circ(const char *ID_name, float f1);
 
-long basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2);
-long basic_expand3D(const char *ID_name, const char *ID_name_out, int n1,
+imageID basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2);
+imageID basic_expand3D(const char *ID_name, const char *ID_name_out, int n1,
                     int n2, int n3);
 
-long basic_zoom2(const char *ID_name, const char *ID_name_out);
+imageID basic_zoom2(const char *ID_name, const char *ID_name_out);
 
-long basic_contract(const char *ID_name, const char *ID_name_out, int n1,
+imageID basic_contract(const char *ID_name, const char *ID_name_out, int n1,
                     int n2);
 
-long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1,
+imageID basic_contract3D(const char *ID_name, const char *ID_name_out, int n1,
                       int n2, int n3);
 
 long basic_average_column(const char *ID_name, const char *IDout_name);

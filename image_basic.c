@@ -1115,11 +1115,17 @@ int basic_add_cst(const char *ID_name, float f1, int sign) /* add a constant */
 
 
 /* extracts a n1xn2 subwindow of an image at offset n3,n4 */
-long basic_extract(const char *ID_in_name, const char *ID_out_name, long n1,
-                   long n2, long n3, long n4)
+imageID basic_extract(
+    const char *ID_in_name,
+    const char *ID_out_name,
+    long n1,
+    long n2,
+    long n3,
+    long n4
+)
 {
-    long ID_in;
-    long ID_out;
+    imageID ID_in;
+    imageID ID_out;
     long ii, jj;
     char name[SBUFFERSIZE];
     int n;
@@ -1131,8 +1137,7 @@ long basic_extract(const char *ID_in_name, const char *ID_out_name, long n1,
     n = snprintf(name, SBUFFERSIZE, "%s", ID_out_name);
     if(n >= SBUFFERSIZE)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "Attempted to write string buffer with too many characters");
+        PRINT_ERROR("Attempted to write string buffer with too many characters");
     }
 
     create_2Dimage_ID(name, n1, n2);
@@ -1153,7 +1158,7 @@ long basic_extract(const char *ID_in_name, const char *ID_out_name, long n1,
 
 int basic_trunc_circ(const char *ID_name, float f1)
 {
-    int ID;
+    imageID ID;
     long ii, jj;
     long naxes[2];
 
@@ -1173,10 +1178,15 @@ int basic_trunc_circ(const char *ID_name, float f1)
 
 
 /* expand image by factor n1 along x axis and n2 along y axis */
-long basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2)
+imageID basic_expand(
+    const char *ID_name,
+    const char *ID_name_out,
+    int n1,
+    int n2
+)
 {
-    long ID;
-    long ID_out; /* ID for the output image */
+    imageID ID;
+    imageID ID_out; /* ID for the output image */
     long ii, jj;
     long naxes[2], naxes_out[2];
     int i, j;
@@ -1204,11 +1214,16 @@ long basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2)
 
 
 /* expand image by factor n1 along x axis and n2 along y axis */
-long basic_expand3D(const char *ID_name, const char *ID_name_out, int n1,
-                    int n2, int n3)
+imageID basic_expand3D(
+    const char *ID_name,
+    const char *ID_name_out,
+    int n1,
+    int n2,
+    int n3
+)
 {
-    long ID;
-    long ID_out; /* ID for the output image */
+    imageID ID;
+    imageID ID_out; /* ID for the output image */
     long ii, jj, kk;
     long naxes[3], naxes_out[3];
     int i, j, k;
@@ -1259,10 +1274,13 @@ long basic_expand3D(const char *ID_name, const char *ID_name_out, int n1,
 
 
 
-long basic_zoom2(const char *ID_name, const char *ID_name_out)
+imageID basic_zoom2(
+    const char *ID_name,
+    const char *ID_name_out
+)
 {
-    long ID;
-    long ID_out; /* ID for the output image */
+    imageID ID;
+    imageID ID_out; /* ID for the output image */
     long ii, jj;
     long naxes[2], naxes_out[2];
     char lstring[SBUFFERSIZE];
@@ -1271,8 +1289,7 @@ long basic_zoom2(const char *ID_name, const char *ID_name_out)
     n = snprintf(lstring, SBUFFERSIZE, "%s=%s*1", ID_name_out, ID_name);
     if(n >= SBUFFERSIZE)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "Attempted to write string buffer with too many characters");
+        PRINT_ERROR("Attempted to write string buffer with too many characters");
     }
 
 
@@ -1310,11 +1327,16 @@ long basic_zoom2(const char *ID_name, const char *ID_name_out)
 
 
 
-long basic_contract(const char *ID_name, const char *ID_name_out, int n1,
-                    int n2)
+imageID basic_contract(
+    const char *ID_name,
+    const char *ID_name_out,
+    int n1,
+
+    int n2
+)
 {
-    long ID;
-    long ID_out; /* ID for the output image */
+    imageID ID;
+    imageID ID_out; /* ID for the output image */
     long ii, jj;
     long naxes[2], naxes_out[2];
     int i, j;
@@ -1639,7 +1661,7 @@ int basic_median(
     if(IDn == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -1647,7 +1669,7 @@ int basic_median(
     if(array == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2058,7 +2080,7 @@ imageID IMAGE_BASIC_get_assym_component(
     if(dist == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2066,7 +2088,7 @@ imageID IMAGE_BASIC_get_assym_component(
     if(mean == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2074,7 +2096,7 @@ imageID IMAGE_BASIC_get_assym_component(
     if(rms == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2082,7 +2104,7 @@ imageID IMAGE_BASIC_get_assym_component(
     if(counts == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2175,7 +2197,7 @@ imageID IMAGE_BASIC_get_sym_component(
     if(dist == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2183,7 +2205,7 @@ imageID IMAGE_BASIC_get_sym_component(
     if(mean == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2191,7 +2213,7 @@ imageID IMAGE_BASIC_get_sym_component(
     if(rms == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2199,7 +2221,7 @@ imageID IMAGE_BASIC_get_sym_component(
     if(counts == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2431,7 +2453,7 @@ int basic_rotate2(
     if(pixcorner_x == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2439,7 +2461,7 @@ int basic_rotate2(
     if(pixcorner_y == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2835,7 +2857,7 @@ int gauss_histo_image(
     if(histo == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2843,7 +2865,7 @@ int gauss_histo_image(
     if(imp == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2851,7 +2873,7 @@ int gauss_histo_image(
     if(impr == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2859,7 +2881,7 @@ int gauss_histo_image(
     if(imprinv == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -2986,8 +3008,7 @@ long load_fitsimages(
     n = snprintf(command, SBUFFERSIZE, "ls %s.fits > flist.tmp\n", strfilter);
     if(n >= SBUFFERSIZE)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "Attempted to write string buffer with too many characters");
+        PRINT_ERROR("Attempted to write string buffer with too many characters");
     }
 
     if(system(command) == -1)
@@ -3000,7 +3021,7 @@ long load_fitsimages(
     if((fp = fopen("flist.tmp", "r")) == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "fopen() error");
+        PRINT_ERROR("fopen() error");
         exit(0);
     }
 
@@ -3019,8 +3040,7 @@ long load_fitsimages(
     n = snprintf(command, SBUFFERSIZE, "rm flist.tmp");
     if(n >= SBUFFERSIZE)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "Attempted to write string buffer with too many characters");
+        PRINT_ERROR("Attempted to write string buffer with too many characters");
     }
 
     if(system(command) == -1)
@@ -3062,8 +3082,7 @@ long load_fitsimages_cube(
     n = snprintf(command, SBUFFERSIZE, "ls %s > flist.tmp\n", strfilter);
     if(n >= SBUFFERSIZE)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "Attempted to write string buffer with too many characters");
+        PRINT_ERROR("Attempted to write string buffer with too many characters");
     }
 
     printf("command: %s\n", command);
@@ -3081,7 +3100,7 @@ long load_fitsimages_cube(
     if((fp = fopen("flist.tmp", "r")) == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "fopen() error");
+        PRINT_ERROR("fopen() error");
         exit(0);
     }
 
@@ -3119,7 +3138,7 @@ long load_fitsimages_cube(
     if((fp = fopen("flist.tmp", "r")) == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "fopen() error");
+        PRINT_ERROR("fopen() error");
         exit(0);
     }
 
@@ -3144,7 +3163,7 @@ long load_fitsimages_cube(
     fclose(fp);
     /*  n = snprintf(command,SBUFFERSIZE,"rm flist.tmp");
       if(n >= SBUFFERSIZE)
-          printERROR(__FILE__,__func__,__LINE__,"Attempted to write string buffer with too many characters");
+          PRINT_ERROR("Attempted to write string buffer with too many characters");
 
       if(system(command)==-1)
       {
@@ -3187,7 +3206,7 @@ imageID basic_cube_center(
     if(tx == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -3195,7 +3214,7 @@ imageID basic_cube_center(
     if(ty == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -3283,7 +3302,7 @@ imageID cube_average(
     if(array == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -3574,8 +3593,7 @@ long basic_addimagesfiles(
     n = snprintf(command, SBUFFERSIZE, "ls %s.fits > flist.tmp\n", strfilter);
     if(n >= SBUFFERSIZE)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "Attempted to write string buffer with too many characters");
+        PRINT_ERROR("Attempted to write string buffer with too many characters");
     }
 
     if(system(command) == -1)
@@ -3587,7 +3605,7 @@ long basic_addimagesfiles(
 
     if((fp = fopen("flist.tmp", "r")) == NULL)
     {
-        printERROR(__FILE__, __func__, __LINE__, "fopen() error");
+        PRINT_ERROR("fopen() error");
         exit(0);
     }
     while(fgets(fname, 200, fp) != NULL)
@@ -3616,8 +3634,7 @@ long basic_addimagesfiles(
     n = snprintf(command, SBUFFERSIZE, "rm flist.tmp");
     if(n >= SBUFFERSIZE)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "Attempted to write string buffer with too many characters");
+        PRINT_ERROR("Attempted to write string buffer with too many characters");
     }
 
     if(system(command) == -1)
@@ -3880,7 +3897,7 @@ long basic_resizeim(
     }
     else
     {
-        printERROR(__FILE__, __func__, __LINE__, "Wrong image type(s)\n");
+        PRINT_ERROR("Wrong image type(s)\n");
         exit(0);
     }
 
@@ -4037,7 +4054,7 @@ imageID basic_tableto2Dim(
     if(pos == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
     pos[0] = 0.0;
@@ -4049,7 +4066,7 @@ imageID basic_tableto2Dim(
     if(xarray == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -4057,7 +4074,7 @@ imageID basic_tableto2Dim(
     if(yarray == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -4065,14 +4082,14 @@ imageID basic_tableto2Dim(
     if(varray == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
     if((fp = fopen(fname, "r")) == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "fopen() error");
+        PRINT_ERROR("fopen() error");
         exit(0);
     }
 
@@ -4126,7 +4143,7 @@ imageID basic_tableto2Dim(
     if(pt_x == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -4134,7 +4151,7 @@ imageID basic_tableto2Dim(
     if(pt_y == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -4142,7 +4159,7 @@ imageID basic_tableto2Dim(
     if(pt_val == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -4150,7 +4167,7 @@ imageID basic_tableto2Dim(
     if(pt_coeff == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -4158,7 +4175,7 @@ imageID basic_tableto2Dim(
     if(pt_coeff1 == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -4166,7 +4183,7 @@ imageID basic_tableto2Dim(
     if(pt_val_cp == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc() error");
+        PRINT_ERROR("malloc() error");
         exit(0);
     }
 
@@ -4362,15 +4379,13 @@ imageID basic_tableto2Dim(
     }
     if(presults != NULL)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "presults was not freed by kd_res_free. Attempting free(presults) and continuing.");
+        PRINT_ERROR("presults was not freed by kd_res_free. Attempting free(presults) and continuing.");
         free(presults);
     }
     kd_free(ptree);
     if(ptree != NULL)
     {
-        printERROR(__FILE__, __func__, __LINE__,
-                   "ptree was not freed by kd_free. Attempting free(ptree) and continuing.");
+        PRINT_ERROR("ptree was not freed by kd_free. Attempting free(ptree) and continuing.");
         free(ptree);
     }
     save_fl_fits(ID_name, "!tmp2dinterp.fits");
@@ -4469,7 +4484,7 @@ imageID basic_2Dextrapolate_nearestpixel(
     if(maskii == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc error");
+        PRINT_ERROR("malloc error");
         exit(0);
     }
     maskii[0] = 0; // avoids warning about unused maskii
@@ -4478,7 +4493,7 @@ imageID basic_2Dextrapolate_nearestpixel(
     if(maskjj == NULL)
     {
         C_ERRNO = errno;
-        printERROR(__FILE__, __func__, __LINE__, "malloc error");
+        PRINT_ERROR("malloc error");
         exit(0);
     }
     maskjj[0] = 0; // avoids warning about unused maskjj
@@ -5233,13 +5248,13 @@ long IMAGE_BASIC_streamfeed(
 #ifndef __MACH__
     if(seteuid(data.euid) != 0)     //This goes up to maximum privileges
     {
-        printERROR(__FILE__, __func__, __LINE__, "seteuid error");
+        PRINT_ERROR("seteuid error");
     }
     sched_setscheduler(0, SCHED_FIFO,
                        &schedpar); //other option is SCHED_RR, might be faster
     if(seteuid(data.ruid) != 0)     //Go back to normal privileges
     {
-        printERROR(__FILE__, __func__, __LINE__, "seteuid error");
+        PRINT_ERROR("seteuid error");
     }
 #endif
 
