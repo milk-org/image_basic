@@ -18,10 +18,10 @@
 // module default short name
 // all CLI calls to this module functions will be <shortname>.<funcname>
 // if set to "", then calls use <funcname>
-#define MODULE_SHORTNAME_DEFAULT ""
+#define MODULE_SHORTNAME_DEFAULT "imgbasic"
 
 // Module short description
-#define MODULE_DESCRIPTION       "Common image operations"
+#define MODULE_DESCRIPTION       "standard image operations"
 
 // Application to which module belongs
 #define MODULE_APPLICATION       "milk"
@@ -393,203 +393,191 @@ errno_t IMAGE_BASIC_streamrecord_cli()
 static errno_t init_module_CLI()
 {
 
-    strcpy(data.cmd[data.NBcmd].key, "imexpand");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_expand_cli;
-    strcpy(data.cmd[data.NBcmd].info, "expand 2D image");
-    strcpy(data.cmd[data.NBcmd].syntax,
-           "<image in> <output image> <x factor> <y factor>");
-    strcpy(data.cmd[data.NBcmd].example, "imexpand im1 im2 2 2");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2)");
-    data.NBcmd++;
+    RegisterCLIcommand(
+        "imexpand",
+        __FILE__,
+        image_basic_expand_cli,
+        "expand 2D image",
+        "<image in> <output image> <x factor> <y factor>",
+        "imexpand im1 im2 2 2",
+        "long basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2)");
 
-    strcpy(data.cmd[data.NBcmd].key, "imexpand3D");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_expand3D_cli;
-    strcpy(data.cmd[data.NBcmd].info, "expand 3D image");
-    strcpy(data.cmd[data.NBcmd].syntax,
-           "<image in> <output image> <x factor> <y factor> <z factor>");
-    strcpy(data.cmd[data.NBcmd].example, "imexpand3D im1 im2 2 2 2");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long basic_expand3D(const char *ID_name, const char *ID_name_out, int n1, int n2, int n3)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "resizeim");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_resize_cli;
-    strcpy(data.cmd[data.NBcmd].info, "resize 2D image");
-    strcpy(data.cmd[data.NBcmd].syntax,
-           "<image in> <output image> <new x size> <new y size>");
-    strcpy(data.cmd[data.NBcmd].example, "resizeim im1 im2 230 200");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long basic_resizeim(const char *imname_in, const char *imname_out, long xsizeout, long ysizeout)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "rotateim");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_rotate_cli;
-    strcpy(data.cmd[data.NBcmd].info, "rotate 2D image");
-    strcpy(data.cmd[data.NBcmd].syntax, "<image in> <output image> <angle>");
-    strcpy(data.cmd[data.NBcmd].example, "rotateim imin imout 230");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long basic_rotate(const char *ID_name, const char *ID_out_name, float angle)");
-    data.NBcmd++;
+    /*
+        RegisterCLIcommand(
+            "imexpand3D",
+            __FILE__,
+            image_basic_expand3D_cli,
+            "expand 3D image",
+            "<image in> <output image> <x factor> <y factor> <z factor>",
+            "imexpand3D im1 im2 2 2 2",
+            "long basic_expand3D(const char *ID_name, const char *ID_name_out, int n1, int n2, int n3)");
 
 
-    strcpy(data.cmd[data.NBcmd].key, "im3Dto2D");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_3Dto2D_cli;
-    strcpy(data.cmd[data.NBcmd].info,
-           "collapse first 2 axis of 3D image (in place)");
-    strcpy(data.cmd[data.NBcmd].syntax, "<image name>");
-    strcpy(data.cmd[data.NBcmd].example, "im3Dto2D im1");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long image_basic_3Dto2D(const char *IDname)");
-    data.NBcmd++;
+        RegisterCLIcommand(
+            "resizeim",
+            __FILE__,
+            image_basic_resize_cli,
+            "resize 2D image",
+            "<image in> <output image> <new x size> <new y size>",
+            "resizeim im1 im2 230 200",
 
-    strcpy(data.cmd[data.NBcmd].key, "imswapaxis2D");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_SwapAxis2D_cli;
-    strcpy(data.cmd[data.NBcmd].info, "Swap axis of a 2D image");
-    strcpy(data.cmd[data.NBcmd].syntax, "<input image> <output image>");
-    strcpy(data.cmd[data.NBcmd].example, "imswapaxis2D im1 im2");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long image_basic_SwapAxis2D(const char *IDin_name, const char *IDout_name)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "addim");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_add_cli;
-    strcpy(data.cmd[data.NBcmd].info, "add two 2D images of different size");
-    strcpy(data.cmd[data.NBcmd].syntax, "<im1> <im2> <outim> <offsetx> <offsety>");
-    strcpy(data.cmd[data.NBcmd].example, "addim im1 im2 outim 23 201");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long basic_add(const char *ID_name1, const char *ID_name2, const char *ID_name_out, long off1, long off2)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "addim3D");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_add3D_cli;
-    strcpy(data.cmd[data.NBcmd].info, "add two 3D images of different size");
-    strcpy(data.cmd[data.NBcmd].syntax,
-           "<im1> <im2> <outim> <offsetx> <offsety> <offsetz>");
-    strcpy(data.cmd[data.NBcmd].example, "addim3D im1 im2 outim 23 201 0");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name_out, long off1, long off2, long off3)");
-    data.NBcmd++;
+            "long basic_resizeim(const char *imname_in, const char *imname_out, long xsizeout, long ysizeout)");
 
 
-    strcpy(data.cmd[data.NBcmd].key, "imcontract3D");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_contract3D_cli;
-    strcpy(data.cmd[data.NBcmd].info, "image binning (3D)");
-    strcpy(data.cmd[data.NBcmd].syntax, "<inim> <outim> <binx> <biny> <binz>");
-    strcpy(data.cmd[data.NBcmd].example, "imcontracteD im1 outim 4 4 1");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1, int n2, int n3)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "imcontract");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_contract_cli;
-    strcpy(data.cmd[data.NBcmd].info, "image binning");
-    strcpy(data.cmd[data.NBcmd].syntax, "<inim> <outim> <binx> <biny>");
-    strcpy(data.cmd[data.NBcmd].example, "imcontract im1 outim 4 4");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long basic_contract(const char *ID_name, const char *ID_name_out, int n1, int n2)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "imgetcircassym");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = IMAGE_BASIC_get_assym_component_cli;
-    strcpy(data.cmd[data.NBcmd].info,
-           "extract non-circular symmetric part of image");
-    strcpy(data.cmd[data.NBcmd].syntax, "<inim> <outim> <xcenter> <ycenter>");
-    strcpy(data.cmd[data.NBcmd].example, "imcgetcircassym imin imout 256.0 230.5");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter, const char *options)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "imgetcircsym");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = IMAGE_BASIC_get_sym_component_cli;
-    strcpy(data.cmd[data.NBcmd].info, "extract circular symmetric part of image");
-    strcpy(data.cmd[data.NBcmd].syntax, "<inim> <outim> <xcenter> <ycenter>");
-    strcpy(data.cmd[data.NBcmd].example, "imcgetcircsym imin imout 256.0 230.5");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter)");
-    data.NBcmd++;
-
-
-    strcpy(data.cmd[data.NBcmd].key, "loadfitsimgcube");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_load_fitsimages_cube_cli;
-    strcpy(data.cmd[data.NBcmd].info, "load multiple images into a single cube");
-    strcpy(data.cmd[data.NBcmd].syntax,
-           "loadfitsimgcube <string pattern> <outputcube>");
-    strcpy(data.cmd[data.NBcmd].example, "loadfitsimgcube im out");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long load_fitsimages_cube(const char *strfilter, const char *ID_out_name)");
-    data.NBcmd++;
-
-
-    strcpy(data.cmd[data.NBcmd].key, "cubecollapse");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_cubecollapse_cli;
-    strcpy(data.cmd[data.NBcmd].info, "collapse a cube along z");
-    strcpy(data.cmd[data.NBcmd].syntax, "cubecollapse <inim> <outim>");
-    strcpy(data.cmd[data.NBcmd].example, "cubecollapse im1 outim");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long cube_collapse(const char *ID_in_name, const char *ID_out_name)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "imindexmap");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_indexmap_cli;
-    strcpy(data.cmd[data.NBcmd].info,
-           "map input values to output image unsing index map");
-    strcpy(data.cmd[data.NBcmd].syntax, "imindexmap <indexmap> <values> <output>");
-    strcpy(data.cmd[data.NBcmd].example, "imindexmap imap imval outmap");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout_name)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "imgstreamave");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_streamaverage_cli;
-    strcpy(data.cmd[data.NBcmd].info, "average stream of images");
-    strcpy(data.cmd[data.NBcmd].syntax,
-           "imgstreamave <imin> <NBcoadd [long]> <imout> <mode> <semindex>");
-    strcpy(data.cmd[data.NBcmd].example, "imgstreamave im 100 imave 0 -1");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDoutname, int mode, int semindex)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "imgstreamfeed");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = image_basic_streamfeed_cli;
-    strcpy(data.cmd[data.NBcmd].info, "feed stream of images");
-    strcpy(data.cmd[data.NBcmd].syntax, "<input image/cube> <stream> <fequ [Hz]>");
-    strcpy(data.cmd[data.NBcmd].example, "imgstreamfeed im imstream 100");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long IMAGE_BASIC_streamfeed(const char *IDname, const char *streamname, float frequ)");
-    data.NBcmd++;
-
-    strcpy(data.cmd[data.NBcmd].key, "imgstreamrec");
-    strcpy(data.cmd[data.NBcmd].module, __FILE__);
-    data.cmd[data.NBcmd].fp = IMAGE_BASIC_streamrecord_cli;
-    strcpy(data.cmd[data.NBcmd].info, "record stream of images");
-    strcpy(data.cmd[data.NBcmd].syntax, "<stream> <# frames> <output>");
-    strcpy(data.cmd[data.NBcmd].example, "imgstreamrec imstream 100 imrec");
-    strcpy(data.cmd[data.NBcmd].Ccall,
-           "long IMAGE_BASIC_streamrecord(const char *streamname, long NBframes, const char *IDname)");
-    data.NBcmd++;
+        RegisterCLIcommand(
+            "rotateim",
+            __FILE__,
+            image_basic_rotate_cli,
+            "rotate 2D image",
+            "<image in> <output image> <angle>",
+            "rotateim imin imout 230",
+            "long basic_rotate(const char *ID_name, const char *ID_out_name, float angle)");
 
 
 
+        RegisterCLIcommand(
+            "im3Dto2D",
+            __FILE__,
+            image_basic_3Dto2D_cli,
+            "collapse first 2 axis of 3D image (in place)",
+            "<image name>",
+            "im3Dto2D im1",
+            "long image_basic_3Dto2D(const char *IDname)");
 
 
+        RegisterCLIcommand(
+            "imswapaxis2D",
+            __FILE__,
+            image_basic_SwapAxis2D_cli,
+            "Swap axis of a 2D image",
+            "<input image> <output image>",
+            "imswapaxis2D im1 im2",
+            "long image_basic_SwapAxis2D(const char *IDin_name, const char *IDout_name)");
+
+
+        RegisterCLIcommand(
+            "addim",
+            __FILE__,
+            image_basic_add_cli,
+            "add two 2D images of different size",
+            "<im1> <im2> <outim> <offsetx> <offsety>",
+            "addim im1 im2 outim 23 201",
+            "long basic_add(const char *ID_name1, const char *ID_name2, const char *ID_name_out, long off1, long off2)");
+
+
+        RegisterCLIcommand(
+            "addim3D",
+            __FILE__,
+            image_basic_add3D_cli,
+            "add two 3D images of different size",
+            "<im1> <im2> <outim> <offsetx> <offsety> <offsetz>",
+            "addim3D im1 im2 outim 23 201 0",
+            "long basic_add3D(const char *ID_name1, const char *ID_name2, const char *ID_name_out, long off1, long off2, long off3)");
+
+
+
+        RegisterCLIcommand(
+            "imcontract3D",
+            __FILE__,
+            image_basic_contract3D_cli,
+            "image binning (3D)",
+            "<inim> <outim> <binx> <biny> <binz>",
+            "imcontracteD im1 outim 4 4 1",
+            "long basic_contract3D(const char *ID_name, const char *ID_name_out, int n1, int n2, int n3)");
+
+
+        RegisterCLIcommand(
+            "imcontract",
+            __FILE__,
+            image_basic_contract_cli,
+            "image binning",
+            "<inim> <outim> <binx> <biny>",
+            "imcontract im1 outim 4 4",
+            "long basic_contract(const char *ID_name, const char *ID_name_out, int n1, int n2)");
+
+
+        RegisterCLIcommand(
+            "imgetcircassym",
+            __FILE__,
+            IMAGE_BASIC_get_assym_component_cli,
+            "extract non-circular symmetric part of image",
+            "<inim> <outim> <xcenter> <ycenter>",
+            "imcgetcircassym imin imout 256.0 230.5",
+            "long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter, const char *options)");
+
+
+        RegisterCLIcommand(
+            "imgetcircsym",
+            __FILE__,
+            IMAGE_BASIC_get_sym_component_cli,
+            "extract circular symmetric part of image",
+            "<inim> <outim> <xcenter> <ycenter>",
+            "imcgetcircsym imin imout 256.0 230.5",
+            "long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter)");
+
+
+
+        RegisterCLIcommand(
+            "loadfitsimgcube",
+            __FILE__,
+            image_basic_load_fitsimages_cube_cli,
+            "load multiple images into a single cube",
+            "loadfitsimgcube <string pattern> <outputcube>",
+            "loadfitsimgcube im out",
+            "long load_fitsimages_cube(const char *strfilter, const char *ID_out_name)");
+
+
+
+        RegisterCLIcommand(
+            "cubecollapse",
+            __FILE__,
+            image_basic_cubecollapse_cli,
+            "collapse a cube along z",
+            "cubecollapse <inim> <outim>",
+            "cubecollapse im1 outim",
+            "long cube_collapse(const char *ID_in_name, const char *ID_out_name)");
+
+
+        RegisterCLIcommand(
+            "imindexmap",
+            __FILE__,
+            image_basic_indexmap_cli,
+            "map input values to output image unsing index map",
+            "imindexmap <indexmap> <values> <output>",
+            "imindexmap imap imval outmap",
+            "long image_basic_indexmap(char *ID_index_name, char *ID_values_name, char *IDout_name)");
+
+
+        RegisterCLIcommand(
+            "imgstreamave",
+            __FILE__,
+            image_basic_streamaverage_cli,
+            "average stream of images",
+            "imgstreamave <imin> <NBcoadd [long]> <imout> <mode> <semindex>",
+            "imgstreamave im 100 imave 0 -1",
+            "long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDoutname, int mode, int semindex)");
+
+
+        RegisterCLIcommand(
+            "imgstreamfeed",
+            __FILE__,
+            image_basic_streamfeed_cli,
+            "feed stream of images",
+            "<input image/cube> <stream> <fequ [Hz]>",
+            "imgstreamfeed im imstream 100",
+            "long IMAGE_BASIC_streamfeed(const char *IDname, const char *streamname, float frequ)");
+
+
+        RegisterCLIcommand(
+            "imgstreamrec",
+            __FILE__,
+            IMAGE_BASIC_streamrecord_cli,
+            "record stream of images",
+            "<stream> <# frames> <output>",
+            "imgstreamrec imstream 100 imrec",
+            "long IMAGE_BASIC_streamrecord(const char *streamname, long NBframes, const char *IDname)");
+
+    */
 
     // add atexit functions here
 
@@ -2999,24 +2987,12 @@ long load_fitsimages(
 )
 {
     long cnt = 0;
-    char command[SBUFFERSIZE];
     char fname[SBUFFERSIZE];
     char fname1[SBUFFERSIZE];
     FILE *fp;
-    int n;
 
-    n = snprintf(command, SBUFFERSIZE, "ls %s.fits > flist.tmp\n", strfilter);
-    if(n >= SBUFFERSIZE)
-    {
-        PRINT_ERROR("Attempted to write string buffer with too many characters");
-    }
+	EXECUTE_SYSTEM_COMMAND("ls %s.fits > flist.tmp\n", strfilter);
 
-    if(system(command) == -1)
-    {
-        printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n", command,
-               __func__, __FILE__, __LINE__);
-        exit(0);
-    }
 
     if((fp = fopen("flist.tmp", "r")) == NULL)
     {
@@ -3037,18 +3013,8 @@ long load_fitsimages(
     }
 
     fclose(fp);
-    n = snprintf(command, SBUFFERSIZE, "rm flist.tmp");
-    if(n >= SBUFFERSIZE)
-    {
-        PRINT_ERROR("Attempted to write string buffer with too many characters");
-    }
-
-    if(system(command) == -1)
-    {
-        printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n", command,
-               __func__, __FILE__, __LINE__);
-        exit(0);
-    }
+    
+    EXECUTE_SYSTEM_COMMAND("rm flist.tmp");
 
     printf("%ld images loaded\n", cnt);
 
