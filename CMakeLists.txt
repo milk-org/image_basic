@@ -1,12 +1,12 @@
 # library name
 set(LIBNAME "milkimagebasic")
-
+set(SRCNAME "image_basic")
 
 set(SOURCEFILES
-	image_basic.c)
+	${SRCNAME}.c)
 
 set(INCLUDEFILES
-	image_basic.h)
+	${SRCNAME}.h)
 
 
 # DEFAULT SETTINGS 
@@ -25,5 +25,5 @@ include_directories ("${PROJECT_SOURCE_DIR}/..")
 add_library(${LIBNAME} SHARED ${SOURCEFILES})
 
 install(TARGETS ${LIBNAME} DESTINATION lib)
-install(FILES ${INCLUDEFILES} DESTINATION include)
+install(FILES ${INCLUDEFILES} DESTINATION include/${SRCNAME})
 
