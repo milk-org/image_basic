@@ -1269,8 +1269,7 @@ imageID basic_zoom2(
 {
     imageID ID;
     imageID ID_out; /* ID for the output image */
-    long ii, jj;
-    long naxes[2], naxes_out[2];
+    uint32_t naxes[2], naxes_out[2];
     char lstring[SBUFFERSIZE];
     int n;
 
@@ -1289,8 +1288,8 @@ imageID basic_zoom2(
     naxes_out[1] = naxes[1];
     ID_out = image_ID(ID_name_out);
 
-    for(jj = 0; jj < naxes[1] / 2; jj++)
-        for(ii = 0; ii < naxes[0] / 2; ii++)
+    for(uint32_t jj = 0; jj < naxes[1] / 2; jj++)
+        for(uint32_t ii = 0; ii < naxes[0] / 2; ii++)
         {
             data.image[ID_out].array.F[(2 * jj)*naxes_out[0] + (2 * ii)] =
                 data.image[ID].array.F[(jj + naxes[1] / 4) * naxes[0] + (ii + naxes[1] / 4)];
@@ -1319,14 +1318,12 @@ imageID basic_contract(
     const char *ID_name,
     const char *ID_name_out,
     int n1,
-
     int n2
 )
 {
     imageID ID;
-    imageID ID_out; /* ID for the output image */
-    long ii, jj;
-    long naxes[2], naxes_out[2];
+    imageID ID_out; /* ID for the output image */    
+    uint32_t naxes[2], naxes_out[2];
     int i, j;
 
     ID = image_ID(ID_name);
@@ -1340,8 +1337,8 @@ imageID basic_contract(
     create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1]);
     ID_out = image_ID(ID_name_out);
 
-    for(jj = 0; jj < naxes_out[1]; jj++)
-        for(ii = 0; ii < naxes_out[0]; ii++)
+    for(uint32_t jj = 0; jj < naxes_out[1]; jj++)
+        for(uint32_t ii = 0; ii < naxes_out[0]; ii++)
             for(i = 0; i < n1; i++)
                 for(j = 0; j < n2; j++)
                 {
@@ -1490,8 +1487,7 @@ imageID basic_padd(
 {
     imageID ID;
     imageID ID_out; /* ID for the output image */
-    long ii, jj;
-    long naxes[2], naxes_out[2];
+    uint32_t naxes[2], naxes_out[2];
 
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
@@ -1503,8 +1499,8 @@ imageID basic_padd(
     create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1]);
     ID_out = image_ID(ID_name_out);
 
-    for(jj = 0; jj < naxes[1]; jj++)
-        for(ii = 0; ii < naxes[0]; ii++)
+    for(uint32_t jj = 0; jj < naxes[1]; jj++)
+        for(uint32_t ii = 0; ii < naxes[0]; ii++)
         {
             data.image[ID_out].array.F[(jj + n2)*naxes_out[0] + ii + n1] =
                 data.image[ID].array.F[jj * naxes[0] + ii];
@@ -1520,21 +1516,19 @@ imageID basic_fliph(
 )
 {
     imageID ID;
-    long ii, jj;
     long naxes[2];
-    long tmp_long;
+    uint32_t tmp_long;
     float temp;
 
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
 
-    ii = 0;
     temp = 0.0;
-    tmp_long = (long)(naxes[1] / 2);
+    tmp_long = (uint32_t) (naxes[1] / 2);
     /* printf("middle point %ld\n",tmp_long); */
-    for(jj = 0; jj < tmp_long; jj++)
-        for(ii = 0; ii < naxes[0]; ii++)
+    for(uint32_t jj = 0; jj < tmp_long; jj++)
+        for(uint32_t ii = 0; ii < naxes[0]; ii++)
         {
             temp = data.image[ID].array.F[jj * naxes[0] + ii];
             data.image[ID].array.F[jj * naxes[0] + ii] = data.image[ID].array.F[(naxes[1] -
@@ -1553,21 +1547,19 @@ imageID basic_flipv(
 )
 {
     imageID ID;
-    long ii, jj;
-    long naxes[2];
-    long tmp_long;
+    uint32_t naxes[2];
+    uint32_t tmp_long;
     float temp;
 
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
 
-    ii = 0;
     temp = 0.0;
-    tmp_long = (long)(naxes[0] / 2);
+    tmp_long = (uint32_t) (naxes[0] / 2);
     /* printf("middle point %ld\n",tmp_long); */
-    for(jj = 0; jj < naxes[1]; jj++)
-        for(ii = 0; ii < tmp_long; ii++)
+    for(uint32_t jj = 0; jj < naxes[1]; jj++)
+        for(uint32_t ii = 0; ii < tmp_long; ii++)
         {
             temp = data.image[ID].array.F[jj * naxes[0] + ii];
             data.image[ID].array.F[jj * naxes[0] + ii] = data.image[ID].array.F[jj *
@@ -1585,21 +1577,19 @@ imageID basic_fliphv(
 )
 {
     imageID ID;
-    long ii, jj;
-    long naxes[2];
-    long tmp_long;
+    uint32_t naxes[2];
+    uint32_t tmp_long;
     float temp;
 
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
 
-    ii = 0;
     temp = 0.0;
-    tmp_long = (long)(naxes[1] / 2);
+    tmp_long = (uint32_t) (naxes[1] / 2);
     /* printf("middle point %ld\n",tmp_long); */
-    for(jj = 0; jj < tmp_long; jj++)
-        for(ii = 0; ii < naxes[0]; ii++)
+    for(uint32_t jj = 0; jj < tmp_long; jj++)
+        for(uint32_t ii = 0; ii < naxes[0]; ii++)
         {
             temp = data.image[ID].array.F[jj * naxes[0] + ii];
             data.image[ID].array.F[jj * naxes[0] + ii] = data.image[ID].array.F[(naxes[1] -
@@ -1620,11 +1610,10 @@ int basic_median(
     unsigned int Nb_files;
     imageID ID;
     unsigned int file_nb;
-    long ii, jj;
     int str_pos;
-    int *IDn;
-    char file_name[50];
-    long naxes[2];
+    imageID *IDn;
+    char file_name[STRINGMAXLEN_FILENAME];
+    uint32_t naxes[2];
     int medianpt = 0;
 
     unsigned long i, j;
@@ -1645,7 +1634,7 @@ int basic_median(
     printf("%d files\n", Nb_files);
     medianpt = (int)(0.5 * (Nb_files - 1));
 
-    IDn = (int *) malloc(sizeof(int) * Nb_files);
+    IDn = (imageID *) malloc(sizeof(imageID) * Nb_files);
     if(IDn == NULL)
     {
         C_ERRNO = errno;
@@ -1671,7 +1660,7 @@ int basic_median(
         {
             file_name[j] = '\0';
             IDn[file_nb] = image_ID(file_name);
-            printf("%d %s \n", IDn[file_nb], file_name);
+            printf("%d %s \n", (int) IDn[file_nb], file_name);
             file_nb += 1;
             j = 0;
         }
@@ -1688,8 +1677,8 @@ int basic_median(
     create_2Dimage_ID(ID_name, naxes[0], naxes[1]);
     ID = image_ID(ID_name);
 
-    for(jj = 0; jj < naxes[1]; jj++)
-        for(ii = 0; ii < naxes[0]; ii++)
+    for(uint32_t jj = 0; jj < naxes[1]; jj++)
+        for(uint32_t ii = 0; ii < naxes[0]; ii++)
         {
             for(i = 0; i < Nb_files; i++)
             {
@@ -3037,11 +3026,9 @@ long load_fitsimages_cube(
     char fname[STRINGMAXLEN_FILENAME];
     char fname1[STRINGMAXLEN_FILENAME];
     FILE *fp;
-    long xsize, ysize;
-    long ii;
+    uint32_t xsize, ysize;
     imageID ID;
     imageID IDout;
-    int n;
 
     printf("Filter = %s\n", strfilter);
 
@@ -3104,7 +3091,7 @@ long load_fitsimages_cube(
         load_fits(fname, fname1, 1);
         printf("Image %s loaded -> %s\n", fname, fname1);
         ID = image_ID(fname1);
-        for(ii = 0; ii < xsize * ysize; ii++)
+        for(uint64_t ii = 0; ii < xsize * ysize; ii++)
         {
             data.image[IDout].array.F[xsize * ysize * cnt + ii] =
                 data.image[ID].array.F[ii];
@@ -3540,7 +3527,6 @@ long basic_addimagesfiles(
     FILE *fp;
     imageID ID;
     int init = 0; // becomes 1 when first image encountered
-    int n;
 
 	EXECUTE_SYSTEM_COMMAND("ls %s.fits > flist.tmp\n", strfilter);
   
@@ -3870,7 +3856,7 @@ imageID image_basic_3Dto2D(
         data.image[ID].md[0].naxis = 2;
     }
 
-    return(ID);
+    return ID;
 }
 
 
@@ -3884,7 +3870,6 @@ imageID image_basic_SwapAxis2D(
 {
     imageID IDin;
     imageID IDout = -1;
-    long ii, jj;
 
     IDin = image_ID(IDin_name);
     if(data.image[IDin].md[0].naxis != 2)
@@ -3895,15 +3880,15 @@ imageID image_basic_SwapAxis2D(
     {
         IDout = create_2Dimage_ID(IDout_name, data.image[IDin].md[0].size[1],
                                   data.image[IDin].md[0].size[0]);
-        for(ii = 0; ii < data.image[IDin].md[0].size[0]; ii++)
-            for(jj = 0; jj < data.image[IDin].md[0].size[1]; jj++)
+        for(uint32_t ii = 0; ii < data.image[IDin].md[0].size[0]; ii++)
+            for(uint32_t jj = 0; jj < data.image[IDin].md[0].size[1]; jj++)
             {
                 data.image[IDout].array.F[ii * data.image[IDin].md[0].size[1] + jj] =
                     data.image[IDin].array.F[jj * data.image[IDin].md[0].size[0] + ii];
             }
     }
 
-    return(IDout);
+    return IDout;
 }
 
 
