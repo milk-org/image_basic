@@ -2987,8 +2987,8 @@ long load_fitsimages(
 )
 {
     long cnt = 0;
-    char fname[SBUFFERSIZE];
-    char fname1[SBUFFERSIZE];
+    char fname[STRINGMAXLEN_FILENAME];
+    char fname1[STRINGMAXLEN_FILENAME];
     FILE *fp;
 
 	EXECUTE_SYSTEM_COMMAND("ls %s.fits > flist.tmp\n", strfilter);
@@ -3001,10 +3001,10 @@ long load_fitsimages(
         exit(0);
     }
 
-    while(fgets(fname, 200, fp) != NULL)
+    while(fgets(fname, STRINGMAXLEN_FILENAME, fp) != NULL)
     {
         fname[strlen(fname) - 1] = '\0';
-        strncpy(fname1, fname, strlen(fname) - 5);
+        strncpy(fname1, fname, STRINGMAXLEN_FILENAME);
         fname1[strlen(fname) - 5] = '\0';
         load_fits(fname, fname1, 1);
         printf("[%ld] Image %s loaded -> %s\n", cnt, fname, fname1);
@@ -3034,31 +3034,18 @@ long load_fitsimages_cube(
 )
 {
     long cnt = 0;
-    char command[SBUFFERSIZE];
-    char fname[SBUFFERSIZE];
-    char fname1[SBUFFERSIZE];
+    char fname[STRINGMAXLEN_FILENAME];
+    char fname1[STRINGMAXLEN_FILENAME];
     FILE *fp;
     long xsize, ysize;
     long ii;
-    long ID, IDout;
+    imageID ID;
+    imageID IDout;
     int n;
 
     printf("Filter = %s\n", strfilter);
 
-    n = snprintf(command, SBUFFERSIZE, "ls %s > flist.tmp\n", strfilter);
-    if(n >= SBUFFERSIZE)
-    {
-        PRINT_ERROR("Attempted to write string buffer with too many characters");
-    }
-
-    printf("command: %s\n", command);
-
-    if(system(command) == -1)
-    {
-        printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n", command,
-               __func__, __FILE__, __LINE__);
-        exit(0);
-    }
+	EXECUTE_SYSTEM_COMMAND("ls %s > flist.tmp\n", strfilter);
 
     xsize = 0;
     ysize = 0;
@@ -3070,7 +3057,7 @@ long load_fitsimages_cube(
         exit(0);
     }
 
-    while(fgets(fname, 200, fp) != NULL)
+    while(fgets(fname, STRINGMAXLEN_FILENAME, fp) != NULL)
     {
         fname[strlen(fname) - 1] = '\0';
         if(cnt == 0)
@@ -3109,10 +3096,10 @@ long load_fitsimages_cube(
     }
 
 
-    while(fgets(fname, 200, fp) != NULL)
+    while(fgets(fname, STRINGMAXLEN_FILENAME, fp) != NULL)
     {
         fname[strlen(fname) - 1] = '\0';
-        strncpy(fname1, fname, strlen(fname) - 5);
+        strncpy(fname1, fname, STRINGMAXLEN_FILENAME);
         fname1[strlen(fname) - 5] = '\0';
         load_fits(fname, fname1, 1);
         printf("Image %s loaded -> %s\n", fname, fname1);
@@ -3548,36 +3535,26 @@ long basic_addimagesfiles(
 )
 {
     long cnt = 0;
-    char command[SBUFFERSIZE];
-    char fname[SBUFFERSIZE];
-    char fname1[SBUFFERSIZE];
+    char fname[STRINGMAXLEN_FILENAME];
+    char fname1[STRINGMAXLEN_FILENAME];
     FILE *fp;
     imageID ID;
     int init = 0; // becomes 1 when first image encountered
     int n;
 
-    n = snprintf(command, SBUFFERSIZE, "ls %s.fits > flist.tmp\n", strfilter);
-    if(n >= SBUFFERSIZE)
-    {
-        PRINT_ERROR("Attempted to write string buffer with too many characters");
-    }
-
-    if(system(command) == -1)
-    {
-        printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n", command,
-               __func__, __FILE__, __LINE__);
-        exit(0);
-    }
+	EXECUTE_SYSTEM_COMMAND("ls %s.fits > flist.tmp\n", strfilter);
+  
 
     if((fp = fopen("flist.tmp", "r")) == NULL)
     {
         PRINT_ERROR("fopen() error");
         exit(0);
     }
-    while(fgets(fname, 200, fp) != NULL)
+    while(fgets(fname, STRINGMAXLEN_FILENAME, fp) != NULL)
     {
         fname[strlen(fname) - 1] = '\0';
-        strncpy(fname1, fname, strlen(fname) - 5);
+        strncpy(fname1, fname, STRINGMAXLEN_FILENAME);
+
         fname1[strlen(fname) - 5] = '\0';
         ID = load_fits(fname, fname1, 1);
         printf("Image %s loaded -> %s\n", fname, fname1);
@@ -3597,18 +3574,7 @@ long basic_addimagesfiles(
 
     fclose(fp);
 
-    n = snprintf(command, SBUFFERSIZE, "rm flist.tmp");
-    if(n >= SBUFFERSIZE)
-    {
-        PRINT_ERROR("Attempted to write string buffer with too many characters");
-    }
-
-    if(system(command) == -1)
-    {
-        printf("ERROR: system(\"%s\") [function: %s  file: %s  line: %d ]\n", command,
-               __func__, __FILE__, __LINE__);
-        exit(0);
-    }
+    EXECUTE_SYSTEM_COMMAND("rm flist.tmp");
 
     printf("%ld images coadded (stored in variable imcnt) -> %s\n", cnt, outname);
     create_variable_ID("imcnt", 1.0 * cnt);
