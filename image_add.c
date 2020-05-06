@@ -36,7 +36,7 @@ imageID basic_add3D(
 // Command line interface wrapper function(s)
 // ==========================================
 
-errno_t image_basic_add_cli()
+static errno_t image_basic_add_cli()
 {
     if(CLI_checkarg(1, 4) + CLI_checkarg(2, 4) + CLI_checkarg(3,
             3) + CLI_checkarg(4, 2) + CLI_checkarg(5, 2) == 0)
@@ -52,7 +52,7 @@ errno_t image_basic_add_cli()
     }
 }
 
-errno_t image_basic_add3D_cli()
+static errno_t image_basic_add3D_cli()
 {
     if(CLI_checkarg(1, 4) + CLI_checkarg(2, 4) + CLI_checkarg(3,
             3) + CLI_checkarg(4, 2) + CLI_checkarg(5, 2) + CLI_checkarg(6, 2) == 0)
@@ -75,7 +75,7 @@ errno_t image_basic_add3D_cli()
 // Register CLI command(s)
 // ==========================================
 
-errno_t image_add_addCLIcmd()
+errno_t __attribute__ ((cold)) image_add_addCLIcmd()
 {
 	
     RegisterCLIcommand(
