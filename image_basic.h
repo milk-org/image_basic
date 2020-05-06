@@ -2,19 +2,27 @@
 #define _BASIC_H
 
 
+#include "image_add.h"
+
+#include "image_basic/naninf2zero.h"
+#include "image_basic/imcontract.h"
+#include "image_basic/imexpand.h"
+#include "image_basic/imresize.h"
+#include "image_basic/imrotate.h"
+#include "image_basic/imstretch.h"
+
 
 void __attribute__((constructor)) libinit_image_basic();
 
-int basic_naninf2zero(const char *ID_name);
+
+
+
+
 
 int basic_lmin_im(const char *ID_name, const char *out_name);
 
 int basic_lmax_im(const char *ID_name, const char *out_name);
 
-long basic_add(const char *ID1_name, const char *ID2_name, const char *ID3_name,
-               long off1, long off2);
-long basic_add3D(const char *ID_name1, const char *ID_name2,
-                 const char *ID_name_out, long off1, long off2, long off3);
 
 long basic_diff(const char *ID1_name, const char *ID2_name,
                 const char *ID3_name, long off1, long off2);
@@ -24,17 +32,11 @@ imageID basic_extract(const char *ID_in_name, const char *ID_out_name, long n1,
 
 int basic_trunc_circ(const char *ID_name, float f1);
 
-imageID basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2);
-imageID basic_expand3D(const char *ID_name, const char *ID_name_out, int n1,
-                    int n2, int n3);
+
 
 imageID basic_zoom2(const char *ID_name, const char *ID_name_out);
 
-imageID basic_contract(const char *ID_name, const char *ID_name_out, int n1,
-                    int n2);
 
-imageID basic_contract3D(const char *ID_name, const char *ID_name_out, int n1,
-                      int n2, int n3);
 
 long basic_average_column(const char *ID_name, const char *IDout_name);
 
@@ -50,11 +52,7 @@ int basic_median(const char *ID_name, const char *options);
 
 long basic_renorm_max(const char *ID_name);
 
-long basic_rotate(const char *ID_name, const char *IDout_name, float angle);
 
-int basic_rotate90(const char *ID_name, const char *ID_out_name);
-
-int basic_rotate_int(const char *ID_name, const char *ID_out_name, long nbstep);
 
 int basic_translate(const char *ID_name, const char *ID_out, float xtransl,
                     float ytransl);
@@ -67,17 +65,8 @@ long IMAGE_BASIC_get_assym_component(const char *ID_name,
 long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name,
                                    float xcenter, float ycenter);
 
-int basic_rotate2(const char *ID_name_in, const char *ID_name_out, float angle);
 
-int basic_rotate3(const char *ID_name_in, const char *ID_name_out, float angle);
 
-int basic_stretch(const char *name_in, const char *name_out, float coeff,
-                  long Xcenter, long Ycenter);
-
-int basic_stretch_range(const char *name_in, const char *name_out, float coeff1,
-                        float coeff2, long Xcenter, long Ycenter, long NBstep, float ApoCoeff);
-
-int basic_stretchc(const char *name_in, const char *name_out, float coeff);
 
 int gauss_histo_image(const char *ID_name, const char *ID_out_name, float sigma,
                       float center);
@@ -106,8 +95,7 @@ long basic_addimages(const char *prefix, const char *ID_out);
 long basic_averageimages(const char *prefix, const char *ID_out);
 
 
-long basic_resizeim(const char *imname_in, const char *imname_out,
-                    long xsizeout, long ysizeout);
+
 
 
 imageID image_basic_3Dto2D(

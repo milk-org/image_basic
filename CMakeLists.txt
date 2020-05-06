@@ -3,9 +3,23 @@ set(LIBNAME "milkimagebasic")
 set(SRCNAME "image_basic")
 
 set(SOURCEFILES
+	image_add.c
+	imcontract.c
+	imexpand.c
+	imresize.c
+	imrotate.c
+	imstretch.c
+	naninf2zero.c
 	${SRCNAME}.c)
 
 set(INCLUDEFILES
+	image_add.h
+	imcontract.h
+	imexpand.h
+	imresize.h
+	imrotate.h
+	imstretch.h
+	naninf2zero.h
 	${SRCNAME}.h)
 
 
