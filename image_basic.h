@@ -4,12 +4,24 @@
 
 #include "image_add.h"
 
-#include "image_basic/naninf2zero.h"
+#include "image_basic/cubecollapse.h"
+#include "image_basic/im3Dto2D.h"
+#include "image_basic/imswapaxis2D.h"
 #include "image_basic/imcontract.h"
 #include "image_basic/imexpand.h"
 #include "image_basic/imresize.h"
 #include "image_basic/imrotate.h"
 #include "image_basic/imstretch.h"
+#include "image_basic/indexmap.h"
+#include "image_basic/loadfitsimgcube.h"
+#include "image_basic/measure_transl.h"
+#include "image_basic/naninf2zero.h"
+#include "image_basic/extrapolate_nearestpixel.h"
+#include "image_basic/streamave.h"
+#include "image_basic/streamfeed.h"
+#include "image_basic/streamrecord.h"
+#include "image_basic/tableto2Dim.h"
+
 
 
 void __attribute__((constructor)) libinit_image_basic();
@@ -73,16 +85,11 @@ int gauss_histo_image(const char *ID_name, const char *ID_out_name, float sigma,
 
 long load_fitsimages(const char *strfilter);
 
-long load_fitsimages_cube(const char *strfilter, const char *ID_out_name);
-
 long basic_cube_center(const char *ID_in_name, const char *ID_out_name);
 
 long cube_average(const char *ID_in_name, const char *ID_out_name, float alpha);
 
-long cube_collapse(const char *ID_in_name, const char *ID_out_name);
 
-long image_basic_indexmap(char *ID_index_name, char *ID_values_name,
-                          char *IDout_name);
 
 long basic_addimagesfiles(const char *strfilter, const char *outname);
 
@@ -102,57 +109,8 @@ imageID image_basic_3Dto2D(
     const char *IDname
 );
 
-imageID image_basic_SwapAxis2D(
-    const char *IDin_name,
-    const char *IDout_name
-);
 
 
 
-imageID basic_tableto2Dim(
-    const char *fname,
-    float       xmin,
-    float       xmax,
-    float       ymin,
-    float       ymax,
-    long        xsize,
-    long        ysize,
-    const char *ID_name,
-    float       convsize
-);
 
-imageID basic_2Dextrapolate_nearestpixel(
-    const char *IDin_name,
-    const char *IDmask_name,
-    const char *IDout_name
-);
-
-double basic_measure_transl(
-    const char *ID_name1,
-    const char *ID_name2,
-    long tmax
-);
-
-// Operations on image streams
-
-/** @brief Average an image stream */
-imageID IMAGE_BASIC_streamaverage(
-    const char *IDname,
-    long        NBcoadd,
-    const char *IDoutname,
-    int         mode,
-    int         semindex
-);
-
-long IMAGE_BASIC_streamfeed(
-    const char *IDname,
-    const char *streamname,
-    float       frequ
-);
-
-imageID IMAGE_BASIC_streamrecord(
-    const char *streamname,
-    long        NBframes,
-    const char *IDname
-);
 #endif
