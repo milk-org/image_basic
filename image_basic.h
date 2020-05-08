@@ -2,13 +2,15 @@
 #define _BASIC_H
 
 
-#include "image_add.h"
+#include "image_basic/image_add.h"
 
 #include "image_basic/cubecollapse.h"
 #include "image_basic/im3Dto2D.h"
 #include "image_basic/imswapaxis2D.h"
 #include "image_basic/imcontract.h"
 #include "image_basic/imexpand.h"
+#include "image_basic/imgetcircsym.h"
+#include "image_basic/imgetcircasym.h"
 #include "image_basic/imresize.h"
 #include "image_basic/imrotate.h"
 #include "image_basic/imstretch.h"
@@ -29,7 +31,7 @@ void __attribute__((constructor)) libinit_image_basic();
 
 
 
-
+/*
 
 int basic_lmin_im(const char *ID_name, const char *out_name);
 
@@ -74,8 +76,7 @@ float basic_correlation(const char *ID_name1, const char *ID_name2);
 long IMAGE_BASIC_get_assym_component(const char *ID_name,
                                      const char *ID_out_name, float xcenter, float ycenter, const char *options);
 
-long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name,
-                                   float xcenter, float ycenter);
+
 
 
 
@@ -109,7 +110,7 @@ imageID image_basic_3Dto2D(
     const char *IDname
 );
 
-
+*/
 
 
 

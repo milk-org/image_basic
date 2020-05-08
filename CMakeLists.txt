@@ -10,6 +10,8 @@ set(SOURCEFILES
 	image_add.c
 	imcontract.c
 	imexpand.c
+	imgetcircsym.c
+	imgetcircasym.c
 	imresize.c
 	imrotate.c
 	imstretch.c
@@ -32,6 +34,8 @@ set(INCLUDEFILES
 	image_add.h
 	imcontract.h
 	imexpand.h
+	imgetcircsym.h
+	imgetcircasym.h
 	imresize.h
 	imrotate.h
 	imstretch.h

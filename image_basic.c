@@ -31,23 +31,24 @@
 
 
 
-#include <stdint.h>
-#include <string.h>
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sched.h>
+//#include <stdint.h>
+//#include <string.h>
+//#include <math.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <errno.h>
+//#include <unistd.h>
+//#include <sched.h>
 
-#include <fitsio.h>  /* required by every program that uses CFITSIO  */
+//#include <fitsio.h>  /* required by every program that uses CFITSIO  */
 
 #include "CommandLineInterface/CLIcore.h"
-#include "COREMOD_tools/COREMOD_tools.h"
-#include "COREMOD_memory/COREMOD_memory.h"
-#include "COREMOD_iofits/COREMOD_iofits.h"
-#include "COREMOD_arith/COREMOD_arith.h"
+//#include "COREMOD_tools/COREMOD_tools.h"
+//#include "COREMOD_memory/COREMOD_memory.h"
+//#include "COREMOD_iofits/COREMOD_iofits.h"
+//#include "COREMOD_arith/COREMOD_arith.h"
 
+/*
 #include "info/info.h"
 #include "fft/fft.h"
 #include "image_gen/image_gen.h"
@@ -56,9 +57,9 @@
 #include "info/info.h"
 #include "image_filter/image_filter.h"
 #include "kdtree/kdtree.h"
+*/
 
-
-#include "image_basic/image_basic.h"
+//#include "image_basic/image_basic.h"
 
 #include "cubecollapse.h"
 #include "im3Dto2D.h"
@@ -66,6 +67,9 @@
 #include "image_add.h"
 #include "imcontract.h"
 #include "imexpand.h"
+#include "imgetcircsym.h"
+#include "imgetcircasym.h"
+#include "imresize.h"
 #include "imrotate.h"
 #include "indexmap.h"
 #include "loadfitsimgcube.h"
@@ -74,7 +78,7 @@
 #include "streamrecord.h"
 
 
-
+/*
 #define SBUFFERSIZE 1000
 
 #define SWAP(x,y)  temp=(x);x=(y);y=temp;
@@ -85,7 +89,7 @@
 
 
 char errmsg[SBUFFERSIZE];
-
+*/
 
 
 
@@ -113,65 +117,15 @@ INIT_MODULE_LIB(image_basic)
 
 
 
-
-
-errno_t IMAGE_BASIC_get_assym_component_cli()
-{
-    if(CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3,
-            1) + CLI_checkarg(4, 1) == 0)
-    {
-        IMAGE_BASIC_get_assym_component(data.cmdargtoken[1].val.string,
-                                        data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numf,
-                                        data.cmdargtoken[4].val.numf, "");
-        return CLICMD_SUCCESS;
-    }
-    else
-    {
-        return CLICMD_INVALID_ARG;
-    }
-}
-
-errno_t IMAGE_BASIC_get_sym_component_cli()
-{
-    if(CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3,
-            1) + CLI_checkarg(4, 1) == 0)
-    {
-        IMAGE_BASIC_get_sym_component(data.cmdargtoken[1].val.string,
-                                      data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numf,
-                                      data.cmdargtoken[4].val.numf);
-        return CLICMD_SUCCESS;
-    }
-    else
-    {
-        return CLICMD_INVALID_ARG;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 static errno_t init_module_CLI()
 {
-
 
 	imswapaxis2D_addCLIcmd();
 	im3Dto2D_addCLIcmd();
 	image_add_addCLIcmd();
 	imexpand_addCLIcmd();
+	imgetcircsym_addCLIcmd();
+	imgetcircasym_addCLIcmd();
 	imresize_addCLIcmd();
 	imcontract_addCLIcmd();
 	imrotate_addCLIcmd();
@@ -181,29 +135,6 @@ static errno_t init_module_CLI()
 	streamave_addCLIcmd();
 	cubecollapse_addCLIcmd();
 	
-
-
-    RegisterCLIcommand(
-        "imgetcircassym",
-        __FILE__,
-        IMAGE_BASIC_get_assym_component_cli,
-        "extract non-circular symmetric part of image",
-        "<inim> <outim> <xcenter> <ycenter>",
-        "imcgetcircassym imin imout 256.0 230.5",
-        "long IMAGE_BASIC_get_assym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter, const char *options)");
-
-
-    RegisterCLIcommand(
-        "imgetcircsym",
-        __FILE__,
-        IMAGE_BASIC_get_sym_component_cli,
-        "extract circular symmetric part of image",
-        "<inim> <outim> <xcenter> <ycenter>",
-        "imcgetcircsym imin imout 256.0 230.5",
-        "long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter)");
-
-
-
     // add atexit functions here
 
     return RETURN_SUCCESS;
@@ -215,7 +146,7 @@ static errno_t init_module_CLI()
 
 
 
-
+/*
 
 int basic_mincontract(
     __attribute__((unused)) const char *ID_name,
@@ -310,11 +241,11 @@ int basic_lmax_im(
 long basic_diff(const char *ID_name1, const char *ID_name2,
                 const char *ID_name_out, long off1, long off2)
 {
-    int ID1, ID2; /* ID for the 2 images added */
-    int ID_out; /* ID for the output image */
+    int ID1, ID2; 
+    int ID_out; 
     long ii, jj;
     long naxes1[2], naxes2[2], naxes[2];
-    long xmin, ymin, xmax, ymax; /* extrema in the ID1 coordinates */
+    long xmin, ymin, xmax, ymax; // extrema in the ID1 coordinates 
 
     ID1 = image_ID(ID_name1);
     ID2 = image_ID(ID_name2);
@@ -356,14 +287,14 @@ long basic_diff(const char *ID_name1, const char *ID_name2,
         {
             {
                 data.image[ID_out].array.F[jj * naxes[0] + ii] = 0;
-                /* if pixel is in ID1 */
+                // if pixel is in ID1 
                 if(((ii + xmin) >= 0) && ((ii + xmin) < naxes1[0]))
                     if(((jj + ymin) >= 0) && ((jj + ymin) < naxes1[1]))
                     {
                         data.image[ID_out].array.F[jj * naxes[0] + ii] += data.image[ID1].array.F[(jj +
                                 ymin) * naxes1[0] + (ii + xmin)];
                     }
-                /* if pixel is in ID2 */
+                // if pixel is in ID2 
                 if(((ii + xmin - off1) >= 0) && ((ii + xmin - off1) < naxes2[0]))
                     if(((jj + ymin - off2) >= 0) && ((jj + ymin - off2) < naxes2[1]))
                     {
@@ -375,7 +306,9 @@ long basic_diff(const char *ID_name1, const char *ID_name2,
     return(ID_out);
 }
 
-int basic_add_cst(const char *ID_name, float f1, int sign) /* add a constant */
+
+
+int basic_add_cst(const char *ID_name, float f1, int sign) // add a constant 
 {
     int ID;
     long ii, jj;
@@ -397,7 +330,7 @@ int basic_add_cst(const char *ID_name, float f1, int sign) /* add a constant */
 
 
 
-/* extracts a n1xn2 subwindow of an image at offset n3,n4 */
+// extracts a n1xn2 subwindow of an image at offset n3,n4 
 imageID basic_extract(
     const char *ID_in_name,
     const char *ID_out_name,
@@ -413,10 +346,7 @@ imageID basic_extract(
     char name[SBUFFERSIZE];
     int n;
 
-    /*  printf("starting extraction\n"); */
     ID_in = image_ID(ID_in_name);
-    /*  printf("ID_in is %d\n",ID_in);
-        printf("%s %ld %ld %ld %ld\n",ID_out_name,n1,n2,n3,n4); */
     n = snprintf(name, SBUFFERSIZE, "%s", ID_out_name);
     if(n >= SBUFFERSIZE)
     {
@@ -432,7 +362,6 @@ imageID basic_extract(
             data.image[ID_out].array.F[jj * n1 + ii] = data.image[ID_in].array.F[(jj + n4) *
                     data.image[ID_in].md[0].size[0] + ii + n3];
         }
-    /* printf("extraction done\n"); */
 
     return(ID_out);
 }
@@ -467,7 +396,7 @@ imageID basic_zoom2(
 )
 {
     imageID ID;
-    imageID ID_out; /* ID for the output image */
+    imageID ID_out; // ID for the output image 
     uint32_t naxes[2], naxes_out[2];
     char lstring[SBUFFERSIZE];
     int n;
@@ -536,7 +465,7 @@ imageID basic_padd(
 )
 {
     imageID ID;
-    imageID ID_out; /* ID for the output image */
+    imageID ID_out; // ID for the output image 
     uint32_t naxes[2], naxes_out[2];
 
     ID = image_ID(ID_name);
@@ -560,7 +489,7 @@ imageID basic_padd(
 }
 
 
-/* flip an image relative to the horizontal axis */
+// flip an image relative to the horizontal axis 
 imageID basic_fliph(
     const char *ID_name
 )
@@ -576,7 +505,6 @@ imageID basic_fliph(
 
     temp = 0.0;
     tmp_long = (uint32_t) (naxes[1] / 2);
-    /* printf("middle point %ld\n",tmp_long); */
     for(uint32_t jj = 0; jj < tmp_long; jj++)
         for(uint32_t ii = 0; ii < naxes[0]; ii++)
         {
@@ -591,7 +519,7 @@ imageID basic_fliph(
 
 
 
-/* flip an image relative to the vertical axis */
+// flip an image relative to the vertical axis 
 imageID basic_flipv(
     const char *ID_name
 )
@@ -607,7 +535,6 @@ imageID basic_flipv(
 
     temp = 0.0;
     tmp_long = (uint32_t) (naxes[0] / 2);
-    /* printf("middle point %ld\n",tmp_long); */
     for(uint32_t jj = 0; jj < naxes[1]; jj++)
         for(uint32_t ii = 0; ii < tmp_long; ii++)
         {
@@ -621,7 +548,7 @@ imageID basic_flipv(
 
 
 
-/* flip an image horizontally and vertically */
+// flip an image horizontally and vertically 
 imageID basic_fliphv(
     const char *ID_name
 )
@@ -637,7 +564,6 @@ imageID basic_fliphv(
 
     temp = 0.0;
     tmp_long = (uint32_t) (naxes[1] / 2);
-    /* printf("middle point %ld\n",tmp_long); */
     for(uint32_t jj = 0; jj < tmp_long; jj++)
         for(uint32_t ii = 0; ii < naxes[0]; ii++)
         {
@@ -651,7 +577,7 @@ imageID basic_fliphv(
 }
 
 
-/* median of the images specified in options, output is ID_name */
+// median of the images specified in options, output is ID_name 
 int basic_median(
     const char *ID_name,
     const char *options
@@ -809,7 +735,6 @@ int basic_translate(
     int n0, n1;
     float coeff;
 
-    /*  printf("basic translate\n");*/
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
@@ -817,7 +742,6 @@ int basic_translate(
     onaxes[1] = naxes[1];
     n0 = (int)((log10(naxes[0]) / log10(2)) + 0.01);
     n1 = (int)((log10(naxes[0]) / log10(2)) + 0.01);
-    /*  printf("(test --- %ld %ld   %d %d   %d %d)\n",naxes[0],naxes[1],n0,n1,(int) pow(2,n0),(int) pow(2,n1));*/
 
     if((n0 == n1) && (naxes[0] == (int) pow(2, n0))
             && (naxes[1] == (int) pow(2, n1)))
@@ -951,263 +875,6 @@ float basic_correlation(
 
 
 
-imageID IMAGE_BASIC_get_assym_component(
-    const char *ID_name,
-    const char *ID_out_name,
-    float xcenter,
-    float ycenter,
-    const char *options
-)
-{
-    float step = 1.0;
-    imageID ID;
-    uint32_t naxes[2];
-    float distance;
-    float *dist;
-    float *mean;
-    float *rms;
-    long *counts;
-    long i;
-    long nb_step;
-    imageID IDout;
-    char input[50];
-    int str_pos;
-    float perc;
-    float ifloat, x;
-
-    printf("get non-circular symmetric component from image %s\n", ID_name);
-    fflush(stdout);
-
-    if(strstr(options, "-perc ") != NULL)
-    {
-        str_pos = strstr(options, "-perc ") - options;
-        str_pos = str_pos + strlen("-perc ");
-        i = 0;
-        while((options[i + str_pos] != ' ') && (options[i + str_pos] != '\n')
-                && (options[i + str_pos] != '\0'))
-        {
-            input[i] = options[i + str_pos];
-            i++;
-        }
-        input[i] = '\0';
-        perc = atof(input);
-        printf("percentile is %f\n", perc);
-    }
-
-    ID = image_ID(ID_name);
-    naxes[0] = data.image[ID].md[0].size[0];
-    naxes[1] = data.image[ID].md[0].size[1];
-    nb_step = naxes[0] / 2;
-
-    dist = (float *) malloc(sizeof(float) * nb_step);
-    if(dist == NULL)
-    {
-        C_ERRNO = errno;
-        PRINT_ERROR("malloc() error");
-        exit(0);
-    }
-
-    mean = (float *) malloc(sizeof(float) * nb_step);
-    if(mean == NULL)
-    {
-        C_ERRNO = errno;
-        PRINT_ERROR("malloc() error");
-        exit(0);
-    }
-
-    rms = (float *) malloc(sizeof(float) * nb_step);
-    if(rms == NULL)
-    {
-        C_ERRNO = errno;
-        PRINT_ERROR("malloc() error");
-        exit(0);
-    }
-
-    counts = (long *) malloc(sizeof(long) * nb_step);
-    if(counts == NULL)
-    {
-        C_ERRNO = errno;
-        PRINT_ERROR("malloc() error");
-        exit(0);
-    }
-
-    for(i = 0; i < nb_step; i++)
-    {
-        dist[i] = 0;
-        mean[i] = 0;
-        rms[i] = 0;
-        counts[i] = 0;
-    }
-
-    for(uint32_t jj = 0; jj < naxes[1]; jj++)
-        for(uint32_t ii = 0; ii < naxes[0]; ii++)
-        {
-            distance = sqrt((1.0 * ii - xcenter) * (1.0 * ii - xcenter) +
-                            (1.0 * jj - ycenter) * (1.0 * jj - ycenter));
-            i = (long)(1.0 * distance / step + 0.5);
-            if(i < nb_step)
-            {
-                dist[i] += distance;
-                mean[i] += data.image[ID].array.F[jj * naxes[0] + ii];
-                rms[i] += data.image[ID].array.F[jj * naxes[0] + ii] * data.image[ID].array.F[jj
-                          * naxes[0] + ii];
-                counts[i] += 1;
-            }
-        }
-
-    for(i = 0; i < nb_step; i++)
-    {
-        dist[i] /= counts[i];
-        mean[i] /= counts[i];
-        rms[i] = sqrt(rms[i] - 1.0 * counts[i] * mean[i] * mean[i]) / sqrt(counts[i]);
-    }
-
-    printf("%u %u\n", naxes[0], naxes[1]);
-    create_2Dimage_ID(ID_out_name, naxes[0], naxes[1]);
-    IDout = image_ID(ID_out_name);
-    for(uint32_t jj = 0; jj < naxes[1]; jj++)
-        for(uint32_t ii = 0; ii < naxes[0]; ii++)
-        {
-            distance = sqrt((1.0 * ii - xcenter) * (1.0 * ii - xcenter) +
-                            (1.0 * jj - ycenter) * (1.0 * jj - ycenter));
-            i = (long)(1.0 * distance / step);
-            ifloat = 1.0 * distance / step;
-            x = ifloat - i;
-
-            if((i + 1) < nb_step)
-            {
-                data.image[IDout].array.F[jj * naxes[0] + ii] = data.image[ID].array.F[jj *
-                        naxes[0] + ii] - ((1.0 - x) * mean[i] + x * mean[i + 1]);
-            }
-        }
-
-    free(counts);
-    free(dist);
-    free(mean);
-    free(rms);
-
-    return(IDout);
-}
-
-
-
-imageID IMAGE_BASIC_get_sym_component(
-    const char *ID_name,
-    const char *ID_out_name,
-    float       xcenter,
-    float       ycenter
-)
-{
-    float step = 1.0;
-    imageID ID;
-    uint32_t naxes[2];
-    float distance;
-    float *dist;
-    float *mean;
-    float *rms;
-    long *counts;
-    long i;
-    long nb_step;
-    imageID IDout;
-    float ifloat, x;
-
-    ID = image_ID(ID_name);
-    naxes[0] = data.image[ID].md[0].size[0];
-    naxes[1] = data.image[ID].md[0].size[1];
-    nb_step = naxes[0] / 2;
-
-    dist = (float *) malloc(sizeof(float) * nb_step);
-    if(dist == NULL)
-    {
-        C_ERRNO = errno;
-        PRINT_ERROR("malloc() error");
-        exit(0);
-    }
-
-    mean = (float *) malloc(sizeof(float) * nb_step);
-    if(mean == NULL)
-    {
-        C_ERRNO = errno;
-        PRINT_ERROR("malloc() error");
-        exit(0);
-    }
-
-    rms = (float *) malloc(sizeof(float) * nb_step);
-    if(rms == NULL)
-    {
-        C_ERRNO = errno;
-        PRINT_ERROR("malloc() error");
-        exit(0);
-    }
-
-    counts = (long *) malloc(sizeof(long) * nb_step);
-    if(counts == NULL)
-    {
-        C_ERRNO = errno;
-        PRINT_ERROR("malloc() error");
-        exit(0);
-    }
-
-    for(i = 0; i < nb_step; i++)
-    {
-        dist[i] = 0;
-        mean[i] = 0;
-        rms[i] = 0;
-        counts[i] = 0;
-    }
-
-
-    for(uint32_t jj = 0; jj < naxes[1]; jj++)
-        for(uint32_t ii = 0; ii < naxes[0]; ii++)
-        {
-            distance = sqrt((1.0 * ii - xcenter) * (1.0 * ii - xcenter) +
-                            (1.0 * jj - ycenter) * (1.0 * jj - ycenter));
-            i = (long)(1.0 * distance / step + 0.5);
-            if(i < nb_step)
-            {
-                dist[i] += distance;
-                mean[i] += data.image[ID].array.F[jj * naxes[0] + ii];
-                rms[i] += data.image[ID].array.F[jj * naxes[0] + ii] * data.image[ID].array.F[jj
-                          * naxes[0] + ii];
-                counts[i] += 1;
-            }
-        }
-
-    for(i = 0; i < nb_step; i++)
-    {
-        dist[i] /= counts[i];
-        mean[i] /= counts[i];
-        rms[i] = sqrt(rms[i] - 1.0 * counts[i] * mean[i] * mean[i]) / sqrt(counts[i]);
-    }
-
-    printf("%u %u\n", naxes[0], naxes[1]);
-    create_2Dimage_ID(ID_out_name, naxes[0], naxes[1]);
-    IDout = image_ID(ID_out_name);
-    for(uint32_t jj = 0; jj < naxes[1]; jj++)
-        for(uint32_t ii = 0; ii < naxes[0]; ii++)
-        {
-            distance = sqrt((1.0 * ii - xcenter) * (1.0 * ii - xcenter) +
-                            (1.0 * jj - ycenter) * (1.0 * jj - ycenter));
-            i = (long)(1.0 * distance / step);
-            ifloat = 1.0 * distance / step;
-            x = ifloat - i;
-
-            if((i + 1) < nb_step)
-            {
-                data.image[IDout].array.F[jj * naxes[0] + ii] = ((1.0 - x) * mean[i] + x *
-                        mean[i + 1]);
-            }
-        }
-
-
-
-    free(counts);
-    free(dist);
-    free(mean);
-    free(rms);
-
-    return(IDout);
-}
 
 
 
@@ -1827,7 +1494,7 @@ long basic_averageimages(
 
 
 
-
+*/
 
 
 
