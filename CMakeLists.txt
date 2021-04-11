@@ -2,6 +2,9 @@
 set(LIBNAME "milkimagebasic")
 set(SRCNAME "image_basic")
 
+message("")
+message(" SRCNAME = ${SRCNAME} -> LIBNAME = ${LIBNAME}")
+
 set(SOURCEFILES
 	${SRCNAME}.c
 	cubecollapse.c
