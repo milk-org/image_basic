@@ -104,7 +104,7 @@ long basic_resizeim(
 
     if(datatype == _DATATYPE_FLOAT)
     {
-        IDout = create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0);
+        IDout = create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0, 0);
         for(ii = 0; ii < naxesout[0]; ii++)
             for(jj = 0; jj < naxesout[1]; jj++)
             {
@@ -129,7 +129,7 @@ long basic_resizeim(
     }
     else if(datatype == _DATATYPE_DOUBLE)
     {
-        IDout = create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0);
+        IDout = create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0, 0);
         for(ii = 0; ii < naxesout[0] - 1; ii++)
             for(jj = 0; jj < naxesout[1] - 1; jj++)
             {

@@ -176,7 +176,7 @@ imageID IMAGE_BASIC_streamaverage(
 
     if(createim == 1)
     {
-        IDcube = create_image_ID("tmpstrcoadd", 3, imsize, datatype, 0, 0);
+        IDcube = create_image_ID("tmpstrcoadd", 3, imsize, datatype, 0, 0, 0);
     }
 
 
