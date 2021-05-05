@@ -88,7 +88,6 @@ imageID image_basic_indexmap(
     long val_xsize, val_ysize, val_xysize;
     uint8_t datatype;
     uint8_t val_datatype;
-    float *arrayf;
     long ii, i;
 
     IDindex = image_ID(ID_index_name);
@@ -108,30 +107,31 @@ imageID image_basic_indexmap(
 
     if(val_datatype == _DATATYPE_FLOAT)
     {
-        arrayf = data.image[IDvalues].array.F;
+        for(ii = 0; ii < xysize; ii++)
+        {
+            i = (long)(data.image[IDindex].array.F[ii] + 0.1);
+            if((i > -1) && (i < val_xysize))
+            {
+                data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
+            }
+        }
     }
     else
     {
-        arrayf = (float *) malloc(sizeof(float) * val_xysize);
+        float * arrayf = (float *) malloc(sizeof(float) * val_xysize);
+        if(arrayf == NULL) {
+            PRINT_ERROR("malloc returns NULL pointer");
+            abort();
+        }
+
         for(i = 0; i < val_xysize; i++)
         {
             arrayf[i] = (float) data.image[IDvalues].array.D[i];
         }
-    }
 
-    switch(datatype)
-    {
 
-        case _DATATYPE_FLOAT:
-            for(ii = 0; ii < xysize; ii++)
-            {
-                i = (long)(data.image[IDindex].array.F[ii] + 0.1);
-                if((i > -1) && (i < val_xysize))
-                {
-                    data.image[IDout].array.F[ii] = arrayf[i];
-                }
-            }
-            break;
+        switch(datatype)
+        {
 
         case _DATATYPE_DOUBLE:
             for(ii = 0; ii < xysize; ii++)
@@ -236,16 +236,13 @@ imageID image_basic_indexmap(
 
         default:
             printf("ERROR: datatype not supported\n");
+            free(arrayf);
             return EXIT_FAILURE;
             break;
-    }
-
-
-
-    if(val_datatype != _DATATYPE_FLOAT)
-    {
+        }
         free(arrayf);
     }
+
 
     return(IDout);
 }

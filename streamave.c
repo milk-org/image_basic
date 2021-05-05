@@ -61,7 +61,7 @@ static errno_t image_basic_streamaverage_cli()
 
 errno_t __attribute__ ((cold)) streamave_addCLIcmd()
 {
-	
+
     RegisterCLIcommand(
         "imgstreamave",
         __FILE__,
@@ -70,7 +70,7 @@ errno_t __attribute__ ((cold)) streamave_addCLIcmd()
         "imgstreamave <imin> <NBcoadd [long]> <imout> <mode> <semindex>",
         "imgstreamave im 100 imave 0 -1",
         "long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDoutname, int mode, int semindex)"
-        );
+    );
 
     return RETURN_SUCCESS;
 }
@@ -141,6 +141,10 @@ imageID IMAGE_BASIC_streamaverage(
 
 
     imsize = (uint32_t *) malloc(sizeof(uint32_t) * 3);
+    if(imsize == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
     imsize[0] = xsize;
     imsize[1] = ysize;
     imsize[2] = NBcoadd;
@@ -150,6 +154,10 @@ imageID IMAGE_BASIC_streamaverage(
     {
         IDrms = create_2Dimage_ID("imgstreamrms", xsize, ysize);
         sumsqarray = calloc(xsize * ysize, sizeof(double));
+        if(sumsqarray == NULL) {
+            PRINT_ERROR("calloc returns NULL pointer");
+            abort();
+        }
     }
 
     createim = 0;
@@ -179,9 +187,14 @@ imageID IMAGE_BASIC_streamaverage(
         IDcube = create_image_ID("tmpstrcoadd", 3, imsize, datatype, 0, 0, 0);
     }
 
+    free(imsize);
 
     IDout = create_2Dimage_ID(IDoutname, xsize, ysize);
     sumarray = calloc(xsize * ysize, sizeof(double));
+    if(sumarray == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
 
 
     // if semindex out of range, use counter
@@ -236,139 +249,138 @@ imageID IMAGE_BASIC_streamaverage(
         switch(datatype)
         {
 
-            case _DATATYPE_UINT8:
-                ptrv = (char *) data.image[ID].array.UI8;
-                ptrv += sizeof(char) * k1 * xysize;
-                ptrcv = (char *) data.image[IDcube].array.UI8;
-                ptrcv += sizeof(char) * k * xysize;
-                memcpy(ptrcv, ptrv, sizeof(char)*xysize);
+        case _DATATYPE_UINT8:
+            ptrv = (char *) data.image[ID].array.UI8;
+            ptrv += sizeof(char) * k1 * xysize;
+            ptrcv = (char *) data.image[IDcube].array.UI8;
+            ptrcv += sizeof(char) * k * xysize;
+            memcpy(ptrcv, ptrv, sizeof(char)*xysize);
 
-                if(mode > 0)
-                {
-                    for(ii = 0; ii < xysize; ii++)
-                    {
-                        sumsqarray[ii] += (double)(data.image[IDcube].array.UI8[offset + ii] *
-                                                   data.image[IDcube].array.UI8[offset + ii]);
-                    }
-                }
+            if(mode > 0)
+            {
                 for(ii = 0; ii < xysize; ii++)
                 {
-                    sumarray[ii] += (double) data.image[IDcube].array.UI8[offset + ii];
+                    sumsqarray[ii] += (double)(data.image[IDcube].array.UI8[offset + ii] *
+                                               data.image[IDcube].array.UI8[offset + ii]);
                 }
-                break;
+            }
+            for(ii = 0; ii < xysize; ii++)
+            {
+                sumarray[ii] += (double) data.image[IDcube].array.UI8[offset + ii];
+            }
+            break;
 
-            case _DATATYPE_INT32:
-                ptrv = (char *) data.image[ID].array.SI32;
-                ptrv += sizeof(int) * k1 * xysize;
-                ptrcv = (char *) data.image[IDcube].array.SI32;
-                ptrcv += sizeof(int) * k * xysize;
-                memcpy(ptrcv, ptrv, sizeof(int)*xysize);
-                if(mode > 0)
-                {
-                    for(ii = 0; ii < xysize; ii++)
-                    {
-                        sumsqarray[ii] += (double)(data.image[IDcube].array.SI32[offset + ii] *
-                                                   data.image[IDcube].array.SI32[offset + ii]);
-                    }
-                }
+        case _DATATYPE_INT32:
+            ptrv = (char *) data.image[ID].array.SI32;
+            ptrv += sizeof(int) * k1 * xysize;
+            ptrcv = (char *) data.image[IDcube].array.SI32;
+            ptrcv += sizeof(int) * k * xysize;
+            memcpy(ptrcv, ptrv, sizeof(int)*xysize);
+            if(mode > 0)
+            {
                 for(ii = 0; ii < xysize; ii++)
                 {
-                    sumarray[ii] += (double) data.image[IDcube].array.SI32[offset + ii];
+                    sumsqarray[ii] += (double)(data.image[IDcube].array.SI32[offset + ii] *
+                                               data.image[IDcube].array.SI32[offset + ii]);
                 }
-                break;
+            }
+            for(ii = 0; ii < xysize; ii++)
+            {
+                sumarray[ii] += (double) data.image[IDcube].array.SI32[offset + ii];
+            }
+            break;
 
-            case _DATATYPE_FLOAT:
-                ptrv = (char *) data.image[ID].array.F;
-                ptrv += sizeof(float) * k1 * xysize;
-                ptrcv = (char *) data.image[IDcube].array.F;
-                ptrcv += sizeof(float) * k * xysize;
-                memcpy(ptrcv, ptrv, sizeof(float)*xysize);
+        case _DATATYPE_FLOAT:
+            ptrv = (char *) data.image[ID].array.F;
+            ptrv += sizeof(float) * k1 * xysize;
+            ptrcv = (char *) data.image[IDcube].array.F;
+            ptrcv += sizeof(float) * k * xysize;
+            memcpy(ptrcv, ptrv, sizeof(float)*xysize);
 
-                if(mode > 0)
-                {
-                    for(ii = 0; ii < xysize; ii++)
-                    {
-                        sumsqarray[ii] += (double)(data.image[IDcube].array.F[offset + ii] *
-                                                   data.image[IDcube].array.F[offset + ii]);
-                    }
-                }
+            if(mode > 0)
+            {
                 for(ii = 0; ii < xysize; ii++)
                 {
-                    sumarray[ii] += (double) data.image[IDcube].array.F[offset + ii];
+                    sumsqarray[ii] += (double)(data.image[IDcube].array.F[offset + ii] *
+                                               data.image[IDcube].array.F[offset + ii]);
                 }
-                break;
+            }
+            for(ii = 0; ii < xysize; ii++)
+            {
+                sumarray[ii] += (double) data.image[IDcube].array.F[offset + ii];
+            }
+            break;
 
-            case _DATATYPE_DOUBLE:
-                ptrv = (char *) data.image[ID].array.D;
-                ptrv += sizeof(double) * k1 * xysize;
-                ptrcv = (char *) data.image[IDcube].array.D;
-                ptrcv += sizeof(double) * k * xysize;
-                memcpy(ptrcv, ptrv, sizeof(double)*xysize);
-                if(mode > 0)
-                {
-                    for(ii = 0; ii < xysize; ii++)
-                    {
-                        sumsqarray[ii] += (double)(data.image[IDcube].array.D[offset + ii] *
-                                                   data.image[IDcube].array.D[offset + ii]);
-                    }
-                }
+        case _DATATYPE_DOUBLE:
+            ptrv = (char *) data.image[ID].array.D;
+            ptrv += sizeof(double) * k1 * xysize;
+            ptrcv = (char *) data.image[IDcube].array.D;
+            ptrcv += sizeof(double) * k * xysize;
+            memcpy(ptrcv, ptrv, sizeof(double)*xysize);
+            if(mode > 0)
+            {
                 for(ii = 0; ii < xysize; ii++)
                 {
-                    sumarray[ii] += (double) data.image[IDcube].array.D[offset + ii];
+                    sumsqarray[ii] += (double)(data.image[IDcube].array.D[offset + ii] *
+                                               data.image[IDcube].array.D[offset + ii]);
                 }
-                break;
+            }
+            for(ii = 0; ii < xysize; ii++)
+            {
+                sumarray[ii] += (double) data.image[IDcube].array.D[offset + ii];
+            }
+            break;
 
-            case _DATATYPE_INT16:
-                ptrv = (char *) data.image[ID].array.SI16;
-                ptrv += sizeof(uint16_t) * k1 * xysize;
-                ptrcv = (char *) data.image[IDcube].array.SI16;
-                ptrcv += sizeof(uint16_t) * k * xysize;
-                memcpy(ptrcv, ptrv, sizeof(uint16_t)*xysize);
-                if(mode > 0)
-                {
-                    for(ii = 0; ii < xysize; ii++)
-                    {
-                        sumsqarray[ii] += (double)(data.image[IDcube].array.SI16[offset + ii] *
-                                                   data.image[IDcube].array.SI16[offset + ii]);
-                    }
-                }
+        case _DATATYPE_INT16:
+            ptrv = (char *) data.image[ID].array.SI16;
+            ptrv += sizeof(uint16_t) * k1 * xysize;
+            ptrcv = (char *) data.image[IDcube].array.SI16;
+            ptrcv += sizeof(uint16_t) * k * xysize;
+            memcpy(ptrcv, ptrv, sizeof(uint16_t)*xysize);
+            if(mode > 0)
+            {
                 for(ii = 0; ii < xysize; ii++)
                 {
-                    sumarray[ii] += (double) data.image[IDcube].array.SI16[offset + ii];
+                    sumsqarray[ii] += (double)(data.image[IDcube].array.SI16[offset + ii] *
+                                               data.image[IDcube].array.SI16[offset + ii]);
                 }
-                break;
+            }
+            for(ii = 0; ii < xysize; ii++)
+            {
+                sumarray[ii] += (double) data.image[IDcube].array.SI16[offset + ii];
+            }
+            break;
 
-            case _DATATYPE_UINT16:
-                ptrv = (char *) data.image[ID].array.UI16;
-                ptrv += sizeof(uint16_t) * k1 * xysize;
-                ptrcv = (char *) data.image[IDcube].array.UI16;
-                ptrcv += sizeof(uint16_t) * k * xysize;
-                memcpy(ptrcv, ptrv, sizeof(uint16_t)*xysize);
-                if(mode > 0)
-                {
-                    for(ii = 0; ii < xysize; ii++)
-                    {
-                        sumsqarray[ii] += (double)(data.image[IDcube].array.UI16[offset + ii] *
-                                                   data.image[IDcube].array.UI16[offset + ii]);
-                    }
-                }
+        case _DATATYPE_UINT16:
+            ptrv = (char *) data.image[ID].array.UI16;
+            ptrv += sizeof(uint16_t) * k1 * xysize;
+            ptrcv = (char *) data.image[IDcube].array.UI16;
+            ptrcv += sizeof(uint16_t) * k * xysize;
+            memcpy(ptrcv, ptrv, sizeof(uint16_t)*xysize);
+            if(mode > 0)
+            {
                 for(ii = 0; ii < xysize; ii++)
                 {
-                    sumarray[ii] += (double) data.image[IDcube].array.UI16[offset + ii];
+                    sumsqarray[ii] += (double)(data.image[IDcube].array.UI16[offset + ii] *
+                                               data.image[IDcube].array.UI16[offset + ii]);
                 }
-                break;
+            }
+            for(ii = 0; ii < xysize; ii++)
+            {
+                sumarray[ii] += (double) data.image[IDcube].array.UI16[offset + ii];
+            }
+            break;
 
-            default :
-                printf("ERROR: Data type not supported for function IMAGE_BASIC_streamaverage\n");
-                exit(EXIT_FAILURE);
-                break;
+        default :
+            printf("ERROR: Data type not supported for function IMAGE_BASIC_streamaverage\n");
+            exit(EXIT_FAILURE);
+            break;
         }
 
         k++;
     }
     //  printf("\n Processing...\n");
     //  fflush(stdout);
-
 
 
     for(ii = 0; ii < xysize; ii++)

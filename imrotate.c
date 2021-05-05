@@ -54,9 +54,9 @@ errno_t imrotate_addCLIcmd()
         "<image in> <output image> <angle>",
         "rotateim imin imout 230",
         "long basic_rotate(const char *ID_name, const char *ID_out_name, float angle)"
-        );
- 
-	
+    );
+
+
 
     return RETURN_SUCCESS;
 }
@@ -88,9 +88,9 @@ imageID basic_rotate(
         for(uint32_t ii = 0; ii < naxes[0]; ii++)
         {
             long iis = (long)(naxes[0] / 2 + (ii - naxes[0] / 2) * cos(angle) +
-                         (jj - naxes[1] / 2) * sin(angle));
+                              (jj - naxes[1] / 2) * sin(angle));
             long jjs = (long)(naxes[1] / 2 - (ii - naxes[0] / 2) * sin(angle) +
-                         (jj - naxes[1] / 2) * cos(angle));
+                              (jj - naxes[1] / 2) * cos(angle));
             if((iis > 0) && (jjs > 0) && (iis < naxes[0]) && (jjs < naxes[1]))
             {
                 data.image[IDout].array.F[jj * naxes[0] + ii] = data.image[ID].array.F[jjs *
@@ -155,9 +155,9 @@ imageID basic_rotate_int(
             for(uint32_t ii = 0; ii < naxes[0]; ii++)
             {
                 long iis = (long) (naxes[0] / 2 + (ii - naxes[0] / 2) * cos(angle) +
-                             (jj - naxes[1] / 2) * sin(angle));
+                                   (jj - naxes[1] / 2) * sin(angle));
                 long jjs = (long) (naxes[1] / 2 + (ii - naxes[0] / 2) * sin(angle) -
-                             (jj - naxes[1] / 2) * cos(angle));
+                                   (jj - naxes[1] / 2) * cos(angle));
                 if((iis > 0) && (jjs > 0) && (iis < naxes[0]) && (jjs < naxes[1]))
                 {
                     data.image[IDout].array.F[jj * naxes[0] + ii] += data.image[ID].array.F[jjs *
@@ -243,15 +243,60 @@ imageID basic_rotate2(
     nelements = naxes[0] * naxes[1];
     printf("creating temporary arrays\n");
     fflush(stdout);
+
     f1a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f1a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
+
     f2a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f2a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
+
     f3a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f3a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
+
     f4a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f4a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
+
     f5a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f5a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
+
     f6a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f6a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
+
     f7a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f7a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
+
     f8a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f8a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
+
     f9a = (int *) calloc(NB_step * NB_step, sizeof(int));
+    if(f9a == NULL) {
+        PRINT_ERROR("calloc returns NULL pointer");
+        abort();
+    }
 
     printf("filling up calibration array ... ");
     fflush(stdout);
