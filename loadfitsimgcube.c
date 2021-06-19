@@ -104,13 +104,13 @@ long load_fitsimages_cube(
         fname[strlen(fname) - 1] = '\0';
         if(cnt == 0)
         {
-            ID = load_fits(fname, "imtmplfc", 1);
+            load_fits(fname, "imtmplfc", 1, &ID);
             xsize = data.image[ID].md[0].size[0];
             ysize = data.image[ID].md[0].size[1];
             delete_image_ID("imtmplfc");
         }
 
-        ID = load_fits(fname, "imtmplfc", 1);
+        load_fits(fname, "imtmplfc", 1, &ID);
         if((data.image[ID].md[0].size[0] != xsize)
                 || (data.image[ID].md[0].size[1] != ysize))
         {
@@ -143,7 +143,7 @@ long load_fitsimages_cube(
         fname[strlen(fname) - 1] = '\0';
         strncpy(fname1, fname, STRINGMAXLEN_FILENAME);
         fname1[strlen(fname) - 5] = '\0';
-        load_fits(fname, fname1, 1);
+        load_fits(fname, fname1, 1, NULL);
         printf("Image %s loaded -> %s\n", fname, fname1);
         ID = image_ID(fname1);
         for(uint64_t ii = 0; ii < xsize * ysize; ii++)
