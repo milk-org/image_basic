@@ -88,10 +88,10 @@ double basic_measure_transl(
     execute_arith("_im1HF=_im1C-_im1Cg");
     execute_arith("_im1HF2=_im1HF*_im1HF");
     gauss_filter("_im1HF2", "_im1mask", 5.0, 10);
-    delete_image_ID("_im1C");
-    delete_image_ID("_im1HF");
-    delete_image_ID("_im1Cg");
-    delete_image_ID("_im1HF2");
+    delete_image_ID("_im1C", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("_im1HF", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("_im1Cg", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("_im1HF2", DELETE_IMAGE_ERRMODE_WARNING);
 
     vlim = (double) img_percentile("_im1mask", 0.8);
     printf("vlim = %g\n", vlim);
@@ -319,9 +319,9 @@ double basic_measure_transl(
     save_fl_fits("TranslMapg", "!_TranslMap.fits");
     save_fl_fits("TranslMapcnt", "!_TranslMapcnt.fits");
 
-    delete_image_ID("TranslMap");
-    delete_image_ID("TranslMapg");
-    delete_image_ID("TranslMapcnt");
+    delete_image_ID("TranslMap", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("TranslMapg", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("TranslMapcnt", DELETE_IMAGE_ERRMODE_WARNING);
     //  exit(0);
 
     return(fitval);

@@ -173,7 +173,7 @@ imageID IMAGE_BASIC_streamaverage(
         }
         else
         {
-            delete_image_ID("tmpstrcoadd");
+            delete_image_ID("tmpstrcoadd", DELETE_IMAGE_ERRMODE_WARNING);
             createim = 1;
         }
     }

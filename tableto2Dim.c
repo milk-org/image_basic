@@ -431,10 +431,10 @@ imageID basic_tableto2Dim(
     fconvolve_padd("tmp2dinterpsly", "kerg", (long)(10.0 * convsize + 2.0),
                    "tmp2dinterpslyg");
 
-    delete_image_ID("tmp2dinterpxerr");
-    delete_image_ID("tmp2dinterpyerr");
-    delete_image_ID("tmp2dinterpslx");
-    delete_image_ID("tmp2dinterpsly");
+    delete_image_ID("tmp2dinterpxerr", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmp2dinterpyerr", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmp2dinterpslx", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmp2dinterpsly", DELETE_IMAGE_ERRMODE_WARNING);
 
     IDxerr = image_ID("tmp2dinterpxerrg");
     IDyerr = image_ID("tmp2dinterpyerrg");
@@ -452,14 +452,14 @@ imageID basic_tableto2Dim(
             //	data.image[ID].array.F[jj*xsize+ii] += xerr*slx+yerr*sly;
         }
 
-    delete_image_ID("tmp2dinterpxerrg");
-    delete_image_ID("tmp2dinterpyerrg");
-    delete_image_ID("tmp2dinterpslxg");
-    delete_image_ID("tmp2dinterpslyg");
+    delete_image_ID("tmp2dinterpxerrg", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmp2dinterpyerrg", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmp2dinterpslxg", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmp2dinterpslyg", DELETE_IMAGE_ERRMODE_WARNING);
 
 
     ID = image_ID(ID_name);
-    delete_image_ID("kerg");
+    delete_image_ID("kerg", DELETE_IMAGE_ERRMODE_WARNING);
 
     return(ID);
 }

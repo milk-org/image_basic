@@ -107,7 +107,7 @@ long load_fitsimages_cube(
             load_fits(fname, "imtmplfc", 1, &ID);
             xsize = data.image[ID].md[0].size[0];
             ysize = data.image[ID].md[0].size[1];
-            delete_image_ID("imtmplfc");
+            delete_image_ID("imtmplfc", DELETE_IMAGE_ERRMODE_WARNING);
         }
 
         load_fits(fname, "imtmplfc", 1, &ID);
@@ -118,7 +118,7 @@ long load_fitsimages_cube(
                     "ERROR in load_fitsimages_cube: not all images have the same size\n");
             exit(0);
         }
-        delete_image_ID("imtmplfc");
+        delete_image_ID("imtmplfc", DELETE_IMAGE_ERRMODE_WARNING);
         cnt++;
     }
     fclose(fp);
@@ -151,7 +151,7 @@ long load_fitsimages_cube(
             data.image[IDout].array.F[xsize * ysize * cnt + ii] =
                 data.image[ID].array.F[ii];
         }
-        delete_image_ID(fname1);
+        delete_image_ID(fname1, DELETE_IMAGE_ERRMODE_WARNING);
         cnt++;
     }
 

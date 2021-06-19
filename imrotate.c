@@ -229,9 +229,9 @@ imageID basic_rotate2(
     while(rotangle > (M_PI / 2))
     {
         basic_rotate90(ID_name_in, "tmprot");
-        delete_image_ID(ID_name_in);
+        delete_image_ID(ID_name_in, DELETE_IMAGE_ERRMODE_WARNING);
         copy_image_ID("tmprot", ID_name_in, 0);
-        delete_image_ID("tmprot");
+        delete_image_ID("tmprot", DELETE_IMAGE_ERRMODE_WARNING);
         rotangle -= M_PI / 2.0;
     }
 
@@ -476,7 +476,7 @@ imageID basic_rotate2(
             }
         }
 
-    delete_image_ID("wtmp");
+    delete_image_ID("wtmp", DELETE_IMAGE_ERRMODE_WARNING);
 
     free(pixcorner_x);
     free(pixcorner_y);
