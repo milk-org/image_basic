@@ -182,7 +182,7 @@ imageID basic_contract3D(
         printf("(%ld x %ld x %ld)  ->  (%ld x %ld x %ld)\n",
                (long) naxes[0], (long) naxes[1], (long) naxes[2],
                (long) naxes_out[0], (long) naxes_out[1], (long) naxes_out[2]);
-        create_image_ID(ID_name_out, 3, naxes_out, datatype, 0, 0, 0);
+        create_image_ID(ID_name_out, 3, naxes_out, datatype, 0, 0, 0, NULL);
     }
 
     ID_out = image_ID(ID_name_out);

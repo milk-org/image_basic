@@ -45,7 +45,7 @@ errno_t image_basic_resize_cli()
 
 errno_t imresize_addCLIcmd()
 {
-	
+
     RegisterCLIcommand(
         "resizeim",
         __FILE__,
@@ -54,7 +54,7 @@ errno_t imresize_addCLIcmd()
         "<image in> <output image> <new x size> <new y size>",
         "resizeim im1 im2 230 200",
         "long basic_resizeim(const char *imname_in, const char *imname_out, long xsizeout, long ysizeout)"
-        );
+    );
 
     return RETURN_SUCCESS;
 }
@@ -104,7 +104,7 @@ long basic_resizeim(
 
     if(datatype == _DATATYPE_FLOAT)
     {
-        IDout = create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0, 0);
+        create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0, 0, &IDout);
         for(ii = 0; ii < naxesout[0]; ii++)
             for(jj = 0; jj < naxesout[1]; jj++)
             {
@@ -129,7 +129,7 @@ long basic_resizeim(
     }
     else if(datatype == _DATATYPE_DOUBLE)
     {
-        IDout = create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0, 0);
+        create_image_ID(imname_out, naxis, naxesout, datatype, 0, 0, 0, &IDout);
         for(ii = 0; ii < naxesout[0] - 1; ii++)
             for(jj = 0; jj < naxesout[1] - 1; jj++)
             {
