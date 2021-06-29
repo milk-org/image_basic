@@ -13,7 +13,7 @@
 imageID basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2);
 
 imageID basic_expand3D(const char *ID_name, const char *ID_name_out, int n1,
-                    int n2, int n3);
+                       int n2, int n3);
 
 
 
@@ -83,7 +83,7 @@ errno_t imexpand_addCLIcmd()
         "<image in> <output image> <x factor> <y factor> <z factor>",
         "imexpand3D im1 im2 2 2 2",
         "long basic_expand3D(const char *ID_name, const char *ID_name_out, int n1, int n2, int n3)");
-	
+
 
     return RETURN_SUCCESS;
 }
@@ -102,6 +102,8 @@ imageID basic_expand(
     int n2
 )
 {
+    DEBUG_TRACE_FSTART();
+
     imageID ID;
     imageID ID_out; /* ID for the output image */
     long ii, jj;
@@ -115,7 +117,8 @@ imageID basic_expand(
     naxes_out[0] = naxes[0] * n1;
     naxes_out[1] = naxes[1] * n2;
 
-    ID_out = create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1]);
+    FUNC_CHECK_RETURN(
+        create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1], &ID_out));
 
 
     for(jj = 0; jj < naxes[1]; jj++)
@@ -126,6 +129,8 @@ imageID basic_expand(
                     data.image[ID_out].array.F[(jj * n2 + j)*naxes_out[0] + ii * n1 + i] =
                         data.image[ID].array.F[jj * naxes[0] + ii];
                 }
+
+    DEBUG_TRACE_FEXIT();
     return(ID_out);
 }
 
@@ -171,8 +176,8 @@ imageID basic_expand3D(
     printf(" %ld %ld %ld -> %ld %ld %ld\n", naxes[0], naxes[1], naxes[2],
            naxes_out[0], naxes_out[1], naxes_out[2]);
 
-    ID_out = create_3Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1],
-                               naxes_out[2]);
+    create_3Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1],
+                      naxes_out[2], &ID_out);
     list_image_ID();
 
     for(kk = 0; kk < naxes[2]; kk++)

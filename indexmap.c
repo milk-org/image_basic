@@ -103,7 +103,7 @@ imageID image_basic_indexmap(
     val_xysize = val_xsize * val_ysize;
     val_datatype = data.image[IDindex].md[0].datatype;
 
-    IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
+    create_2Dimage_ID(IDout_name, xsize, ysize, &IDout);
 
     if(val_datatype == _DATATYPE_FLOAT)
     {

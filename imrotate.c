@@ -81,8 +81,7 @@ imageID basic_rotate(
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
-    create_2Dimage_ID(IDout_name, naxes[0], naxes[1]);
-    IDout = image_ID(IDout_name);
+    create_2Dimage_ID(IDout_name, naxes[0], naxes[1], &IDout);
 
     for(uint32_t jj = 0; jj < naxes[1]; jj++)
         for(uint32_t ii = 0; ii < naxes[0]; ii++)
@@ -114,8 +113,7 @@ imageID basic_rotate90(
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
-    create_2Dimage_ID(ID_out_name, naxes[1], naxes[0]);
-    IDout = image_ID(ID_out_name);
+    create_2Dimage_ID(ID_out_name, naxes[1], naxes[0], &IDout);
 
     for(uint32_t jj = 0; jj < naxes[0]; jj++)
         for(uint32_t ii = 0; ii < naxes[1]; ii++)
@@ -145,8 +143,7 @@ imageID basic_rotate_int(
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
-    create_2Dimage_ID(ID_out_name, naxes[0], naxes[1]);
-    IDout = image_ID(ID_out_name);
+    create_2Dimage_ID(ID_out_name, naxes[0], naxes[1], &IDout);
 
     for(int i = 0; i < nbstep; i++)
     {
@@ -403,10 +400,8 @@ imageID basic_rotate2(
     naxes2[0] = (long)(sin(rotangle) * naxes[1] + cos(rotangle) * naxes[0] + 2.0);
     naxes2[1] = (long)(cos(rotangle) * naxes[1] + sin(rotangle) * naxes[0] + 2.0);
 
-    create_2Dimage_ID(ID_name_out, naxes2[0], naxes2[1]);
-    create_2Dimage_ID("wtmp", naxes2[0], naxes2[1]);
-    ID_out = image_ID(ID_name_out);
-    ID_wout = image_ID("wtmp");
+    create_2Dimage_ID(ID_name_out, naxes2[0], naxes2[1], &ID_out);
+    create_2Dimage_ID("wtmp", naxes2[0], naxes2[1], &ID_wout);
 
     for(uint32_t jj = 0; jj < naxes[1]; jj++)
         for(uint32_t ii = 0; ii < naxes[0]; ii++)

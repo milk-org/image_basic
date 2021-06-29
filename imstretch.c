@@ -29,7 +29,7 @@ imageID basic_stretch(
     naxes[0] = data.image[IDin].md[0].size[0];
     naxes[1] = data.image[IDin].md[0].size[1];
 
-    IDout = create_2Dimage_ID(name_out, naxes[0], naxes[1]);
+    create_2Dimage_ID(name_out, naxes[0], naxes[1], &IDout);
 
     for(uint32_t ii = 0; ii < naxes[0]; ii++)
         for(uint32_t jj = 0; jj < naxes[0]; jj++)
@@ -62,6 +62,8 @@ imageID basic_stretch_range(
     float       ApoCoeff
 )
 {
+    DEBUG_TRACE_FSTART();
+
     // ApoCoeff should be between 0 and 1
     uint32_t naxes[2];
     imageID IDin, IDout;
@@ -78,7 +80,8 @@ imageID basic_stretch_range(
     naxes[0] = data.image[IDin].md[0].size[0];
     naxes[1] = data.image[IDin].md[0].size[1];
 
-    IDout = create_2Dimage_ID(name_out, naxes[0], naxes[1]);
+    FUNC_CHECK_RETURN(
+        create_2Dimage_ID(name_out, naxes[0], naxes[1], &IDout));
 
     for(step = 0; step < NBstep; step ++)
     {
@@ -130,6 +133,7 @@ imageID basic_stretch_range(
     arith_image_cstmult_inplace(name_out,
                                 arith_image_total(name_in) / arith_image_total(name_out));
 
+    DEBUG_TRACE_FEXIT();
     return IDout;
 }
 
@@ -141,6 +145,8 @@ imageID basic_stretchc(
     float coeff
 )
 {
+    DEBUG_TRACE_FSTART();
+
     uint32_t naxes[2];
     imageID IDin;
     imageID IDout;
@@ -153,7 +159,8 @@ imageID basic_stretchc(
     Xcenter = naxes[0] / 2;
     Ycenter = naxes[1] / 2;
 
-    IDout = create_2Dimage_ID(name_out, naxes[0], naxes[1]);
+    FUNC_CHECK_RETURN(
+        create_2Dimage_ID(name_out, naxes[0], naxes[1], &IDout));
 
     for(uint32_t ii = 0; ii < naxes[0]; ii++)
         for(uint32_t jj = 0; jj < naxes[0]; jj++)
@@ -169,6 +176,7 @@ imageID basic_stretchc(
 
     /*  basic_mult(name_out,arith_image_total(name_in)/arith_image_total(name_out));*/
 
+    DEBUG_TRACE_FEXIT();
     return IDout;
 }
 

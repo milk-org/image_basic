@@ -87,7 +87,7 @@ imageID cube_collapse(
     ysize = data.image[IDin].md[0].size[1];
     ksize = data.image[IDin].md[0].size[2];
 
-    IDout = create_2Dimage_ID(ID_out_name, xsize, ysize);
+    create_2Dimage_ID(ID_out_name, xsize, ysize, &IDout);
 
     for(ii = 0; ii < xsize * ysize; ii++)
     {

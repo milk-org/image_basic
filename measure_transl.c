@@ -66,8 +66,8 @@ double basic_measure_transl(
 
     sx_out = 2 * tmax;
     sy_out = 2 * tmax;
-    IDout = create_2Dimage_ID("TranslMap", sx_out, sy_out);
-    IDcnt = create_2Dimage_ID("TranslMapcnt", sx_out, sy_out);
+    create_2Dimage_ID("TranslMap", sx_out, sy_out, &IDout);
+    create_2Dimage_ID("TranslMapcnt", sx_out, sy_out, &IDcnt);
     for(iio = 0; iio < sx_out; iio++)
         for(jjo = 0; jjo < sy_out; jjo++)
         {

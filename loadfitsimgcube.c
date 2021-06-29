@@ -125,7 +125,7 @@ long load_fitsimages_cube(
 
     printf("Creating 3D cube ... ");
     fflush(stdout);
-    IDout = create_3Dimage_ID(ID_out_name, xsize, ysize, cnt);
+    create_3Dimage_ID(ID_out_name, xsize, ysize, cnt, &IDout);
     printf("\n");
     fflush(stdout);
 

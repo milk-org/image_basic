@@ -108,7 +108,7 @@ imageID IMAGE_BASIC_streamrecord(
     zsize = NBframes;
     xysize = xsize * ysize;
 
-    ID = create_3Dimage_ID(IDname, xsize, ysize, zsize);
+    create_3Dimage_ID(IDname, xsize, ysize, zsize, &ID);
     cnt = data.image[IDstream].md[0].cnt0;
 
     kk = 0;

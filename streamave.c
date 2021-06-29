@@ -152,7 +152,7 @@ imageID IMAGE_BASIC_streamaverage(
 
     if(mode > 0)
     {
-        IDrms = create_2Dimage_ID("imgstreamrms", xsize, ysize);
+        create_2Dimage_ID("imgstreamrms", xsize, ysize, &IDrms);
         sumsqarray = calloc(xsize * ysize, sizeof(double));
         if(sumsqarray == NULL) {
             PRINT_ERROR("calloc returns NULL pointer");
@@ -189,7 +189,7 @@ imageID IMAGE_BASIC_streamaverage(
 
     free(imsize);
 
-    IDout = create_2Dimage_ID(IDoutname, xsize, ysize);
+    create_2Dimage_ID(IDoutname, xsize, ysize, &IDout);
     sumarray = calloc(xsize * ysize, sizeof(double));
     if(sumarray == NULL) {
         PRINT_ERROR("calloc returns NULL pointer");
@@ -399,7 +399,7 @@ imageID IMAGE_BASIC_streamaverage(
 
     if(mode == 2)
     {
-        IDbadpix = create_2Dimage_ID("badpixmap", xsize, ysize);
+        create_2Dimage_ID("badpixmap", xsize, ysize, &IDbadpix);
 
         // RMS
         // measure median pixel stddev

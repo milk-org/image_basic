@@ -167,8 +167,7 @@ imageID IMAGE_BASIC_get_circsym_component(
     }
 
     printf("%u %u\n", naxes[0], naxes[1]);
-    create_2Dimage_ID(ID_out_name, naxes[0], naxes[1]);
-    IDout = image_ID(ID_out_name);
+    create_2Dimage_ID(ID_out_name, naxes[0], naxes[1], &IDout);
     for(uint32_t jj = 0; jj < naxes[1]; jj++)
         for(uint32_t ii = 0; ii < naxes[0]; ii++)
         {

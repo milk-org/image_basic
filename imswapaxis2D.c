@@ -76,8 +76,9 @@ imageID image_basic_SwapAxis2D_byID(
     }
     else
     {
-        IDout = create_2Dimage_ID(IDout_name, data.image[IDin].md[0].size[1],
-                                  data.image[IDin].md[0].size[0]);
+        create_2Dimage_ID(IDout_name, data.image[IDin].md[0].size[1],
+                          data.image[IDin].md[0].size[0], &IDout);
+
         for(uint32_t ii = 0; ii < data.image[IDin].md[0].size[0]; ii++)
             for(uint32_t jj = 0; jj < data.image[IDin].md[0].size[1]; jj++)
             {

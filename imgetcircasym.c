@@ -42,7 +42,7 @@ static errno_t IMAGE_BASIC_get_circasym_component_cli()
             data.cmdargtoken[3].val.numf,
             data.cmdargtoken[4].val.numf,
             "");
-            
+
         return CLICMD_SUCCESS;
     }
     else
@@ -188,7 +188,7 @@ imageID IMAGE_BASIC_get_circasym_component_byID(
     }
 
     printf("%u %u\n", naxes[0], naxes[1]);
-    create_2Dimage_ID(ID_out_name, naxes[0], naxes[1]);
+    create_2Dimage_ID(ID_out_name, naxes[0], naxes[1], NULL);
     IDout = image_ID(ID_out_name);
     for(uint32_t jj = 0; jj < naxes[1]; jj++)
         for(uint32_t ii = 0; ii < naxes[0]; ii++)
@@ -228,23 +228,23 @@ imageID IMAGE_BASIC_get_circasym_component(
     const char *options
 )
 {
-	imageID IDout;
-	imageID ID;
-	
+    imageID IDout;
+    imageID ID;
+
     printf("get non-circular symmetric component from image %s\n", ID_name);
     fflush(stdout);
-	
-	
-	ID = image_ID(ID_name);
+
+
+    ID = image_ID(ID_name);
 
     IDout = IMAGE_BASIC_get_circasym_component_byID(
-        ID,
-        ID_out_name,
-        xcenter,
-        ycenter,
-        options
-    );
-    
+                ID,
+                ID_out_name,
+                xcenter,
+                ycenter,
+                options
+            );
+
     return IDout;
 }
 

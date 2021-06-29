@@ -149,12 +149,12 @@ imageID basic_tableto2Dim(
         kd_insert(ptree, buf, &varray[i]);
     }
 
-    ID = create_2Dimage_ID(ID_name, xsize, ysize);
+    create_2Dimage_ID(ID_name, xsize, ysize, &ID);
 
-    IDslx = create_2Dimage_ID("tmp2dinterpslx", xsize, ysize);
-    IDsly = create_2Dimage_ID("tmp2dinterpsly", xsize, ysize);
-    IDxerr = create_2Dimage_ID("tmp2dinterpxerr", xsize, ysize);
-    IDyerr = create_2Dimage_ID("tmp2dinterpyerr", xsize, ysize);
+    create_2Dimage_ID("tmp2dinterpslx", xsize, ysize, &IDslx);
+    create_2Dimage_ID("tmp2dinterpsly", xsize, ysize, &IDsly);
+    create_2Dimage_ID("tmp2dinterpxerr", xsize, ysize, &IDxerr);
+    create_2Dimage_ID("tmp2dinterpyerr", xsize, ysize, &IDyerr);
 
     // automatically set radius0 such that if points are randomly distributed, a circle of radius radius0 includes sqrt(NBpts) points
     //  tmp1 = sqrt(NBpts);

@@ -14,6 +14,8 @@ imageID basic_2Dextrapolate_nearestpixel(
     const char *__restrict__ IDout_name
 )
 {
+    DEBUG_TRACE_FSTART();
+
     imageID IDin, IDmask, IDout;
     long ii, jj, ii1, jj1, k;
     double bdist, dist;
@@ -77,7 +79,7 @@ imageID basic_2Dextrapolate_nearestpixel(
                 NBmaskpts++;
             }
 
-    IDout  = create_2Dimage_ID(IDout_name, naxes[0], naxes[1]);
+    create_2Dimage_ID(IDout_name, naxes[0], naxes[1], &IDout);
     printf("imout = %s\n", IDout_name);
     printf("\n");
 
@@ -119,6 +121,7 @@ imageID basic_2Dextrapolate_nearestpixel(
     free(maskii);
     free(maskjj);
 
+    DEBUG_TRACE_FEXIT();
     return(IDout);
 }
 

@@ -77,7 +77,7 @@ static errno_t image_basic_add3D_cli()
 
 errno_t __attribute__ ((cold)) image_add_addCLIcmd()
 {
-	
+
     RegisterCLIcommand(
         "addim",
         __FILE__,
@@ -116,7 +116,7 @@ imageID basic_add(
 )
 {
     imageID ID1, ID2; /* ID for the 2 images added */
-    int ID_out; /* ID for the output image */
+    imageID ID_out; /* ID for the output image */
     long ii, jj;
     long naxes1[2], naxes2[2], naxes[2];
     long xmin, ymin, xmax, ymax; /* extrema in the ID1 coordinates */
@@ -178,8 +178,7 @@ imageID basic_add(
 
     if(datatype == _DATATYPE_FLOAT)
     {
-        create_2Dimage_ID(ID_name_out, (xmax - xmin), (ymax - ymin));
-        ID_out = image_ID(ID_name_out);
+        create_2Dimage_ID(ID_name_out, (xmax - xmin), (ymax - ymin), &ID_out);
         naxes[0] = data.image[ID_out].md[0].size[0];
         naxes[1] = data.image[ID_out].md[0].size[1];
 
@@ -208,8 +207,7 @@ imageID basic_add(
 
     if(datatype == _DATATYPE_DOUBLE)
     {
-        create_2Dimage_ID_double(ID_name_out, (xmax - xmin), (ymax - ymin));
-        ID_out = image_ID(ID_name_out);
+        create_2Dimage_ID_double(ID_name_out, (xmax - xmin), (ymax - ymin), &ID_out);
         naxes[0] = data.image[ID_out].md[0].size[0];
         naxes[1] = data.image[ID_out].md[0].size[1];
 
@@ -332,8 +330,7 @@ imageID basic_add3D(
 
     if(datatype == _DATATYPE_FLOAT)
     {
-        create_3Dimage_ID(ID_name_out, (xmax - xmin), (ymax - ymin), (zmax - zmin));
-        ID_out = image_ID(ID_name_out);
+        create_3Dimage_ID(ID_name_out, (xmax - xmin), (ymax - ymin), (zmax - zmin), &ID_out);
         naxes[0] = data.image[ID_out].md[0].size[0];
         naxes[1] = data.image[ID_out].md[0].size[1];
         naxes[2] = data.image[ID_out].md[0].size[2];
@@ -370,8 +367,7 @@ imageID basic_add3D(
     if(datatype == _DATATYPE_DOUBLE)
     {
         create_3Dimage_ID_double(ID_name_out, (xmax - xmin), (ymax - ymin),
-                                 (zmax - zmin));
-        ID_out = image_ID(ID_name_out);
+                                 (zmax - zmin), &ID_out);
         naxes[0] = data.image[ID_out].md[0].size[0];
         naxes[1] = data.image[ID_out].md[0].size[1];
         naxes[2] = data.image[ID_out].md[0].size[2];

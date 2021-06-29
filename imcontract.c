@@ -127,8 +127,7 @@ imageID basic_contract(
     naxes_out[1] = naxes[1] / n2;
 
     //  printf("%ld %ld  ->  %ld %ld\n",naxes[0],naxes[1],naxes_out[0],naxes_out[1]);
-    create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1]);
-    ID_out = image_ID(ID_name_out);
+    create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1], &ID_out);
 
     for(uint32_t jj = 0; jj < naxes_out[1]; jj++)
         for(uint32_t ii = 0; ii < naxes_out[0]; ii++)
@@ -151,6 +150,8 @@ imageID basic_contract3D(
     int n2,
     int n3)
 {
+    DEBUG_TRACE_FSTART();
+
     imageID ID;
     imageID ID_out; /* ID for the output image */
     uint32_t naxes[3];
@@ -175,7 +176,7 @@ imageID basic_contract3D(
 
     if(naxes_out[2] == 1)
     {
-        create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1]);
+        create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1], NULL);
     }
     else
     {
@@ -256,6 +257,8 @@ imageID basic_contract3D(
     }
 
     free(naxes_out);
+
+    DEBUG_TRACE_FEXIT();
 
     return(ID_out);
 }
