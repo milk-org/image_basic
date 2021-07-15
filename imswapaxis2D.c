@@ -12,8 +12,8 @@
 // ==========================================
 
 imageID image_basic_SwapAxis2D(
-    const char *__restrict__ IDin_name,
-    const char *__restrict__ IDout_name
+    const char *__restrict IDin_name,
+    const char *__restrict IDout_name
 );
 
 
@@ -65,7 +65,7 @@ errno_t __attribute__((cold)) imswapaxis2D_addCLIcmd()
 
 imageID image_basic_SwapAxis2D_byID(
     imageID IDin,
-    const char *__restrict__ IDout_name
+    const char *__restrict IDout_name
 )
 {
     imageID IDout = -1;
@@ -95,8 +95,8 @@ imageID image_basic_SwapAxis2D_byID(
 
 
 imageID image_basic_SwapAxis2D(
-    const char *__restrict__ IDin_name,
-    const char *__restrict__ IDout_name
+    const char *__restrict IDin_name,
+    const char *__restrict IDout_name
 )
 {
     imageID IDin;

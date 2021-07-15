@@ -9,5 +9,5 @@ imageID image_basic_3Dto2D_byID(
 );
 
 imageID image_basic_3Dto2D(
-    const char *__restrict__ IDname
+    const char *__restrict IDname
 );

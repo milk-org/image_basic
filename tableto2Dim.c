@@ -23,14 +23,14 @@
  * ---------------------------------------------------------------------- */
 
 imageID basic_tableto2Dim(
-    const char *__restrict__ fname,
+    const char *__restrict fname,
     float       xmin,
     float       xmax,
     float       ymin,
     float       ymax,
     long        xsize,
     long        ysize,
-    const char *__restrict__ ID_name,
+    const char *__restrict ID_name,
     float       convsize
 )
 {

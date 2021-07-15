@@ -9,9 +9,9 @@
 
 
 imageID basic_2Dextrapolate_nearestpixel(
-    const char *__restrict__ IDin_name,
-    const char *__restrict__ IDmask_name,
-    const char *__restrict__ IDout_name
+    const char *__restrict IDin_name,
+    const char *__restrict IDmask_name,
+    const char *__restrict IDout_name
 )
 {
     DEBUG_TRACE_FSTART();

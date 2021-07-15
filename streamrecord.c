@@ -15,9 +15,9 @@
 // ==========================================
 
 imageID IMAGE_BASIC_streamrecord(
-    const char *__restrict__ streamname,
+    const char *__restrict streamname,
     long        NBframes,
-    const char *__restrict__ IDname
+    const char *__restrict IDname
 );
 
 
@@ -88,9 +88,9 @@ errno_t __attribute__((cold)) streamrecord_addCLIcmd()
 // works only for floats
 //
 imageID IMAGE_BASIC_streamrecord(
-    const char *__restrict__ streamname,
+    const char *__restrict streamname,
     long        NBframes,
-    const char *__restrict__ IDname
+    const char *__restrict IDname
 )
 {
     imageID ID;

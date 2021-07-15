@@ -13,8 +13,8 @@
 // Forward declaration(s)
 // ==========================================
 long IMAGE_BASIC_streamfeed(
-    const char *__restrict__ IDname,
-    const char *__restrict__ streamname,
+    const char *__restrict IDname,
+    const char *__restrict streamname,
     float       frequ
 );
 
@@ -78,8 +78,8 @@ errno_t __attribute__ ((cold)) streamfeed_addCLIcmd()
 // feed image to data stream
 // only works on slice #1 out output
 long IMAGE_BASIC_streamfeed(
-    const char *__restrict__ IDname,
-    const char *__restrict__ streamname,
+    const char *__restrict IDname,
+    const char *__restrict streamname,
     float       frequ
 )
 {

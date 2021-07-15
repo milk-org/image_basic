@@ -16,8 +16,8 @@
 // measure offset between 2 images
 
 double basic_measure_transl(
-    const char *__restrict__ ID_name1,
-    const char *__restrict__ ID_name2,
+    const char *__restrict ID_name1,
+    const char *__restrict ID_name2,
     long tmax
 )
 {
