@@ -95,7 +95,7 @@ double basic_measure_transl(
 
     vlim = (double) img_percentile("_im1mask", 0.8);
     printf("vlim = %g\n", vlim);
-    save_fl_fits("_im1mask", "!_im1mask.0.fits");
+    save_fl_fits("_im1mask", "_im1mask.0.fits");
     ID1mask = image_ID("_im1mask");
     xsizemask = data.image[ID1mask].md[0].size[0];
     ysizemask = data.image[ID1mask].md[0].size[1];
@@ -112,7 +112,7 @@ double basic_measure_transl(
         }
     }
 
-    save_fl_fits("_im1mask", "!_im1mask.fits");
+    save_fl_fits("_im1mask", "_im1mask.fits");
     //exit(0);
 
     dsize = tmax * 2;
@@ -316,8 +316,8 @@ double basic_measure_transl(
     create_variable_ID("vdy", vdy);
     printf("-------- %f %f --------\n", vdx, vdy);
 
-    save_fl_fits("TranslMapg", "!_TranslMap.fits");
-    save_fl_fits("TranslMapcnt", "!_TranslMapcnt.fits");
+    save_fl_fits("TranslMapg", "_TranslMap.fits");
+    save_fl_fits("TranslMapcnt", "_TranslMapcnt.fits");
 
     delete_image_ID("TranslMap", DELETE_IMAGE_ERRMODE_WARNING);
     delete_image_ID("TranslMapg", DELETE_IMAGE_ERRMODE_WARNING);

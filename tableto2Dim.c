@@ -417,7 +417,7 @@ imageID basic_tableto2Dim(
         PRINT_ERROR("ptree was not freed by kd_free. Attempting free(ptree) and continuing.");
         free(ptree);
     }
-    save_fl_fits(ID_name, "!tmp2dinterp.fits");
+    save_fl_fits(ID_name, "tmp2dinterp.fits");
 
     make_gauss("kerg", xsize, ysize, convsize,
                (float) 1.0); //(long) (10.0*convsize+2.0));
