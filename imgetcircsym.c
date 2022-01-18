@@ -3,44 +3,26 @@
 
 #include <math.h>
 
-#include "CommandLineInterface/CLIcore.h"
 #include "COREMOD_memory/COREMOD_memory.h"
-
-
-
+#include "CommandLineInterface/CLIcore.h"
 
 // ==========================================
 // Forward declaration(s)
 // ==========================================
 
-imageID IMAGE_BASIC_get_circsym_component(
-    const char *__restrict ID_name,
-    const char *__restrict ID_out_name,
-    float       xcenter,
-    float       ycenter
-);
-
+imageID IMAGE_BASIC_get_circsym_component(const char *__restrict ID_name, const char *__restrict ID_out_name,
+                                          float xcenter, float ycenter);
 
 // ==========================================
 // Command line interface wrapper function(s)
 // ==========================================
 
-
 static errno_t IMAGE_BASIC_get_circsym_component_cli()
 {
-    if(0
-            + CLI_checkarg(1, 4)
-            + CLI_checkarg(2, 3)
-            + CLI_checkarg(3, 1)
-            + CLI_checkarg(4, 1)
-            == 0)
+    if (0 + CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 1) + CLI_checkarg(4, 1) == 0)
     {
-        IMAGE_BASIC_get_circsym_component(
-            data.cmdargtoken[1].val.string,
-            data.cmdargtoken[2].val.string,
-            data.cmdargtoken[3].val.numf,
-            data.cmdargtoken[4].val.numf
-        );
+        IMAGE_BASIC_get_circsym_component(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string,
+                                          data.cmdargtoken[3].val.numf, data.cmdargtoken[4].val.numf);
         return CLICMD_SUCCESS;
     }
     else
@@ -49,8 +31,6 @@ static errno_t IMAGE_BASIC_get_circsym_component_cli()
     }
 }
 
-
-
 // ==========================================
 // Register CLI command(s)
 // ==========================================
@@ -58,31 +38,17 @@ static errno_t IMAGE_BASIC_get_circsym_component_cli()
 errno_t __attribute__((cold)) imgetcircsym_addCLIcmd()
 {
 
-    RegisterCLIcommand(
-        "imgetcircsym",
-        __FILE__,
-        IMAGE_BASIC_get_circsym_component_cli,
-        "extract circular symmetric part of image",
-        "<inim> <outim> <xcenter> <ycenter>",
-        "imcgetcircsym imin imout 256.0 230.5",
-        "long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name, float xcenter, float ycenter)"
-    );
+    RegisterCLIcommand("imgetcircsym", __FILE__, IMAGE_BASIC_get_circsym_component_cli,
+                       "extract circular symmetric part of image", "<inim> <outim> <xcenter> <ycenter>",
+                       "imcgetcircsym imin imout 256.0 230.5",
+                       "long IMAGE_BASIC_get_sym_component(const char *ID_name, const char *ID_out_name, float "
+                       "xcenter, float ycenter)");
 
     return RETURN_SUCCESS;
 }
 
-
-
-
-
-
-
-imageID IMAGE_BASIC_get_circsym_component(
-    const char *__restrict ID_name,
-    const char *__restrict ID_out_name,
-    float       xcenter,
-    float       ycenter
-)
+imageID IMAGE_BASIC_get_circsym_component(const char *__restrict ID_name, const char *__restrict ID_out_name,
+                                          float xcenter, float ycenter)
 {
     float step = 1.0;
     imageID ID;
@@ -102,39 +68,39 @@ imageID IMAGE_BASIC_get_circsym_component(
     naxes[1] = data.image[ID].md[0].size[1];
     nb_step = naxes[0] / 2;
 
-    dist = (float *) malloc(sizeof(float) * nb_step);
-    if(dist == NULL)
+    dist = (float *)malloc(sizeof(float) * nb_step);
+    if (dist == NULL)
     {
         C_ERRNO = errno;
         PRINT_ERROR("malloc() error");
         exit(0);
     }
 
-    mean = (float *) malloc(sizeof(float) * nb_step);
-    if(mean == NULL)
+    mean = (float *)malloc(sizeof(float) * nb_step);
+    if (mean == NULL)
     {
         C_ERRNO = errno;
         PRINT_ERROR("malloc() error");
         exit(0);
     }
 
-    rms = (float *) malloc(sizeof(float) * nb_step);
-    if(rms == NULL)
+    rms = (float *)malloc(sizeof(float) * nb_step);
+    if (rms == NULL)
     {
         C_ERRNO = errno;
         PRINT_ERROR("malloc() error");
         exit(0);
     }
 
-    counts = (long *) malloc(sizeof(long) * nb_step);
-    if(counts == NULL)
+    counts = (long *)malloc(sizeof(long) * nb_step);
+    if (counts == NULL)
     {
         C_ERRNO = errno;
         PRINT_ERROR("malloc() error");
         exit(0);
     }
 
-    for(i = 0; i < nb_step; i++)
+    for (i = 0; i < nb_step; i++)
     {
         dist[i] = 0;
         mean[i] = 0;
@@ -142,24 +108,21 @@ imageID IMAGE_BASIC_get_circsym_component(
         counts[i] = 0;
     }
 
-
-    for(uint32_t jj = 0; jj < naxes[1]; jj++)
-        for(uint32_t ii = 0; ii < naxes[0]; ii++)
+    for (uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++)
         {
-            distance = sqrt((1.0 * ii - xcenter) * (1.0 * ii - xcenter) +
-                            (1.0 * jj - ycenter) * (1.0 * jj - ycenter));
+            distance = sqrt((1.0 * ii - xcenter) * (1.0 * ii - xcenter) + (1.0 * jj - ycenter) * (1.0 * jj - ycenter));
             i = (long)(1.0 * distance / step + 0.5);
-            if(i < nb_step)
+            if (i < nb_step)
             {
                 dist[i] += distance;
                 mean[i] += data.image[ID].array.F[jj * naxes[0] + ii];
-                rms[i] += data.image[ID].array.F[jj * naxes[0] + ii] * data.image[ID].array.F[jj
-                          * naxes[0] + ii];
+                rms[i] += data.image[ID].array.F[jj * naxes[0] + ii] * data.image[ID].array.F[jj * naxes[0] + ii];
                 counts[i] += 1;
             }
         }
 
-    for(i = 0; i < nb_step; i++)
+    for (i = 0; i < nb_step; i++)
     {
         dist[i] /= counts[i];
         mean[i] /= counts[i];
@@ -168,28 +131,24 @@ imageID IMAGE_BASIC_get_circsym_component(
 
     printf("%u %u\n", naxes[0], naxes[1]);
     create_2Dimage_ID(ID_out_name, naxes[0], naxes[1], &IDout);
-    for(uint32_t jj = 0; jj < naxes[1]; jj++)
-        for(uint32_t ii = 0; ii < naxes[0]; ii++)
+    for (uint32_t jj = 0; jj < naxes[1]; jj++)
+        for (uint32_t ii = 0; ii < naxes[0]; ii++)
         {
-            distance = sqrt((1.0 * ii - xcenter) * (1.0 * ii - xcenter) +
-                            (1.0 * jj - ycenter) * (1.0 * jj - ycenter));
+            distance = sqrt((1.0 * ii - xcenter) * (1.0 * ii - xcenter) + (1.0 * jj - ycenter) * (1.0 * jj - ycenter));
             i = (long)(1.0 * distance / step);
             ifloat = 1.0 * distance / step;
             x = ifloat - i;
 
-            if((i + 1) < nb_step)
+            if ((i + 1) < nb_step)
             {
-                data.image[IDout].array.F[jj * naxes[0] + ii] = ((1.0 - x) * mean[i] + x *
-                        mean[i + 1]);
+                data.image[IDout].array.F[jj * naxes[0] + ii] = ((1.0 - x) * mean[i] + x * mean[i + 1]);
             }
         }
-
-
 
     free(counts);
     free(dist);
     free(mean);
     free(rms);
 
-    return(IDout);
+    return (IDout);
 }

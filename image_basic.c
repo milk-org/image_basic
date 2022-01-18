@@ -6,8 +6,6 @@
  *
  */
 
-
-
 /* ================================================================== */
 /* ================================================================== */
 /*            MODULE INFO                                             */
@@ -20,16 +18,7 @@
 #define MODULE_SHORTNAME_DEFAULT "imgbasic"
 
 // Module short description
-#define MODULE_DESCRIPTION       "standard image operations"
-
-
-
-
-
-
-
-
-
+#define MODULE_DESCRIPTION "standard image operations"
 
 //#include <stdint.h>
 //#include <string.h>
@@ -49,34 +38,32 @@
 //#include "COREMOD_arith/COREMOD_arith.h"
 
 /*
-#include "info/info.h"
 #include "fft/fft.h"
-#include "image_gen/image_gen.h"
-#include "statistic/statistic.h"
-#include "linopt_imtools/linopt_imtools.h"
-#include "info/info.h"
 #include "image_filter/image_filter.h"
+#include "image_gen/image_gen.h"
+#include "info/info.h"
 #include "kdtree/kdtree.h"
+#include "linopt_imtools/linopt_imtools.h"
+#include "statistic/statistic.h"
 */
 
 //#include "image_basic/image_basic.h"
 
 #include "cubecollapse.h"
 #include "im3Dto2D.h"
-#include "imswapaxis2D.h"
 #include "image_add.h"
 #include "imcontract.h"
 #include "imexpand.h"
-#include "imgetcircsym.h"
 #include "imgetcircasym.h"
+#include "imgetcircsym.h"
 #include "imresize.h"
 #include "imrotate.h"
+#include "imswapaxis2D.h"
 #include "indexmap.h"
 #include "loadfitsimgcube.h"
 #include "streamave.h"
 #include "streamfeed.h"
 #include "streamrecord.h"
-
 
 /*
 #define SBUFFERSIZE 1000
@@ -91,10 +78,6 @@
 char errmsg[SBUFFERSIZE];
 */
 
-
-
-
-
 /* ================================================================== */
 /* ================================================================== */
 /*            INITIALIZE LIBRARY                                      */
@@ -106,45 +89,34 @@ char errmsg[SBUFFERSIZE];
 //
 INIT_MODULE_LIB(image_basic)
 
-
 /* ================================================================== */
 /* ================================================================== */
 /*            COMMAND LINE INTERFACE (CLI) FUNCTIONS                  */
 /* ================================================================== */
 /* ================================================================== */
 
-
-
-
-
 static errno_t init_module_CLI()
 {
 
-	imswapaxis2D_addCLIcmd();
-	im3Dto2D_addCLIcmd();
-	image_add_addCLIcmd();
-	imexpand_addCLIcmd();
-	imgetcircsym_addCLIcmd();
-	imgetcircasym_addCLIcmd();
-	imresize_addCLIcmd();
-	imcontract_addCLIcmd();
-	imrotate_addCLIcmd();
-	loadfitsimgcube_addCLIcmd();
-	streamfeed_addCLIcmd();
-	streamrecord_addCLIcmd();
-	streamave_addCLIcmd();
-	cubecollapse_addCLIcmd();
-	
+    imswapaxis2D_addCLIcmd();
+    im3Dto2D_addCLIcmd();
+    image_add_addCLIcmd();
+    imexpand_addCLIcmd();
+    imgetcircsym_addCLIcmd();
+    imgetcircasym_addCLIcmd();
+    imresize_addCLIcmd();
+    imcontract_addCLIcmd();
+    imrotate_addCLIcmd();
+    loadfitsimgcube_addCLIcmd();
+    streamfeed_addCLIcmd();
+    streamrecord_addCLIcmd();
+    streamave_addCLIcmd();
+    cubecollapse_addCLIcmd();
+
     // add atexit functions here
 
     return RETURN_SUCCESS;
-
 }
-
-
-
-
-
 
 /*
 
@@ -241,11 +213,11 @@ int basic_lmax_im(
 long basic_diff(const char *ID_name1, const char *ID_name2,
                 const char *ID_name_out, long off1, long off2)
 {
-    int ID1, ID2; 
-    int ID_out; 
+    int ID1, ID2;
+    int ID_out;
     long ii, jj;
     long naxes1[2], naxes2[2], naxes[2];
-    long xmin, ymin, xmax, ymax; // extrema in the ID1 coordinates 
+    long xmin, ymin, xmax, ymax; // extrema in the ID1 coordinates
 
     ID1 = image_ID(ID_name1);
     ID2 = image_ID(ID_name2);
@@ -287,14 +259,14 @@ long basic_diff(const char *ID_name1, const char *ID_name2,
         {
             {
                 data.image[ID_out].array.F[jj * naxes[0] + ii] = 0;
-                // if pixel is in ID1 
+                // if pixel is in ID1
                 if(((ii + xmin) >= 0) && ((ii + xmin) < naxes1[0]))
                     if(((jj + ymin) >= 0) && ((jj + ymin) < naxes1[1]))
                     {
                         data.image[ID_out].array.F[jj * naxes[0] + ii] += data.image[ID1].array.F[(jj +
                                 ymin) * naxes1[0] + (ii + xmin)];
                     }
-                // if pixel is in ID2 
+                // if pixel is in ID2
                 if(((ii + xmin - off1) >= 0) && ((ii + xmin - off1) < naxes2[0]))
                     if(((jj + ymin - off2) >= 0) && ((jj + ymin - off2) < naxes2[1]))
                     {
@@ -308,7 +280,7 @@ long basic_diff(const char *ID_name1, const char *ID_name2,
 
 
 
-int basic_add_cst(const char *ID_name, float f1, int sign) // add a constant 
+int basic_add_cst(const char *ID_name, float f1, int sign) // add a constant
 {
     int ID;
     long ii, jj;
@@ -330,7 +302,7 @@ int basic_add_cst(const char *ID_name, float f1, int sign) // add a constant
 
 
 
-// extracts a n1xn2 subwindow of an image at offset n3,n4 
+// extracts a n1xn2 subwindow of an image at offset n3,n4
 imageID basic_extract(
     const char *ID_in_name,
     const char *ID_out_name,
@@ -396,7 +368,7 @@ imageID basic_zoom2(
 )
 {
     imageID ID;
-    imageID ID_out; // ID for the output image 
+    imageID ID_out; // ID for the output image
     uint32_t naxes[2], naxes_out[2];
     char lstring[SBUFFERSIZE];
     int n;
@@ -465,7 +437,7 @@ imageID basic_padd(
 )
 {
     imageID ID;
-    imageID ID_out; // ID for the output image 
+    imageID ID_out; // ID for the output image
     uint32_t naxes[2], naxes_out[2];
 
     ID = image_ID(ID_name);
@@ -489,7 +461,7 @@ imageID basic_padd(
 }
 
 
-// flip an image relative to the horizontal axis 
+// flip an image relative to the horizontal axis
 imageID basic_fliph(
     const char *ID_name
 )
@@ -519,7 +491,7 @@ imageID basic_fliph(
 
 
 
-// flip an image relative to the vertical axis 
+// flip an image relative to the vertical axis
 imageID basic_flipv(
     const char *ID_name
 )
@@ -548,7 +520,7 @@ imageID basic_flipv(
 
 
 
-// flip an image horizontally and vertically 
+// flip an image horizontally and vertically
 imageID basic_fliphv(
     const char *ID_name
 )
@@ -577,7 +549,7 @@ imageID basic_fliphv(
 }
 
 
-// median of the images specified in options, output is ID_name 
+// median of the images specified in options, output is ID_name
 int basic_median(
     const char *ID_name,
     const char *options
@@ -1074,7 +1046,7 @@ long load_fitsimages(
     }
 
     fclose(fp);
-    
+
     EXECUTE_SYSTEM_COMMAND("rm flist.tmp");
 
     printf("%ld images loaded\n", cnt);
@@ -1290,7 +1262,7 @@ long basic_addimagesfiles(
     int init = 0; // becomes 1 when first image encountered
 
 	EXECUTE_SYSTEM_COMMAND("ls %s.fits > flist.tmp\n", strfilter);
-  
+
 
     if((fp = fopen("flist.tmp", "r")) == NULL)
     {
@@ -1495,25 +1467,3 @@ long basic_averageimages(
 
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
