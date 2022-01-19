@@ -1,10 +1,11 @@
 /** @file measure_transl.c
  */
 
+#include "CommandLineInterface/CLIcore.h"
+
 #include "COREMOD_arith/COREMOD_arith.h"
 #include "COREMOD_iofits/COREMOD_iofits.h"
 #include "COREMOD_memory/COREMOD_memory.h"
-#include "CommandLineInterface/CLIcore.h"
 
 #include "image_filter/image_filter.h"
 #include "info/info.h"

@@ -4,8 +4,10 @@
 #include <math.h>
 #include <sched.h>
 
-#include "COREMOD_memory/COREMOD_memory.h"
 #include "CommandLineInterface/CLIcore.h"
+
+#include "COREMOD_memory/COREMOD_memory.h"
+
 #include "info/info.h"
 
 // ==========================================

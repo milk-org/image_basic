@@ -3,8 +3,9 @@
 
 #include <math.h>
 
-#include "COREMOD_memory/COREMOD_memory.h"
 #include "CommandLineInterface/CLIcore.h"
+
+#include "COREMOD_memory/COREMOD_memory.h"
 
 /* set all nan and inf pixel values to zero */
 int basic_naninf2zero(const char *ID_name)

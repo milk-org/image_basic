@@ -3,9 +3,10 @@
 
 #include <math.h>
 
+#include "CommandLineInterface/CLIcore.h"
+
 #include "COREMOD_arith/COREMOD_arith.h"
 #include "COREMOD_memory/COREMOD_memory.h"
-#include "CommandLineInterface/CLIcore.h"
 
 imageID basic_stretch(const char *__restrict name_in, const char *__restrict name_out, float coeff, long Xcenter,
                       long Ycenter)
