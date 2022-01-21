@@ -10,7 +10,8 @@
 // Forward declaration(s)
 // ==========================================
 
-long load_fitsimages_cube(const char *__restrict strfilter, const char *__restrict ID_out_name);
+long load_fitsimages_cube(const char *__restrict strfilter,
+                          const char *__restrict ID_out_name);
 
 // ==========================================
 // Command line interface wrapper function(s)
@@ -20,7 +21,8 @@ static errno_t image_basic_load_fitsimages_cube_cli()
 {
     if (CLI_checkarg(1, 3) + CLI_checkarg(2, 3) == 0)
     {
-        load_fitsimages_cube(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string);
+        load_fitsimages_cube(data.cmdargtoken[1].val.string,
+                             data.cmdargtoken[2].val.string);
         return CLICMD_SUCCESS;
     }
     else
@@ -36,10 +38,14 @@ static errno_t image_basic_load_fitsimages_cube_cli()
 errno_t __attribute__((cold)) loadfitsimgcube_addCLIcmd()
 {
 
-    RegisterCLIcommand("loadfitsimgcube", __FILE__, image_basic_load_fitsimages_cube_cli,
-                       "load multiple images into a single cube", "loadfitsimgcube <string pattern> <outputcube>",
+    RegisterCLIcommand("loadfitsimgcube",
+                       __FILE__,
+                       image_basic_load_fitsimages_cube_cli,
+                       "load multiple images into a single cube",
+                       "loadfitsimgcube <string pattern> <outputcube>",
                        "loadfitsimgcube im out",
-                       "long load_fitsimages_cube(const char *strfilter, const char *ID_out_name)");
+                       "long load_fitsimages_cube(const char *strfilter, const "
+                       "char *ID_out_name)");
 
     return RETURN_SUCCESS;
 }
@@ -47,15 +53,16 @@ errno_t __attribute__((cold)) loadfitsimgcube_addCLIcmd()
 // load all images matching strfilter + .fits into a data cube
 // return number of images loaded
 // image name in buffer is same as file name without extension
-long load_fitsimages_cube(const char *__restrict strfilter, const char *__restrict ID_out_name)
+long load_fitsimages_cube(const char *__restrict strfilter,
+                          const char *__restrict ID_out_name)
 {
-    long cnt = 0;
-    char fname[STRINGMAXLEN_FILENAME];
-    char fname1[STRINGMAXLEN_FILENAME];
-    FILE *fp;
+    long     cnt = 0;
+    char     fname[STRINGMAXLEN_FILENAME];
+    char     fname1[STRINGMAXLEN_FILENAME];
+    FILE    *fp;
     uint32_t xsize, ysize;
-    imageID ID;
-    imageID IDout;
+    imageID  ID;
+    imageID  IDout;
 
     printf("Filter = %s\n", strfilter);
 
@@ -83,9 +90,12 @@ long load_fitsimages_cube(const char *__restrict strfilter, const char *__restri
         }
 
         load_fits(fname, "imtmplfc", 1, &ID);
-        if ((data.image[ID].md[0].size[0] != xsize) || (data.image[ID].md[0].size[1] != ysize))
+        if ((data.image[ID].md[0].size[0] != xsize) ||
+            (data.image[ID].md[0].size[1] != ysize))
         {
-            fprintf(stderr, "ERROR in load_fitsimages_cube: not all images have the same size\n");
+            fprintf(stderr,
+                    "ERROR in load_fitsimages_cube: not all images have the "
+                    "same size\n");
             exit(0);
         }
         delete_image_ID("imtmplfc", DELETE_IMAGE_ERRMODE_WARNING);
@@ -117,7 +127,8 @@ long load_fitsimages_cube(const char *__restrict strfilter, const char *__restri
         ID = image_ID(fname1);
         for (uint64_t ii = 0; ii < xsize * ysize; ii++)
         {
-            data.image[IDout].array.F[xsize * ysize * cnt + ii] = data.image[ID].array.F[ii];
+            data.image[IDout].array.F[xsize * ysize * cnt + ii] =
+                data.image[ID].array.F[ii];
         }
         delete_image_ID(fname1, DELETE_IMAGE_ERRMODE_WARNING);
         cnt++;

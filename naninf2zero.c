@@ -10,11 +10,11 @@
 /* set all nan and inf pixel values to zero */
 int basic_naninf2zero(const char *ID_name)
 {
-    imageID ID;
+    imageID  ID;
     uint32_t naxes[2];
-    long cnt = 0;
+    long     cnt = 0;
 
-    ID = image_ID(ID_name);
+    ID       = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
 

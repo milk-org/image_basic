@@ -14,8 +14,11 @@
 // Forward declaration(s)
 // ==========================================
 
-imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, const char *__restrict IDoutname,
-                                  int mode, int semindex);
+imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname,
+                                  long NBcoadd,
+                                  const char *__restrict IDoutname,
+                                  int mode,
+                                  int semindex);
 
 // ==========================================
 // Command line interface wrapper function(s)
@@ -23,10 +26,14 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
 
 static errno_t image_basic_streamaverage_cli()
 {
-    if (0 + CLI_checkarg(1, 4) + CLI_checkarg(2, 2) + CLI_checkarg(3, 3) + CLI_checkarg(4, 2) + CLI_checkarg(5, 2) == 0)
+    if (0 + CLI_checkarg(1, 4) + CLI_checkarg(2, 2) + CLI_checkarg(3, 3) +
+            CLI_checkarg(4, 2) + CLI_checkarg(5, 2) ==
+        0)
     {
-        IMAGE_BASIC_streamaverage(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.numl,
-                                  data.cmdargtoken[3].val.string, data.cmdargtoken[4].val.numl,
+        IMAGE_BASIC_streamaverage(data.cmdargtoken[1].val.string,
+                                  data.cmdargtoken[2].val.numl,
+                                  data.cmdargtoken[3].val.string,
+                                  data.cmdargtoken[4].val.numl,
                                   data.cmdargtoken[5].val.numl);
         return CLICMD_SUCCESS;
     }
@@ -43,11 +50,16 @@ static errno_t image_basic_streamaverage_cli()
 errno_t __attribute__((cold)) streamave_addCLIcmd()
 {
 
-    RegisterCLIcommand("imgstreamave", __FILE__, image_basic_streamaverage_cli, "average stream of images",
-                       "imgstreamave <imin> <NBcoadd [long]> <imout> <mode> <semindex>",
-                       "imgstreamave im 100 imave 0 -1",
-                       "long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, const char *IDoutname, int "
-                       "mode, int semindex)");
+    RegisterCLIcommand(
+        "imgstreamave",
+        __FILE__,
+        image_basic_streamaverage_cli,
+        "average stream of images",
+        "imgstreamave <imin> <NBcoadd [long]> <imout> <mode> <semindex>",
+        "imgstreamave im 100 imave 0 -1",
+        "long IMAGE_BASIC_streamaverage(const char *IDname, long NBcoadd, "
+        "const char *IDoutname, int "
+        "mode, int semindex)");
 
     return RETURN_SUCCESS;
 }
@@ -64,41 +76,44 @@ errno_t __attribute__((cold)) streamave_addCLIcmd()
  * @note If semindex<0, use counter instead of semaphore
  *
  * */
-imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, const char *__restrict IDoutname,
-                                  int mode, int semindex)
+imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname,
+                                  long NBcoadd,
+                                  const char *__restrict IDoutname,
+                                  int mode,
+                                  int semindex)
 {
-    imageID ID;
+    imageID       ID;
     unsigned long cnt = 0;
-    long k;
-    long xsize, ysize;
-    long IDcube;
-    uint32_t *imsize;
-    uint8_t datatype;
-    char *ptrv;
-    char *ptrcv;
-    long xysize;
-    long k1;
-    long IDout;
-    long ii;
-    imageID IDrms;
-    imageID IDbadpix;
-    float rmsmean;
-    float vmin, vmax;
-    float darkp20, darkp80;
-    int createim;
-    long offset;
+    long          k;
+    long          xsize, ysize;
+    long          IDcube;
+    uint32_t     *imsize;
+    uint8_t       datatype;
+    char         *ptrv;
+    char         *ptrcv;
+    long          xysize;
+    long          k1;
+    long          IDout;
+    long          ii;
+    imageID       IDrms;
+    imageID       IDbadpix;
+    float         rmsmean;
+    float         vmin, vmax;
+    float         darkp20, darkp80;
+    int           createim;
+    long          offset;
 
     int CounterWatch; // 1 if using cnt0, 0 if using semaphore
 
     double *sumsqarray; // sum squared
     double *sumarray;
 
-    ID = image_ID(IDname);
-    xsize = data.image[ID].md[0].size[0];
-    ysize = data.image[ID].md[0].size[1];
+    ID     = image_ID(IDname);
+    xsize  = data.image[ID].md[0].size[0];
+    ysize  = data.image[ID].md[0].size[1];
     xysize = xsize * ysize;
 
-    imsize = (uint32_t *)malloc(sizeof(uint32_t) * 3);
+    imsize = (uint32_t *) malloc(sizeof(uint32_t) * 3);
     if (imsize == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
@@ -107,7 +122,7 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
     imsize[0] = xsize;
     imsize[1] = ysize;
     imsize[2] = NBcoadd;
-    datatype = data.image[ID].md[0].datatype;
+    datatype  = data.image[ID].md[0].datatype;
 
     if (mode > 0)
     {
@@ -121,11 +136,13 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
     }
 
     createim = 0;
-    IDcube = image_ID("tmpstrcoadd");
+    IDcube   = image_ID("tmpstrcoadd");
     if (IDcube != -1)
     {
-        if ((data.image[IDcube].md[0].naxis == 3) && (data.image[IDcube].md[0].size[0] == imsize[0]) &&
-            (data.image[IDcube].md[0].size[1] == imsize[1]) && (data.image[IDcube].md[0].size[2] == imsize[2]))
+        if ((data.image[IDcube].md[0].naxis == 3) &&
+            (data.image[IDcube].md[0].size[0] == imsize[0]) &&
+            (data.image[IDcube].md[0].size[1] == imsize[1]) &&
+            (data.image[IDcube].md[0].size[2] == imsize[2]))
         {
             createim = 0;
         }
@@ -210,9 +227,9 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
         {
 
         case _DATATYPE_UINT8:
-            ptrv = (char *)data.image[ID].array.UI8;
+            ptrv = (char *) data.image[ID].array.UI8;
             ptrv += sizeof(char) * k1 * xysize;
-            ptrcv = (char *)data.image[IDcube].array.UI8;
+            ptrcv = (char *) data.image[IDcube].array.UI8;
             ptrcv += sizeof(char) * k * xysize;
             memcpy(ptrcv, ptrv, sizeof(char) * xysize);
 
@@ -221,39 +238,43 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
                 for (ii = 0; ii < xysize; ii++)
                 {
                     sumsqarray[ii] +=
-                        (double)(data.image[IDcube].array.UI8[offset + ii] * data.image[IDcube].array.UI8[offset + ii]);
+                        (double) (data.image[IDcube].array.UI8[offset + ii] *
+                                  data.image[IDcube].array.UI8[offset + ii]);
                 }
             }
             for (ii = 0; ii < xysize; ii++)
             {
-                sumarray[ii] += (double)data.image[IDcube].array.UI8[offset + ii];
+                sumarray[ii] +=
+                    (double) data.image[IDcube].array.UI8[offset + ii];
             }
             break;
 
         case _DATATYPE_INT32:
-            ptrv = (char *)data.image[ID].array.SI32;
+            ptrv = (char *) data.image[ID].array.SI32;
             ptrv += sizeof(int) * k1 * xysize;
-            ptrcv = (char *)data.image[IDcube].array.SI32;
+            ptrcv = (char *) data.image[IDcube].array.SI32;
             ptrcv += sizeof(int) * k * xysize;
             memcpy(ptrcv, ptrv, sizeof(int) * xysize);
             if (mode > 0)
             {
                 for (ii = 0; ii < xysize; ii++)
                 {
-                    sumsqarray[ii] += (double)(data.image[IDcube].array.SI32[offset + ii] *
-                                               data.image[IDcube].array.SI32[offset + ii]);
+                    sumsqarray[ii] +=
+                        (double) (data.image[IDcube].array.SI32[offset + ii] *
+                                  data.image[IDcube].array.SI32[offset + ii]);
                 }
             }
             for (ii = 0; ii < xysize; ii++)
             {
-                sumarray[ii] += (double)data.image[IDcube].array.SI32[offset + ii];
+                sumarray[ii] +=
+                    (double) data.image[IDcube].array.SI32[offset + ii];
             }
             break;
 
         case _DATATYPE_FLOAT:
-            ptrv = (char *)data.image[ID].array.F;
+            ptrv = (char *) data.image[ID].array.F;
             ptrv += sizeof(float) * k1 * xysize;
-            ptrcv = (char *)data.image[IDcube].array.F;
+            ptrcv = (char *) data.image[IDcube].array.F;
             ptrcv += sizeof(float) * k * xysize;
             memcpy(ptrcv, ptrv, sizeof(float) * xysize);
 
@@ -262,19 +283,21 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
                 for (ii = 0; ii < xysize; ii++)
                 {
                     sumsqarray[ii] +=
-                        (double)(data.image[IDcube].array.F[offset + ii] * data.image[IDcube].array.F[offset + ii]);
+                        (double) (data.image[IDcube].array.F[offset + ii] *
+                                  data.image[IDcube].array.F[offset + ii]);
                 }
             }
             for (ii = 0; ii < xysize; ii++)
             {
-                sumarray[ii] += (double)data.image[IDcube].array.F[offset + ii];
+                sumarray[ii] +=
+                    (double) data.image[IDcube].array.F[offset + ii];
             }
             break;
 
         case _DATATYPE_DOUBLE:
-            ptrv = (char *)data.image[ID].array.D;
+            ptrv = (char *) data.image[ID].array.D;
             ptrv += sizeof(double) * k1 * xysize;
-            ptrcv = (char *)data.image[IDcube].array.D;
+            ptrcv = (char *) data.image[IDcube].array.D;
             ptrcv += sizeof(double) * k * xysize;
             memcpy(ptrcv, ptrv, sizeof(double) * xysize);
             if (mode > 0)
@@ -282,57 +305,65 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
                 for (ii = 0; ii < xysize; ii++)
                 {
                     sumsqarray[ii] +=
-                        (double)(data.image[IDcube].array.D[offset + ii] * data.image[IDcube].array.D[offset + ii]);
+                        (double) (data.image[IDcube].array.D[offset + ii] *
+                                  data.image[IDcube].array.D[offset + ii]);
                 }
             }
             for (ii = 0; ii < xysize; ii++)
             {
-                sumarray[ii] += (double)data.image[IDcube].array.D[offset + ii];
+                sumarray[ii] +=
+                    (double) data.image[IDcube].array.D[offset + ii];
             }
             break;
 
         case _DATATYPE_INT16:
-            ptrv = (char *)data.image[ID].array.SI16;
+            ptrv = (char *) data.image[ID].array.SI16;
             ptrv += sizeof(uint16_t) * k1 * xysize;
-            ptrcv = (char *)data.image[IDcube].array.SI16;
+            ptrcv = (char *) data.image[IDcube].array.SI16;
             ptrcv += sizeof(uint16_t) * k * xysize;
             memcpy(ptrcv, ptrv, sizeof(uint16_t) * xysize);
             if (mode > 0)
             {
                 for (ii = 0; ii < xysize; ii++)
                 {
-                    sumsqarray[ii] += (double)(data.image[IDcube].array.SI16[offset + ii] *
-                                               data.image[IDcube].array.SI16[offset + ii]);
+                    sumsqarray[ii] +=
+                        (double) (data.image[IDcube].array.SI16[offset + ii] *
+                                  data.image[IDcube].array.SI16[offset + ii]);
                 }
             }
             for (ii = 0; ii < xysize; ii++)
             {
-                sumarray[ii] += (double)data.image[IDcube].array.SI16[offset + ii];
+                sumarray[ii] +=
+                    (double) data.image[IDcube].array.SI16[offset + ii];
             }
             break;
 
         case _DATATYPE_UINT16:
-            ptrv = (char *)data.image[ID].array.UI16;
+            ptrv = (char *) data.image[ID].array.UI16;
             ptrv += sizeof(uint16_t) * k1 * xysize;
-            ptrcv = (char *)data.image[IDcube].array.UI16;
+            ptrcv = (char *) data.image[IDcube].array.UI16;
             ptrcv += sizeof(uint16_t) * k * xysize;
             memcpy(ptrcv, ptrv, sizeof(uint16_t) * xysize);
             if (mode > 0)
             {
                 for (ii = 0; ii < xysize; ii++)
                 {
-                    sumsqarray[ii] += (double)(data.image[IDcube].array.UI16[offset + ii] *
-                                               data.image[IDcube].array.UI16[offset + ii]);
+                    sumsqarray[ii] +=
+                        (double) (data.image[IDcube].array.UI16[offset + ii] *
+                                  data.image[IDcube].array.UI16[offset + ii]);
                 }
             }
             for (ii = 0; ii < xysize; ii++)
             {
-                sumarray[ii] += (double)data.image[IDcube].array.UI16[offset + ii];
+                sumarray[ii] +=
+                    (double) data.image[IDcube].array.UI16[offset + ii];
             }
             break;
 
         default:
-            printf("ERROR: Data type not supported for function IMAGE_BASIC_streamaverage\n");
+            printf(
+                "ERROR: Data type not supported for function "
+                "IMAGE_BASIC_streamaverage\n");
             exit(EXIT_FAILURE);
             break;
         }
@@ -344,14 +375,15 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
 
     for (ii = 0; ii < xysize; ii++)
     {
-        data.image[IDout].array.F[ii] = (float)(sumarray[ii] / k);
+        data.image[IDout].array.F[ii] = (float) (sumarray[ii] / k);
     }
 
     if (mode > 0)
     {
         for (ii = 0; ii < xysize; ii++)
         {
-            data.image[IDrms].array.F[ii] = (float)sqrt(sumsqarray[ii] / k - (sumarray[ii] / k) * (sumarray[ii] / k));
+            data.image[IDrms].array.F[ii] = (float) sqrt(
+                sumsqarray[ii] / k - (sumarray[ii] / k) * (sumarray[ii] / k));
         }
     }
 
@@ -362,8 +394,8 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
         // RMS
         // measure median pixel stddev
         rmsmean = img_percentile_float("imgstreamrms", 0.5);
-        vmin = 0.3 * rmsmean;
-        vmax = 3.0 * rmsmean;
+        vmin    = 0.3 * rmsmean;
+        vmax    = 3.0 * rmsmean;
         for (ii = 0; ii < xysize; ii++)
         {
             if (data.image[IDrms].array.F[ii] < vmin)
@@ -378,8 +410,8 @@ imageID IMAGE_BASIC_streamaverage(const char *__restrict IDname, long NBcoadd, c
         // DARK
         darkp20 = img_percentile_float(IDoutname, 0.1);
         darkp80 = img_percentile_float(IDoutname, 0.9);
-        vmin = darkp20 - 5.0 * (darkp80 - darkp20);
-        vmax = darkp80 + 5.0 * (darkp80 - darkp20);
+        vmin    = darkp20 - 5.0 * (darkp80 - darkp20);
+        vmax    = darkp80 + 5.0 * (darkp80 - darkp20);
         for (ii = 0; ii < xysize; ii++)
         {
             if (data.image[IDout].array.F[ii] < vmin)

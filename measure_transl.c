@@ -14,48 +14,50 @@
 
 // measure offset between 2 images
 
-double basic_measure_transl(const char *__restrict ID_name1, const char *__restrict ID_name2, long tmax)
+double basic_measure_transl(const char *__restrict ID_name1,
+                            const char *__restrict ID_name2,
+                            long tmax)
 {
     imageID ID1, ID2, ID;
     imageID IDout, IDcnt;
-    long dx, dy, ii1, jj1, ii2, jj2, iio, jjo;
-    long sx_out, sy_out;
-    long size1x, size1y;
-    long size2x, size2y;
-    double val;
-    double tmp, v1, v2;
-    int SCALE = 64; // must be power of 2
-    long step1 = 1;
-    long step2 = 1;
-    double vmin;
-    double vdx, vdy;
-    long ii2min, ii2max, jj2min, jj2max;
-    long dxmin, dymin;
-    int SCALEindex;
-    long dsize;
-    double vmincnt;
-    long dx1, dy1;
-    int QUICKMODE = 0;
-    long ii1min, ii1max, jj1min, jj1max;
-    long iiomin, iiomax, jjomin, jjomax;
+    long    dx, dy, ii1, jj1, ii2, jj2, iio, jjo;
+    long    sx_out, sy_out;
+    long    size1x, size1y;
+    long    size2x, size2y;
+    double  val;
+    double  tmp, v1, v2;
+    int     SCALE = 64; // must be power of 2
+    long    step1 = 1;
+    long    step2 = 1;
+    double  vmin;
+    double  vdx, vdy;
+    long    ii2min, ii2max, jj2min, jj2max;
+    long    dxmin, dymin;
+    int     SCALEindex;
+    long    dsize;
+    double  vmincnt;
+    long    dx1, dy1;
+    int     QUICKMODE = 0;
+    long    ii1min, ii1max, jj1min, jj1max;
+    long    iiomin, iiomax, jjomin, jjomax;
     imageID ID1mask;
-    long xsizemask, ysizemask;
-    double vlim;
-    long contractfactor;
-    long ii;
-    long ii1m, jj1m;
-    double Mlim;
+    long    xsizemask, ysizemask;
+    double  vlim;
+    long    contractfactor;
+    long    ii;
+    long    ii1m, jj1m;
+    double  Mlim;
 
     double fitval = 0.0;
 
     step1 = SCALE;
     step2 = SCALE;
 
-    ID1 = image_ID(ID_name1);
+    ID1    = image_ID(ID_name1);
     size1x = data.image[ID1].md[0].size[0];
     size1y = data.image[ID1].md[0].size[1];
 
-    ID2 = image_ID(ID_name2);
+    ID2    = image_ID(ID_name2);
     size2x = data.image[ID2].md[0].size[0];
     size2y = data.image[ID2].md[0].size[1];
 
@@ -70,8 +72,8 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
             data.image[IDcnt].array.F[jjo * sx_out + iio] = 0.0;
         }
 
-    dxmin = 0;
-    dymin = 0;
+    dxmin      = 0;
+    dymin      = 0;
     SCALEindex = 1;
 
     // STEP 1 : quickly identify regions of image 1 where flux gradient is large
@@ -87,10 +89,10 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
     delete_image_ID("_im1Cg", DELETE_IMAGE_ERRMODE_WARNING);
     delete_image_ID("_im1HF2", DELETE_IMAGE_ERRMODE_WARNING);
 
-    vlim = (double)img_percentile("_im1mask", 0.8);
+    vlim = (double) img_percentile("_im1mask", 0.8);
     printf("vlim = %g\n", vlim);
     save_fl_fits("_im1mask", "_im1mask.0.fits");
-    ID1mask = image_ID("_im1mask");
+    ID1mask   = image_ID("_im1mask");
     xsizemask = data.image[ID1mask].md[0].size[0];
     ysizemask = data.image[ID1mask].md[0].size[1];
 
@@ -118,7 +120,7 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
         dsize /= 2; //(long) (1.0*tmax/pow(SCALEindex,2.0));
         if (dsize < 1.2 * SCALE)
         {
-            dsize = (long)(1.2 * SCALE);
+            dsize = (long) (1.2 * SCALE);
         }
 
         //      if(SCALE>1)
@@ -145,8 +147,8 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
         for (ii1 = ii1min; ii1 < ii1max; ii1 += step1)
             for (jj1 = jj1min; jj1 < jj1max; jj1 += step1)
             {
-                ii1m = (long)(ii1 / contractfactor);
-                jj1m = (long)(jj1 / contractfactor);
+                ii1m = (long) (ii1 / contractfactor);
+                jj1m = (long) (jj1 / contractfactor);
                 if (data.image[ID1mask].array.F[jj1m * xsizemask + ii1m] > Mlim)
                 {
                     v1 = data.image[ID1].array.F[jj1 * size1x + ii1];
@@ -192,20 +194,25 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
                     for (ii2 = ii2min; ii2 < ii2max; ii2 += step2)
                         for (jj2 = jj2min; jj2 < jj2max; jj2 += step2)
                         {
-                            dx = ii2 - ii1;
-                            dy = jj2 - jj1;
+                            dx  = ii2 - ii1;
+                            dy  = jj2 - jj1;
                             dx1 = dx - dxmin;
                             dy1 = dy - dymin;
                             if (dx1 * dx1 + dy1 * dy1 < 1.0 * dsize * dsize)
                             {
                                 iio = dx + tmax;
                                 jjo = dy + tmax;
-                                if ((iio > -1) && (iio < sx_out) && (jjo > -1) && (jjo < sy_out))
+                                if ((iio > -1) && (iio < sx_out) &&
+                                    (jjo > -1) && (jjo < sy_out))
                                 {
-                                    v2 = data.image[ID2].array.F[jj2 * size2x + ii2];
+                                    v2 = data.image[ID2]
+                                             .array.F[jj2 * size2x + ii2];
                                     tmp = (v1 - v2);
-                                    data.image[IDout].array.F[jjo * sx_out + iio] += tmp * tmp;
-                                    data.image[IDcnt].array.F[jjo * sx_out + iio] += 1.0;
+                                    data.image[IDout]
+                                        .array.F[jjo * sx_out + iio] +=
+                                        tmp * tmp;
+                                    data.image[IDcnt]
+                                        .array.F[jjo * sx_out + iio] += 1.0;
                                     //   if((iio == 87)&&(jjo == 100))
                                     //printf("%g (%ld %ld %g) (%ld %ld %g)\n",data.image[IDcnt].array.F[jjo*sx_out+iio], ii1, jj1, v1, ii2, jj2, v2);
                                 }
@@ -220,13 +227,14 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
             {
                 if (data.image[IDcnt].array.F[jjo * sx_out + iio] > 0.1)
                 {
-                    val = data.image[IDout].array.F[jjo * sx_out + iio] / data.image[IDcnt].array.F[jjo * sx_out + iio];
+                    val = data.image[IDout].array.F[jjo * sx_out + iio] /
+                          data.image[IDcnt].array.F[jjo * sx_out + iio];
                     if (val < vmin)
                     {
-                        vmin = val;
+                        vmin    = val;
                         vmincnt = data.image[IDcnt].array.F[jjo * sx_out + iio];
-                        vdx = 1.0 * iio - tmax;
-                        vdy = 1.0 * jjo - tmax;
+                        vdx     = 1.0 * iio - tmax;
+                        vdy     = 1.0 * jjo - tmax;
                     }
                 }
             }
@@ -235,8 +243,8 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
         printf("vdy = %g  (%ld)\n", vdy, dymin);
         printf("vmin = %g [%g]\n", vmin, vmincnt);
 
-        dxmin = (long)(vdx + 0.5 + 10000) - 10000;
-        dymin = (long)(vdy + 0.5 + 10000) - 10000;
+        dxmin = (long) (vdx + 0.5 + 10000) - 10000;
+        dymin = (long) (vdy + 0.5 + 10000) - 10000;
 
         printf("-------- %ld %ld --------\n", dxmin, dymin);
 
@@ -256,7 +264,8 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
         {
             if (data.image[IDcnt].array.F[jjo * sx_out + iio] > 0.1)
             {
-                data.image[IDout].array.F[jjo * sx_out + iio] /= data.image[IDcnt].array.F[jjo * sx_out + iio];
+                data.image[IDout].array.F[jjo * sx_out + iio] /=
+                    data.image[IDcnt].array.F[jjo * sx_out + iio];
             }
         }
 
@@ -295,8 +304,8 @@ double basic_measure_transl(const char *__restrict ID_name1, const char *__restr
                 if (val < vmin)
                 {
                     vmin = val;
-                    vdx = 1.0 * iio - tmax;
-                    vdy = 1.0 * jjo - tmax;
+                    vdx  = 1.0 * iio - tmax;
+                    vdy  = 1.0 * jjo - tmax;
                 }
             }
         }

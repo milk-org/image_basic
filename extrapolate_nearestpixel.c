@@ -7,23 +7,24 @@
 
 #include "imcontract.h"
 
-imageID basic_2Dextrapolate_nearestpixel(const char *__restrict IDin_name, const char *__restrict IDmask_name,
+imageID basic_2Dextrapolate_nearestpixel(const char *__restrict IDin_name,
+                                         const char *__restrict IDmask_name,
                                          const char *__restrict IDout_name)
 {
     DEBUG_TRACE_FSTART();
 
     imageID IDin, IDmask, IDout;
-    long ii, jj, ii1, jj1, k;
-    double bdist, dist;
-    long naxes[2];
+    long    ii, jj, ii1, jj1, k;
+    double  bdist, dist;
+    long    naxes[2];
 
     long *maskii = NULL;
     long *maskjj = NULL;
-    long NBmaskpts;
+    long  NBmaskpts;
 
     long IDmask1;
 
-    IDin = image_ID(IDin_name);
+    IDin   = image_ID(IDin_name);
     IDmask = image_ID(IDmask_name);
 
     list_image_ID();
@@ -44,7 +45,7 @@ imageID basic_2Dextrapolate_nearestpixel(const char *__restrict IDin_name, const
                 NBmaskpts++;
             }
 
-    maskii = (long *)malloc(sizeof(long) * NBmaskpts);
+    maskii = (long *) malloc(sizeof(long) * NBmaskpts);
     if (maskii == NULL)
     {
         C_ERRNO = errno;
@@ -53,7 +54,7 @@ imageID basic_2Dextrapolate_nearestpixel(const char *__restrict IDin_name, const
     }
     maskii[0] = 0; // avoids warning about unused maskii
 
-    maskjj = (long *)malloc(sizeof(long) * NBmaskpts);
+    maskjj = (long *) malloc(sizeof(long) * NBmaskpts);
     if (maskjj == NULL)
     {
         C_ERRNO = errno;
@@ -92,17 +93,19 @@ imageID basic_2Dextrapolate_nearestpixel(const char *__restrict IDin_name, const
                 else
                     OKpix = 0;
             }*/
-            bdist = (double)(naxes[0] + naxes[1]);
+            bdist = (double) (naxes[0] + naxes[1]);
             bdist = bdist * bdist;
             for (k = 0; k < NBmaskpts; k++)
             {
                 ii1 = maskii[k];
                 jj1 = maskjj[k];
-                dist = 1.0 * ((ii1 - ii) * (ii1 - ii) + (jj1 - jj) * (jj1 - jj));
+                dist =
+                    1.0 * ((ii1 - ii) * (ii1 - ii) + (jj1 - jj) * (jj1 - jj));
                 if (dist < bdist)
                 {
                     bdist = dist;
-                    data.image[IDout].array.F[jj * naxes[0] + ii] = data.image[IDin].array.F[jj1 * naxes[0] + ii1];
+                    data.image[IDout].array.F[jj * naxes[0] + ii] =
+                        data.image[IDin].array.F[jj1 * naxes[0] + ii1];
                 }
             }
         }
