@@ -23,7 +23,6 @@ set(SOURCEFILES
 	loadfitsimgcube.c
 	measure_transl.c
 	naninf2zero.c
-	streamave.c
 	streamfeed.c
 	streamrecord.c
 	tableto2Dim.c

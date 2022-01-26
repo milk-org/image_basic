@@ -18,7 +18,6 @@
 #include "image_basic/loadfitsimgcube.h"
 #include "image_basic/measure_transl.h"
 #include "image_basic/naninf2zero.h"
-#include "image_basic/streamave.h"
 #include "image_basic/streamfeed.h"
 #include "image_basic/streamrecord.h"
 #include "image_basic/tableto2Dim.h"

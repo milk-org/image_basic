@@ -61,7 +61,6 @@
 #include "imswapaxis2D.h"
 #include "indexmap.h"
 #include "loadfitsimgcube.h"
-#include "streamave.h"
 #include "streamfeed.h"
 #include "streamrecord.h"
 
@@ -110,8 +109,9 @@ static errno_t init_module_CLI()
     loadfitsimgcube_addCLIcmd();
     streamfeed_addCLIcmd();
     streamrecord_addCLIcmd();
-    streamave_addCLIcmd();
     cubecollapse_addCLIcmd();
+
+    CLIADDCMD_streamaverage();
 
     // add atexit functions here
 
