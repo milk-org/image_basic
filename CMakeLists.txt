@@ -46,7 +46,6 @@ set(INCLUDEFILES
 	loadfitsimgcube.h
 	measure_transl.h
 	naninf2zero.h
-	streamave.h
 	streamfeed.h
 	streamrecord.h
 	tableto2Dim.h
