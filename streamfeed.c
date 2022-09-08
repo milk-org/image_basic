@@ -71,7 +71,6 @@ long IMAGE_BASIC_streamfeed(const char *__restrict IDname,
     long               ii;
 
     schedpar.sched_priority = RT_priority;
-#ifndef __MACH__
     if (seteuid(data.euid) != 0) //This goes up to maximum privileges
     {
         PRINT_ERROR("seteuid error");
@@ -83,7 +82,6 @@ long IMAGE_BASIC_streamfeed(const char *__restrict IDname,
     {
         PRINT_ERROR("seteuid error");
     }
-#endif
 
     ID     = image_ID(IDname);
     xsize  = data.image[ID].md[0].size[0];
