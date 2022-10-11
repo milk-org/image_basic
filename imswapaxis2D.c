@@ -18,7 +18,7 @@ imageID image_basic_SwapAxis2D(const char *__restrict IDin_name,
 
 static errno_t image_basic_SwapAxis2D_cli() // swap axis of a 2D image
 {
-    if (CLI_checkarg(1, 4) + CLI_checkarg(2, 3) == 0)
+    if(CLI_checkarg(1, 4) + CLI_checkarg(2, 3) == 0)
     {
         image_basic_SwapAxis2D(data.cmdargtoken[1].val.string,
                                data.cmdargtoken[2].val.string);
@@ -54,7 +54,7 @@ imageID image_basic_SwapAxis2D_byID(imageID IDin,
 {
     imageID IDout = -1;
 
-    if (data.image[IDin].md[0].naxis != 2)
+    if(data.image[IDin].md[0].naxis != 2)
     {
         printf("ERROR: image needs to have 2 axis\n");
     }
@@ -65,13 +65,13 @@ imageID image_basic_SwapAxis2D_byID(imageID IDin,
                           data.image[IDin].md[0].size[0],
                           &IDout);
 
-        for (uint32_t ii = 0; ii < data.image[IDin].md[0].size[0]; ii++)
-            for (uint32_t jj = 0; jj < data.image[IDin].md[0].size[1]; jj++)
+        for(uint32_t ii = 0; ii < data.image[IDin].md[0].size[0]; ii++)
+            for(uint32_t jj = 0; jj < data.image[IDin].md[0].size[1]; jj++)
             {
                 data.image[IDout]
-                    .array.F[ii * data.image[IDin].md[0].size[1] + jj] =
+                .array.F[ii * data.image[IDin].md[0].size[1] + jj] =
                     data.image[IDin]
-                        .array.F[jj * data.image[IDin].md[0].size[0] + ii];
+                    .array.F[jj * data.image[IDin].md[0].size[0] + ii];
             }
     }
 

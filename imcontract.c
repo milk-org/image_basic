@@ -21,9 +21,9 @@ imageID basic_contract3D(
 
 static errno_t image_basic_contract_cli()
 {
-    if (CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 2) +
+    if(CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 2) +
             CLI_checkarg(4, 2) ==
-        0)
+            0)
     {
         basic_contract(data.cmdargtoken[1].val.string,
                        data.cmdargtoken[2].val.string,
@@ -39,9 +39,9 @@ static errno_t image_basic_contract_cli()
 
 static errno_t image_basic_contract3D_cli()
 {
-    if (CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 2) +
+    if(CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 2) +
             CLI_checkarg(4, 2) + CLI_checkarg(5, 2) ==
-        0)
+            0)
     {
         basic_contract3D(data.cmdargtoken[1].val.string,
                          data.cmdargtoken[2].val.string,
@@ -102,14 +102,14 @@ basic_contract(const char *ID_name, const char *ID_name_out, int n1, int n2)
     //  printf("%ld %ld  ->  %ld %ld\n",naxes[0],naxes[1],naxes_out[0],naxes_out[1]);
     create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1], &ID_out);
 
-    for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
-        for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
-            for (i = 0; i < n1; i++)
-                for (j = 0; j < n2; j++)
+    for(uint32_t jj = 0; jj < naxes_out[1]; jj++)
+        for(uint32_t ii = 0; ii < naxes_out[0]; ii++)
+            for(i = 0; i < n1; i++)
+                for(j = 0; j < n2; j++)
                 {
                     data.image[ID_out].array.F[jj * naxes_out[0] + ii] +=
                         data.image[ID]
-                            .array.F[(jj * n2 + j) * naxes[0] + ii * n1 + i];
+                        .array.F[(jj * n2 + j) * naxes[0] + ii * n1 + i];
                 }
 
     return (ID_out);
@@ -133,7 +133,7 @@ imageID basic_contract3D(
     naxes[2] = data.image[ID].md[0].size[2];
 
     naxes_out = (uint32_t *) malloc(sizeof(uint32_t) * 3);
-    if (naxes_out == NULL)
+    if(naxes_out == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
         abort();
@@ -142,7 +142,7 @@ imageID basic_contract3D(
     naxes_out[1] = naxes[1] / n2;
     naxes_out[2] = naxes[2] / n3;
 
-    if (naxes_out[2] == 1)
+    if(naxes_out[2] == 1)
     {
         create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1], NULL);
     }
@@ -160,108 +160,108 @@ imageID basic_contract3D(
 
     ID_out = image_ID(ID_name_out);
 
-    switch (datatype)
+    switch(datatype)
     {
-    case _DATATYPE_FLOAT:
-        for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
-            for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
-                for (uint32_t kk = 0; kk < naxes_out[2]; kk++)
-                    for (int i = 0; i < n1; i++)
-                        for (int j = 0; j < n2; j++)
-                            for (int k = 0; k < n3; k++)
-                            {
-                                data.image[ID_out]
+        case _DATATYPE_FLOAT:
+            for(uint32_t jj = 0; jj < naxes_out[1]; jj++)
+                for(uint32_t ii = 0; ii < naxes_out[0]; ii++)
+                    for(uint32_t kk = 0; kk < naxes_out[2]; kk++)
+                        for(int i = 0; i < n1; i++)
+                            for(int j = 0; j < n2; j++)
+                                for(int k = 0; k < n3; k++)
+                                {
+                                    data.image[ID_out]
                                     .array.F[kk * naxes_out[0] * naxes_out[1] +
-                                             jj * naxes_out[0] + ii] +=
-                                    data.image[ID]
-                                        .array
-                                        .F[(kk * n3 + k) * naxes[0] * naxes[1] +
-                                           (jj * n2 + j) * naxes[0] + ii * n1 +
-                                           i];
-                            }
-        break;
-    case _DATATYPE_DOUBLE:
-        for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
-            for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
-                for (uint32_t kk = 0; kk < naxes_out[2]; kk++)
-                    for (int i = 0; i < n1; i++)
-                        for (int j = 0; j < n2; j++)
-                            for (int k = 0; k < n3; k++)
-                            {
-                                data.image[ID_out]
+                                                jj * naxes_out[0] + ii] +=
+                                                 data.image[ID]
+                                                 .array
+                                                 .F[(kk * n3 + k) * naxes[0] * naxes[1] +
+                                                                  (jj * n2 + j) * naxes[0] + ii * n1 +
+                                                                  i];
+                                }
+            break;
+        case _DATATYPE_DOUBLE:
+            for(uint32_t jj = 0; jj < naxes_out[1]; jj++)
+                for(uint32_t ii = 0; ii < naxes_out[0]; ii++)
+                    for(uint32_t kk = 0; kk < naxes_out[2]; kk++)
+                        for(int i = 0; i < n1; i++)
+                            for(int j = 0; j < n2; j++)
+                                for(int k = 0; k < n3; k++)
+                                {
+                                    data.image[ID_out]
                                     .array.D[kk * naxes_out[0] * naxes_out[1] +
-                                             jj * naxes_out[0] + ii] +=
-                                    data.image[ID]
-                                        .array
-                                        .D[(kk * n3 + k) * naxes[0] * naxes[1] +
-                                           (jj * n2 + j) * naxes[0] + ii * n1 +
-                                           i];
-                            }
-        break;
-    case _DATATYPE_COMPLEX_FLOAT:
-        for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
-            for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
-                for (uint32_t kk = 0; kk < naxes_out[2]; kk++)
-                    for (int i = 0; i < n1; i++)
-                        for (int j = 0; j < n2; j++)
-                            for (int k = 0; k < n3; k++)
-                            {
-                                data.image[ID_out]
+                                                jj * naxes_out[0] + ii] +=
+                                                 data.image[ID]
+                                                 .array
+                                                 .D[(kk * n3 + k) * naxes[0] * naxes[1] +
+                                                                  (jj * n2 + j) * naxes[0] + ii * n1 +
+                                                                  i];
+                                }
+            break;
+        case _DATATYPE_COMPLEX_FLOAT:
+            for(uint32_t jj = 0; jj < naxes_out[1]; jj++)
+                for(uint32_t ii = 0; ii < naxes_out[0]; ii++)
+                    for(uint32_t kk = 0; kk < naxes_out[2]; kk++)
+                        for(int i = 0; i < n1; i++)
+                            for(int j = 0; j < n2; j++)
+                                for(int k = 0; k < n3; k++)
+                                {
+                                    data.image[ID_out]
                                     .array
                                     .CF[kk * naxes_out[0] * naxes_out[1] +
-                                        jj * naxes_out[0] + ii]
+                                           jj * naxes_out[0] + ii]
                                     .re += data.image[ID]
-                                               .array
-                                               .CF[(kk * n3 + k) * naxes[0] *
-                                                       naxes[1] +
-                                                   (jj * n2 + j) * naxes[0] +
-                                                   ii * n1 + i]
-                                               .re;
-                                data.image[ID_out]
+                                           .array
+                                           .CF[(kk * n3 + k) * naxes[0] *
+                                                             naxes[1] +
+                                                             (jj * n2 + j) * naxes[0] +
+                                                             ii * n1 + i]
+                                           .re;
+                                    data.image[ID_out]
                                     .array
                                     .CF[kk * naxes_out[0] * naxes_out[1] +
-                                        jj * naxes_out[0] + ii]
+                                           jj * naxes_out[0] + ii]
                                     .im += data.image[ID]
-                                               .array
-                                               .CF[(kk * n3 + k) * naxes[0] *
-                                                       naxes[1] +
-                                                   (jj * n2 + j) * naxes[0] +
-                                                   ii * n1 + i]
-                                               .im;
-                            }
-        break;
-    case _DATATYPE_COMPLEX_DOUBLE:
-        for (uint32_t jj = 0; jj < naxes_out[1]; jj++)
-            for (uint32_t ii = 0; ii < naxes_out[0]; ii++)
-                for (uint32_t kk = 0; kk < naxes_out[2]; kk++)
-                    for (int i = 0; i < n1; i++)
-                        for (int j = 0; j < n2; j++)
-                            for (int k = 0; k < n3; k++)
-                            {
-                                data.image[ID_out]
+                                           .array
+                                           .CF[(kk * n3 + k) * naxes[0] *
+                                                             naxes[1] +
+                                                             (jj * n2 + j) * naxes[0] +
+                                                             ii * n1 + i]
+                                           .im;
+                                }
+            break;
+        case _DATATYPE_COMPLEX_DOUBLE:
+            for(uint32_t jj = 0; jj < naxes_out[1]; jj++)
+                for(uint32_t ii = 0; ii < naxes_out[0]; ii++)
+                    for(uint32_t kk = 0; kk < naxes_out[2]; kk++)
+                        for(int i = 0; i < n1; i++)
+                            for(int j = 0; j < n2; j++)
+                                for(int k = 0; k < n3; k++)
+                                {
+                                    data.image[ID_out]
                                     .array
                                     .CD[kk * naxes_out[0] * naxes_out[1] +
-                                        jj * naxes_out[0] + ii]
+                                           jj * naxes_out[0] + ii]
                                     .re += data.image[ID]
-                                               .array
-                                               .CD[(kk * n3 + k) * naxes[0] *
-                                                       naxes[1] +
-                                                   (jj * n2 + j) * naxes[0] +
-                                                   ii * n1 + i]
-                                               .re;
-                                data.image[ID_out]
+                                           .array
+                                           .CD[(kk * n3 + k) * naxes[0] *
+                                                             naxes[1] +
+                                                             (jj * n2 + j) * naxes[0] +
+                                                             ii * n1 + i]
+                                           .re;
+                                    data.image[ID_out]
                                     .array
                                     .CD[kk * naxes_out[0] * naxes_out[1] +
-                                        jj * naxes_out[0] + ii]
+                                           jj * naxes_out[0] + ii]
                                     .im += data.image[ID]
-                                               .array
-                                               .CD[(kk * n3 + k) * naxes[0] *
-                                                       naxes[1] +
-                                                   (jj * n2 + j) * naxes[0] +
-                                                   ii * n1 + i]
-                                               .im;
-                            }
-        break;
+                                           .array
+                                           .CD[(kk * n3 + k) * naxes[0] *
+                                                             naxes[1] +
+                                                             (jj * n2 + j) * naxes[0] +
+                                                             ii * n1 + i]
+                                           .im;
+                                }
+            break;
     }
 
     free(naxes_out);

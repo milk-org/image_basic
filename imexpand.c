@@ -21,9 +21,9 @@ imageID basic_expand3D(
 
 static errno_t image_basic_expand_cli()
 {
-    if (CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 2) +
+    if(CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 2) +
             CLI_checkarg(4, 2) ==
-        0)
+            0)
     {
         basic_expand(data.cmdargtoken[1].val.string,
                      data.cmdargtoken[2].val.string,
@@ -39,9 +39,9 @@ static errno_t image_basic_expand_cli()
 
 static errno_t image_basic_expand3D_cli()
 {
-    if (CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 2) +
+    if(CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 2) +
             CLI_checkarg(4, 2) + CLI_checkarg(5, 2) ==
-        0)
+            0)
     {
         basic_expand3D(data.cmdargtoken[1].val.string,
                        data.cmdargtoken[2].val.string,
@@ -107,13 +107,13 @@ basic_expand(const char *ID_name, const char *ID_name_out, int n1, int n2)
     FUNC_CHECK_RETURN(
         create_2Dimage_ID(ID_name_out, naxes_out[0], naxes_out[1], &ID_out));
 
-    for (jj = 0; jj < naxes[1]; jj++)
-        for (ii = 0; ii < naxes[0]; ii++)
-            for (i = 0; i < n1; i++)
-                for (j = 0; j < n2; j++)
+    for(jj = 0; jj < naxes[1]; jj++)
+        for(ii = 0; ii < naxes[0]; ii++)
+            for(i = 0; i < n1; i++)
+                for(j = 0; j < n2; j++)
                 {
                     data.image[ID_out]
-                        .array.F[(jj * n2 + j) * naxes_out[0] + ii * n1 + i] =
+                    .array.F[(jj * n2 + j) * naxes_out[0] + ii * n1 + i] =
                         data.image[ID].array.F[jj * naxes[0] + ii];
                 }
 
@@ -134,7 +134,7 @@ imageID basic_expand3D(
     ID = image_ID(ID_name);
 
     naxes[0] = data.image[ID].md[0].size[0];
-    if (data.image[ID].md[0].naxis > 1)
+    if(data.image[ID].md[0].naxis > 1)
     {
         naxes[1] = data.image[ID].md[0].size[1];
     }
@@ -142,7 +142,7 @@ imageID basic_expand3D(
     {
         naxes[1] = 1;
     }
-    if (data.image[ID].md[0].naxis == 3)
+    if(data.image[ID].md[0].naxis == 3)
     {
         naxes[2] = data.image[ID].md[0].size[2];
     }
@@ -169,20 +169,20 @@ imageID basic_expand3D(
                       &ID_out);
     list_image_ID();
 
-    for (kk = 0; kk < naxes[2]; kk++)
-        for (jj = 0; jj < naxes[1]; jj++)
-            for (ii = 0; ii < naxes[0]; ii++)
-                for (i = 0; i < n1; i++)
-                    for (j = 0; j < n2; j++)
-                        for (k = 0; k < n3; k++)
+    for(kk = 0; kk < naxes[2]; kk++)
+        for(jj = 0; jj < naxes[1]; jj++)
+            for(ii = 0; ii < naxes[0]; ii++)
+                for(i = 0; i < n1; i++)
+                    for(j = 0; j < n2; j++)
+                        for(k = 0; k < n3; k++)
                         {
                             data.image[ID_out]
-                                .array
-                                .F[(kk * n3 + k) * naxes_out[0] * naxes_out[1] +
-                                   (jj * n2 + j) * naxes_out[0] + ii * n1 + i] =
-                                data.image[ID]
-                                    .array.F[kk * naxes[0] * naxes[1] +
-                                             jj * naxes[0] + ii];
+                            .array
+                            .F[(kk * n3 + k) * naxes_out[0] * naxes_out[1] +
+                                             (jj * n2 + j) * naxes_out[0] + ii * n1 + i] =
+                                   data.image[ID]
+                                   .array.F[kk * naxes[0] * naxes[1] +
+                                               jj * naxes[0] + ii];
                         }
     return (ID_out);
 }

@@ -20,7 +20,7 @@ imageID cube_collapse(const char *__restrict ID_in_name,
 
 static errno_t image_basic_cubecollapse_cli()
 {
-    if (0 + CLI_checkarg(1, 4) + CLI_checkarg(2, 3) == 0)
+    if(0 + CLI_checkarg(1, 4) + CLI_checkarg(2, 3) == 0)
     {
         cube_collapse(data.cmdargtoken[1].val.string,
                       data.cmdargtoken[2].val.string);
@@ -67,9 +67,9 @@ imageID cube_collapse(const char *__restrict ID_in_name,
 
     create_2Dimage_ID(ID_out_name, xsize, ysize, &IDout);
 
-    for (ii = 0; ii < xsize * ysize; ii++)
+    for(ii = 0; ii < xsize * ysize; ii++)
     {
-        for (kk = 0; kk < ksize; kk++)
+        for(kk = 0; kk < ksize; kk++)
         {
             data.image[IDout].array.F[ii] +=
                 data.image[IDin].array.F[kk * xsize * ysize + ii];

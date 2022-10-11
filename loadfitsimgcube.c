@@ -19,7 +19,7 @@ long load_fitsimages_cube(const char *__restrict strfilter,
 
 static errno_t image_basic_load_fitsimages_cube_cli()
 {
-    if (CLI_checkarg(1, 3) + CLI_checkarg(2, 3) == 0)
+    if(CLI_checkarg(1, 3) + CLI_checkarg(2, 3) == 0)
     {
         load_fitsimages_cube(data.cmdargtoken[1].val.string,
                              data.cmdargtoken[2].val.string);
@@ -71,17 +71,17 @@ long load_fitsimages_cube(const char *__restrict strfilter,
     xsize = 0;
     ysize = 0;
 
-    if ((fp = fopen("flist.tmp", "r")) == NULL)
+    if((fp = fopen("flist.tmp", "r")) == NULL)
     {
         C_ERRNO = errno;
         PRINT_ERROR("fopen() error");
         exit(0);
     }
 
-    while (fgets(fname, STRINGMAXLEN_FILENAME, fp) != NULL)
+    while(fgets(fname, STRINGMAXLEN_FILENAME, fp) != NULL)
     {
         fname[strlen(fname) - 1] = '\0';
-        if (cnt == 0)
+        if(cnt == 0)
         {
             load_fits(fname, "imtmplfc", 1, &ID);
             xsize = data.image[ID].md[0].size[0];
@@ -90,8 +90,8 @@ long load_fitsimages_cube(const char *__restrict strfilter,
         }
 
         load_fits(fname, "imtmplfc", 1, &ID);
-        if ((data.image[ID].md[0].size[0] != xsize) ||
-            (data.image[ID].md[0].size[1] != ysize))
+        if((data.image[ID].md[0].size[0] != xsize) ||
+                (data.image[ID].md[0].size[1] != ysize))
         {
             fprintf(stderr,
                     "ERROR in load_fitsimages_cube: not all images have the "
@@ -110,14 +110,14 @@ long load_fitsimages_cube(const char *__restrict strfilter,
     fflush(stdout);
 
     cnt = 0;
-    if ((fp = fopen("flist.tmp", "r")) == NULL)
+    if((fp = fopen("flist.tmp", "r")) == NULL)
     {
         C_ERRNO = errno;
         PRINT_ERROR("fopen() error");
         exit(0);
     }
 
-    while (fgets(fname, STRINGMAXLEN_FILENAME, fp) != NULL)
+    while(fgets(fname, STRINGMAXLEN_FILENAME, fp) != NULL)
     {
         fname[strlen(fname) - 1] = '\0';
         strncpy(fname1, fname, STRINGMAXLEN_FILENAME);
@@ -125,7 +125,7 @@ long load_fitsimages_cube(const char *__restrict strfilter,
         load_fits(fname, fname1, 1, NULL);
         printf("Image %s loaded -> %s\n", fname, fname1);
         ID = image_ID(fname1);
-        for (uint64_t ii = 0; ii < xsize * ysize; ii++)
+        for(uint64_t ii = 0; ii < xsize * ysize; ii++)
         {
             data.image[IDout].array.F[xsize * ysize * cnt + ii] =
                 data.image[ID].array.F[ii];

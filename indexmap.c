@@ -19,7 +19,7 @@ imageID image_basic_indexmap(const char *__restrict ID_index_name,
 
 static errno_t image_basic_indexmap_cli()
 {
-    if (CLI_checkarg(1, 4) + CLI_checkarg(2, 4) + CLI_checkarg(3, 3) == 0)
+    if(CLI_checkarg(1, 4) + CLI_checkarg(2, 4) + CLI_checkarg(3, 3) == 0)
     {
         image_basic_indexmap(data.cmdargtoken[1].val.string,
                              data.cmdargtoken[2].val.string,
@@ -78,12 +78,12 @@ imageID image_basic_indexmap(const char *__restrict ID_index_name,
 
     create_2Dimage_ID(IDout_name, xsize, ysize, &IDout);
 
-    if (val_datatype == _DATATYPE_FLOAT)
+    if(val_datatype == _DATATYPE_FLOAT)
     {
-        for (ii = 0; ii < xysize; ii++)
+        for(ii = 0; ii < xysize; ii++)
         {
-            i = (long) (data.image[IDindex].array.F[ii] + 0.1);
-            if ((i > -1) && (i < val_xysize))
+            i = (long)(data.image[IDindex].array.F[ii] + 0.1);
+            if((i > -1) && (i < val_xysize))
             {
                 data.image[IDout].array.F[ii] = data.image[IDvalues].array.F[i];
             }
@@ -92,124 +92,124 @@ imageID image_basic_indexmap(const char *__restrict ID_index_name,
     else
     {
         float *arrayf = (float *) malloc(sizeof(float) * val_xysize);
-        if (arrayf == NULL)
+        if(arrayf == NULL)
         {
             PRINT_ERROR("malloc returns NULL pointer");
             abort();
         }
 
-        for (i = 0; i < val_xysize; i++)
+        for(i = 0; i < val_xysize; i++)
         {
             arrayf[i] = (float) data.image[IDvalues].array.D[i];
         }
 
-        switch (datatype)
+        switch(datatype)
         {
 
-        case _DATATYPE_DOUBLE:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) (data.image[IDindex].array.D[ii] + 0.1);
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_DOUBLE:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long)(data.image[IDindex].array.D[ii] + 0.1);
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        case _DATATYPE_UINT8:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) data.image[IDindex].array.UI8[ii];
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_UINT8:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long) data.image[IDindex].array.UI8[ii];
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        case _DATATYPE_INT8:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) data.image[IDindex].array.SI8[ii];
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_INT8:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long) data.image[IDindex].array.SI8[ii];
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        case _DATATYPE_UINT16:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) data.image[IDindex].array.UI16[ii];
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_UINT16:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long) data.image[IDindex].array.UI16[ii];
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        case _DATATYPE_INT16:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) data.image[IDindex].array.SI16[ii];
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_INT16:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long) data.image[IDindex].array.SI16[ii];
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        case _DATATYPE_UINT32:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) data.image[IDindex].array.UI32[ii];
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_UINT32:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long) data.image[IDindex].array.UI32[ii];
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        case _DATATYPE_INT32:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) data.image[IDindex].array.SI32[ii];
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_INT32:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long) data.image[IDindex].array.SI32[ii];
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        case _DATATYPE_UINT64:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) data.image[IDindex].array.UI64[ii];
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_UINT64:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long) data.image[IDindex].array.UI64[ii];
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        case _DATATYPE_INT64:
-            for (ii = 0; ii < xysize; ii++)
-            {
-                i = (long) data.image[IDindex].array.SI64[ii];
-                if ((i > -1) && (i < val_xysize))
+            case _DATATYPE_INT64:
+                for(ii = 0; ii < xysize; ii++)
                 {
-                    data.image[IDout].array.F[ii] = arrayf[i];
+                    i = (long) data.image[IDindex].array.SI64[ii];
+                    if((i > -1) && (i < val_xysize))
+                    {
+                        data.image[IDout].array.F[ii] = arrayf[i];
+                    }
                 }
-            }
-            break;
+                break;
 
-        default:
-            printf("ERROR: datatype not supported\n");
-            free(arrayf);
-            return EXIT_FAILURE;
-            break;
+            default:
+                printf("ERROR: datatype not supported\n");
+                free(arrayf);
+                return EXIT_FAILURE;
+                break;
         }
         free(arrayf);
     }
