@@ -111,8 +111,6 @@ static errno_t init_module_CLI()
     streamrecord_addCLIcmd();
     cubecollapse_addCLIcmd();
 
-    CLIADDCMD_streamaverage();
-
     // add atexit functions here
 
     return RETURN_SUCCESS;
